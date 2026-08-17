@@ -1,18 +1,44 @@
 [
   {
-    "type": "definition",
+    "type": "argument",
     "named": true,
     "subtypes": [
+      {
+        "type": "cel_expression",
+        "named": true
+      },
+      {
+        "type": "heredoc",
+        "named": true
+      },
+      {
+        "type": "numeric",
+        "named": true
+      },
+      {
+        "type": "string",
+        "named": true
+      },
+      {
+        "type": "verb",
+        "named": true
+      }
+    ]
+  },
+  {
+    "type": "expression",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "directive",
+        "named": true
+      },
       {
         "type": "matcher_definition",
         "named": true
       },
       {
         "type": "snippet_reference",
-        "named": true
-      },
-      {
-        "type": "statement",
         "named": true
       }
     ]
@@ -41,11 +67,15 @@
       "required": false,
       "types": [
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "site_block",
           "named": true
         },
         {
-          "type": "snippet",
+          "type": "snippet_definition",
           "named": true
         },
         {
@@ -77,6 +107,61 @@
     }
   },
   {
+    "type": "comment",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "directive",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
+      "keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "matcher": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "matcher",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "subdirective",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "environment_variable",
     "named": true,
     "fields": {
@@ -90,6 +175,29 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "heredoc",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "heredoc_content",
+          "named": true
+        },
+        {
+          "type": "heredoc_suffix",
+          "named": true
+        },
+        {
+          "type": "heredoc_tag",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -131,9 +239,69 @@
     }
   },
   {
+    "type": "matcher_clause",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
+      "keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "matcher": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "matcher_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "matcher_definition",
     "named": true,
     "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -150,7 +318,11 @@
       "required": false,
       "types": [
         {
-          "type": "definition",
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "matcher_clause",
           "named": true
         }
       ]
@@ -246,7 +418,11 @@
         "required": true,
         "types": [
           {
-            "type": "definition",
+            "type": "comment",
+            "named": true
+          },
+          {
+            "type": "expression",
             "named": true
           },
           {
@@ -269,10 +445,20 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
     }
   },
   {
-    "type": "snippet",
+    "type": "snippet_definition",
     "named": true,
     "fields": {
       "content": {
@@ -280,7 +466,11 @@
         "required": true,
         "types": [
           {
-            "type": "definition",
+            "type": "comment",
+            "named": true
+          },
+          {
+            "type": "expression",
             "named": true
           },
           {
@@ -314,67 +504,17 @@
         "required": false,
         "types": [
           {
-            "type": "cel_expression",
-            "named": true
-          },
-          {
-            "type": "numeric",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "verb",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "statement",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "cel_expression",
-            "named": true
-          },
-          {
-            "type": "numeric",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "verb",
+            "type": "argument",
             "named": true
           }
         ]
       },
-      "directive": {
+      "snippet": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "matcher": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "matcher",
             "named": true
           }
         ]
@@ -394,6 +534,42 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "subdirective",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
+      "keyword": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "matcher": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "matcher",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -466,6 +642,10 @@
     "named": false
   },
   {
+    "type": "#",
+    "named": false
+  },
+  {
     "type": "$",
     "named": false
   },
@@ -494,12 +674,28 @@
     "named": false
   },
   {
+    "type": "<<",
+    "named": false
+  },
+  {
     "type": "@",
     "named": false
   },
   {
     "type": "`",
     "named": false
+  },
+  {
+    "type": "heredoc_content",
+    "named": true
+  },
+  {
+    "type": "heredoc_suffix",
+    "named": true
+  },
+  {
+    "type": "heredoc_tag",
+    "named": true
   },
   {
     "type": "import",

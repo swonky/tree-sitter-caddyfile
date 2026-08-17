@@ -10,16 +10,16 @@
 export default grammar({
 	name: 'caddyfile',
 
-	supertypes: $ => [$.reference, $.definition],
+	supertypes: $ => [$.reference, $.expression, $.argument],
 
 	externals: $ => [
 		$._ext_unspecified,
 
 		// heredoc
 		$._ext_heredoc_operator,
-		$._ext_heredoc_tag,
-		$._ext_heredoc_content,
-		$._ext_heredoc_suffix,
+		$.heredoc_tag,
+		$.heredoc_content,
+		$.heredoc_suffix,
 
 		// plain text content
 		$._ext_str_word,
@@ -27,11 +27,11 @@ export default grammar({
 		$._ext_str_upper,
 		$._ext_str_num,
 		$._ext_str_cel,
+		$._ext_str_comment,
 
 		// whitespace
 		$._ext_eol,
 		$._ext_ws,
-		$._ext_comment,
 
 		// keywords
 		$._ext_key_import,
@@ -55,6 +55,7 @@ export default grammar({
 		$._ext_sym_grave,
 		$._ext_sym_quote,
 		$._ext_sym_asterisk,
+		$._ext_sym_exclaim,
 
 		// error recovery indicator
 		$._error_sentinel,
@@ -63,7 +64,8 @@ export default grammar({
 	extras: $ => [],
 
 	rules: {
-		caddyfile: $ => repeat1(choice($.site_block, $.snippet, $.snippet_reference, $._eol)),
+		caddyfile: $ =>
+			repeat1(choice($.site_block, $.snippet_definition, $.snippet_reference, $._eol)),
 
 		site_block: $ => seq(repeat(seq($._site_field, $._sd)), field('content', $._block)),
 
@@ -117,17 +119,32 @@ export default grammar({
 			seq(
 				$._sym_brace_o,
 				repeat1($._eol),
-				repeat(seq($.definition, repeat1($._eol))),
+				repeat(seq($.expression, repeat1($._eol))),
+				$._sym_brace_c,
+			),
+
+		_directive_block: $ =>
+			seq(
+				$._sym_brace_o,
+				repeat1($._eol),
+				repeat(seq($.subdirective, repeat1($._eol))),
+				$._sym_brace_c,
+			),
+		_matcher_block: $ =>
+			seq(
+				$._sym_brace_o,
+				repeat1($._eol),
+				repeat(seq($.matcher_clause, repeat1($._eol))),
 				$._sym_brace_c,
 			),
 
 		_snippet_name: $ =>
 			seq($._sym_paren_o, optional(field('name', $._bare_identifier)), $._sym_paren_c),
-		snippet: $ => seq($._snippet_name, field('content', $._block)),
 
-		definition: $ => choice($.statement, $.matcher_definition, $.snippet_reference),
-		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
-		matcher_definition: $ => seq($._matcher_name, $._block),
+		snippet_definition: $ => seq($._snippet_name, field('content', $._block)),
+
+		expression: $ => choice($.directive, $.matcher_definition, $.snippet_reference),
+
 		named_matcher: $ => $._matcher_name,
 		path_matcher: $ => prec.left(seq(field('path', $.path), $._ws)),
 
@@ -140,19 +157,44 @@ export default grammar({
 		matcher: $ => choice($.wildcard, $.named_matcher, $.path_matcher),
 		wildcard: $ => $._sym_asterisk,
 
-		statement: $ =>
+		directive: $ => seq($._clause, optional($._directive_block)),
+
+		subdirective: $ => $._clause,
+
+		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
+
+		matcher_definition: $ =>
+			seq($._matcher_name, repeat($._arguments_field), optional($._matcher_block)),
+
+		matcher_clause: $ =>
 			seq(
-				field('directive', $.identifier),
-				optional(seq(field('matcher', $.matcher), repeat($._ws))),
-				repeat(seq(field('argument', $._arg), repeat($._ws))),
+				$._keyword_field,
+				field('matcher', $.identifier),
+				repeat($._arguments_field),
+				optional($._matcher_block),
 			),
+
+		_clause: $ =>
+			prec.left(
+				seq($._keyword_field, optional($._matcher_field), repeat($._arguments_field)),
+			),
+
+		_keyword_field: $ => field('keyword', $.identifier),
+		_matcher_field: $ => seq(field('matcher', $.matcher), repeat($._ws)),
+		_arguments_field: $ => seq(field('argument', $.argument), repeat($._ws)),
+		argument: $ => choice($.cel_expression, $.string, $.numeric, $.verb, $.heredoc),
+
+		heredoc: $ => seq($._sym_heredoc, $.heredoc_tag, $.heredoc_content, $.heredoc_suffix),
+		_sym_heredoc: $ => alias($._ext_heredoc_operator, '<<'),
 
 		snippet_reference: $ =>
 			prec.right(
 				seq(
 					$._key_import,
 					repeat($._ws),
-					repeat(seq(field('argument', $._arg), repeat($._ws))),
+					field('snippet', $._bare_identifier),
+					repeat($._ws),
+					repeat($._arguments_field),
 				),
 			),
 
@@ -165,7 +207,6 @@ export default grammar({
 			seq($._sym_grave, optional(field('content', $.cel_content)), $._sym_grave),
 		cel_content: $ => $._ext_str_cel,
 
-		_arg: $ => choice($.cel_expression, $.string, $.numeric, $.verb),
 		// symbols
 		_sym_paren_o: $ => alias($._ext_sym_paren_o, '('),
 		_sym_paren_c: $ => alias($._ext_sym_paren_c, ')'),
@@ -187,6 +228,8 @@ export default grammar({
 		_sym_asterisk: $ => alias($._ext_sym_asterisk, '*'),
 
 		_ws: $ => $._ext_ws,
-		_eol: $ => $._ext_eol,
+		_eol: $ => choice($.comment, $._ext_eol),
+
+		comment: $ => seq($._sym_num, optional($._ext_str_comment), $._ext_eol),
 	},
 });

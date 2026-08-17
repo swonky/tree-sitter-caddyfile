@@ -1,36 +1,47 @@
 ; (environment_variable
 ; 	reference: (identifier) @keyword.directive
 ; )
+(heredoc_tag) @label
+(heredoc_suffix) @label
 
-; (comment) @spell @comment
+(comment) @spell @comment
 
 ; (identifier) @constant
 (string) @string 
+; (comment) @comment 
 (cel_expression) @string.special
 (verb) @string.special
 (numeric) @number
 (identifier) @variable
-(snippet
+(snippet_definition
 	name: (_) @constant.macro
 )
 
 "import" @keyword
 
 ["{" "}"] @punctuation.bracket
-["$" "*" "@"] @punctuation.special
+["$" "*" "@" "<<"] @punctuation.special
 ["/"] @punctuation.delimiter
 
-(statement
-	directive: (_) @function.call
+(directive
+	keyword: (_) @function.call
 )
 
+(subdirective
+	keyword: (_) @function.call
+)
+
+; (matcher_clause
+; 	matcher (_) @type
+; )
+;
 (matcher_definition
 	name: (_) @type.definition
 )
-
-(named_matcher
-	name: (_) @type
-)
+;
+; (named_matcher
+; 	name: (_) @type
+; )
 
 
 ; (path

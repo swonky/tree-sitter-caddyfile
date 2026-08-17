@@ -202,34 +202,21 @@ static inline void advance_while(Scanner *s, Asserter fn)
 	}
 }
 
-/*
- * Consume the rest of the current line, including terminating EOL characters.
- */
+// consume the rest of the line (incl. newline characters)
 static inline void advance_rol(Scanner *s)
 {
-	while (!eof(s) && !is_eol(peek(s)))
+	while (!eof(s) && get_column(s) != 0) {
 		advance(s);
-
-	if (eof(s))
-		return;
-
-	advance(s);
-
-	if (previous(s) == '\r' && !eof(s) && peek(s) == '\n')
-		advance(s);
+	}
 }
 
 static bool scan_heredoc(Scanner *s, const bool *vs)
 {
-	if (vs[ERROR_SENTINEL])
-		return false;
-
-	uint8_t n;
-
 	if (vs[HEREDOC_CONTENT] && s->tag_len != 0) {
 		while (!eof(s)) {
 			advance_while(s, is_ws);
 			mark_end(s);
+			uint8_t n;
 
 			for (n = 0; n < TAGLEN && n < s->tag_len; n++) {
 				if (eof(s))
@@ -245,6 +232,8 @@ static bool scan_heredoc(Scanner *s, const bool *vs)
 			}
 
 			advance_rol(s);
+			// if (is_eol(peek(s)))
+			// 	continue;
 		}
 
 		mark_end(s);
@@ -255,10 +244,6 @@ static bool scan_heredoc(Scanner *s, const bool *vs)
 	if (vs[HEREDOC_SUFFIX]) {
 		for (int i = 0; i < s->tag_len; i++)
 			advance(s);
-		if (s->tag_len != s->consumed) {
-			s->tag_len = 0;
-			return false;
-		}
 		s->tag_len = 0;
 		mark_end(s);
 		set_result(s, HEREDOC_SUFFIX);
@@ -318,6 +303,13 @@ static void scan_text(Scanner *s, const bool *vs)
 		mark_end(s);
 		return;
 	}
+
+	// if (peek(s) == '#') {
+	// 	advance_rol(s);
+	// 	set_result(s, STR_COMMENT);
+	// 	mark_end(s);
+	// 	return;
+	// }
 
 	enum TokenType token = get_token(peek(s));
 
@@ -528,9 +520,8 @@ bool tree_sitter_caddyfile_external_scanner_scan(
 {
 	Scanner *scanner = payload;
 	scanner->lexer = lexer;
-
 	if (scan_heredoc(scanner, valid_symbols))
-		return scanner->consumed != 0;
+		return true;
 
 	scan_text(scanner, valid_symbols);
 	return scanner->consumed != 0;
