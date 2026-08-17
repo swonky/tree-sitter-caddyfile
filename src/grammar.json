@@ -860,6 +860,10 @@
         {
           "type": "SYMBOL",
           "name": "heredoc"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "keyword_private_ranges"
         }
       ]
     },
@@ -901,7 +905,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_key_import"
+            "name": "keyword_import"
           },
           {
             "type": "REPEAT",
@@ -934,15 +938,6 @@
           }
         ]
       }
-    },
-    "_key_import": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_ext_key_import"
-      },
-      "named": false,
-      "value": "import"
     },
     "_quoted_string": {
       "type": "SEQ",
@@ -1269,7 +1264,19 @@
     },
     {
       "type": "SYMBOL",
-      "name": "_ext_key_import"
+      "name": "keyword_import"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "keyword_invoke"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "keyword_private_ranges"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "keyword_client_ip"
     },
     {
       "type": "SYMBOL",

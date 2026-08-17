@@ -34,7 +34,10 @@ export default grammar({
 		$._ext_ws,
 
 		// keywords
-		$._ext_key_import,
+		$.keyword_import,
+		$.keyword_invoke,
+		$.keyword_private_ranges,
+		$.keyword_client_ip,
 
 		// symbols
 		$._ext_sym_paren_o,
@@ -182,7 +185,16 @@ export default grammar({
 		_keyword_field: $ => field('keyword', $.identifier),
 		_matcher_field: $ => seq(field('matcher', $.matcher), repeat($._ws)),
 		_arguments_field: $ => seq(field('argument', $.argument), repeat($._ws)),
-		argument: $ => choice($.cel_expression, $.string, $.numeric, $.verb, $.heredoc),
+
+		argument: $ =>
+			choice(
+				$.cel_expression,
+				$.string,
+				$.numeric,
+				$.verb,
+				$.heredoc,
+				$.keyword_private_ranges,
+			),
 
 		heredoc: $ => seq($._sym_heredoc, $.heredoc_tag, $.heredoc_content, $.heredoc_suffix),
 		_sym_heredoc: $ => alias($._ext_heredoc_operator, '<<'),
@@ -190,15 +202,13 @@ export default grammar({
 		snippet_reference: $ =>
 			prec.right(
 				seq(
-					$._key_import,
+					$.keyword_import,
 					repeat($._ws),
 					field('snippet', $._bare_identifier),
 					repeat($._ws),
 					repeat($._arguments_field),
 				),
 			),
-
-		_key_import: $ => alias($._ext_key_import, 'import'),
 
 		_quoted_string: $ =>
 			seq($._sym_quote, repeat(choice($._substring, $._ws)), $._sym_quote),

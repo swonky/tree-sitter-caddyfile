@@ -17,7 +17,7 @@
 	name: (_) @constant.macro
 )
 
-"import" @keyword
+(keyword_import) @keyword
 
 ["{" "}"] @punctuation.bracket
 ["$" "*" "@" "<<"] @punctuation.special
@@ -48,7 +48,7 @@
 ; 	segment: (string) @string.special.url
 ; )
 ; (site_block (string) @string.special.url ) 
-
+(keyword_private_ranges) @constant.builtin
 
 
 (ERROR) @error-node

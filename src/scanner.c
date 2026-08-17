@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-typedef int32_t UnicodeChar;
+#define KEYWORD(text, token) {text, sizeof(text) - 1, token}
 
 enum {
 	U32LEN = sizeof(uint32_t),
@@ -13,25 +13,46 @@ enum {
 };
 
 enum TokenType {
+	/*
+	 * never requested
+	 */
 	_UNSPECIFIED,
-	// heredoc
+
+	/*
+	 * heredoc
+	 */
 	HEREDOC_OPERATOR,
 	HEREDOC_TAG,
 	HEREDOC_CONTENT,
 	HEREDOC_SUFFIX,
-	// plain text content
+
+	/*
+	 * strings
+	 */
 	STR_WORD,
 	STR_BARE,
 	STR_UPPER,
 	STR_NUM,
 	STR_CEL,
 	STR_COMMENT,
-	// whitespace
+
+	/*
+	 * whitespace
+	 */
 	EOL,
 	WS,
-	// keywords
+
+	/*
+	 * keywords
+	 */
 	KEY_IMPORT,
-	// symbolic operators
+	KEY_INVOKE,
+	KEY_PRIVATE_RANGES,
+	KEY_CLIENT_IP,
+
+	/*
+	 * symbolic operators
+	 */
 	SYM_PAREN_O,
 	SYM_PAREN_C,
 	SYM_BRACE_O,
@@ -51,10 +72,32 @@ enum TokenType {
 	SYM_QUOTE,
 	SYM_ASTERISK,
 	SYM_EXCLAIM,
-	// error recovery indicator
+
+	/*
+	 * indicates that tree-sitter
+	 * is in error recovery mode
+	 */
 	ERROR_SENTINEL,
 };
 
+/**
+ *	unicode character
+ */
+typedef int32_t UnicodeChar;
+
+/**
+ *	keyword entry.
+ *	use @ref KEYWORD() macro to initialise.
+ */
+typedef struct {
+	const char *text;
+	uint8_t len;
+	enum TokenType token;
+} Keyword;
+
+/**
+ *	character-to-token map for ASCII symbolic operators.
+ */
 static const UnicodeChar sym_map[128] = {
     ['('] = SYM_PAREN_O,
     [')'] = SYM_PAREN_C,
@@ -77,6 +120,46 @@ static const UnicodeChar sym_map[128] = {
     ['!'] = SYM_EXCLAIM,
 };
 
+/**
+ *	string-to-token map for keywords.
+ */
+static const Keyword keywords[] = {
+    KEYWORD("import", KEY_IMPORT),
+    KEYWORD("invoke", KEY_INVOKE),
+    KEYWORD("private_ranges", KEY_PRIVATE_RANGES),
+    KEYWORD("client_ip", KEY_CLIENT_IP),
+};
+
+/**
+ * Checks @ref keywords entries for a given string.
+ *
+ * @param *text Unicode character array.
+ * @param len Character length.
+ * @return Matching keyword token, or NULL
+ */
+static const Keyword *find_keyword(const UnicodeChar *text, size_t len)
+{
+	for (size_t i = 0; i < sizeof(keywords) / sizeof(keywords[0]); i++) {
+		const Keyword *kw = &keywords[i];
+
+		if (kw->len != len)
+			continue;
+
+		bool match = true;
+
+		for (size_t j = 0; j < len; j++)
+			if (text[j] != (UnicodeChar)kw->text[j]) {
+				match = false;
+				break;
+			}
+
+		if (match)
+			return kw;
+	}
+
+	return NULL;
+}
+
 static const UnicodeChar import_string[] = {'i', 'm', 'p', 'o', 'r', 't'};
 
 static inline enum TokenType get_token(UnicodeChar c)
@@ -95,30 +178,21 @@ typedef struct {
 	/* transient fields */
 	TSLexer *lexer;
 	unsigned int consumed;
+	uint8_t word_len;
+	UnicodeChar word[TAGLEN];
 } Scanner;
+
+static enum TokenType check_keyword(Scanner *scanner)
+{
+	const Keyword *kw = find_keyword(scanner->word, scanner->word_len);
+	if (kw == NULL)
+		return _UNSPECIFIED;
+	return kw->token;
+}
 
 static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
 
 static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
-
-static inline void advance(Scanner *s)
-{
-	if (eof(s))
-		return;
-
-	s->previous = peek(s);
-	s->lexer->advance(s->lexer, false);
-	s->consumed++;
-}
-
-static inline void skip(Scanner *s)
-{
-	if (eof(s))
-		return;
-
-	s->previous = peek(s);
-	s->lexer->advance(s->lexer, true);
-}
 
 static inline UnicodeChar previous(Scanner *s) { return s->previous; }
 
@@ -186,6 +260,33 @@ static inline bool is_eol(UnicodeChar c)
 	default:
 		return false;
 	}
+}
+
+static inline void advance(Scanner *s)
+{
+	if (eof(s))
+		return;
+
+	s->previous = peek(s);
+	s->lexer->advance(s->lexer, false);
+
+	if (s->word_len == 0) {
+		if (s->consumed < TAGLEN)
+			s->word[s->consumed] = s->previous;
+		if (is_ws(peek(s)))
+			s->word_len = s->consumed + 1;
+	}
+
+	s->consumed++;
+}
+
+static inline void skip(Scanner *s)
+{
+	if (eof(s))
+		return;
+
+	s->previous = peek(s);
+	s->lexer->advance(s->lexer, true);
 }
 
 static inline void skip_while(Scanner *s, Asserter fn)
@@ -331,7 +432,7 @@ static void scan_text(Scanner *s, const bool *vs)
 	bool escape = false;
 	bool digits = true;
 	bool upper = true;
-	bool kw_import = true;
+	bool kw = true;
 
 	while (!eof(s)) {
 
@@ -372,6 +473,15 @@ static void scan_text(Scanner *s, const bool *vs)
 		}
 
 		if (is_eol(c) || is_ws(c)) {
+			if (kw) {
+				enum TokenType token = check_keyword(s);
+				if (token != _UNSPECIFIED && vs[token]) {
+					mark_end(s);
+					set_result(s, token);
+					return;
+				}
+				kw = false;
+			}
 			break;
 		}
 
@@ -380,21 +490,6 @@ static void scan_text(Scanner *s, const bool *vs)
 
 		if (!is_upper(c))
 			upper = false;
-
-		if (vs[KEY_IMPORT] && kw_import) {
-			if (s->consumed <= 5 && c != import_string[s->consumed])
-				kw_import = false;
-			if (s->consumed == 5 && kw_import) {
-				advance(s);
-				mark_end(s);
-				c = peek(s);
-				if (is_ws(c)) {
-					set_result(s, KEY_IMPORT);
-					return;
-				}
-				kw_import = false;
-			}
-		}
 
 		enum TokenType token = get_token(c);
 		if (token != _UNSPECIFIED && vs[token]) {
@@ -446,7 +541,11 @@ static inline void init_persistent_fields(Scanner *s)
  * Sets transient field values.
  * These fields do not persist across scanner instances.
  */
-static inline void reset_transient_fields(Scanner *s) { s->consumed = 0; }
+static inline void reset_transient_fields(Scanner *s)
+{
+	s->consumed = 0;
+	s->word_len = 0;
+}
 
 void *tree_sitter_caddyfile_external_scanner_create(void)
 {

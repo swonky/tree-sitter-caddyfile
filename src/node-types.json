@@ -12,6 +12,10 @@
         "named": true
       },
       {
+        "type": "keyword_private_ranges",
+        "named": true
+      },
+      {
         "type": "numeric",
         "named": true
       },
@@ -519,6 +523,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_import",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -698,8 +712,12 @@
     "named": true
   },
   {
-    "type": "import",
-    "named": false
+    "type": "keyword_import",
+    "named": true
+  },
+  {
+    "type": "keyword_private_ranges",
+    "named": true
   },
   {
     "type": "{",
