@@ -77,6 +77,8 @@ enum TokenType {
 	SYM_ASTERISK,
 	SYM_EXCLAIM,
 
+	SYM_BLOCK_START,
+
 	/*
 	 * indicates that tree-sitter
 	 * is in error recovery mode
@@ -429,7 +431,24 @@ static void scan_text(Scanner *s, const bool *vs)
 		return;
 	}
 
-	enum TokenType token = get_token(peek(s));
+	UnicodeChar c = peek(s);
+
+	if (vs[SYM_BLOCK_START] && c == '{') {
+		advance(s);
+		mark_end(s);
+		advance_while(s, is_ws);
+		c = peek(s);
+		if (eof(s) || is_eol(c) || c == '#') {
+			set_result(s, SYM_BLOCK_START);
+			return;
+		}
+		if (vs[SYM_BRACE_O]) {
+			set_result(s, SYM_BRACE_O);
+			return;
+		}
+	}
+
+	enum TokenType token = get_token(c);
 
 	if (token != _UNSPECIFIED && vs[token]) {
 		set_result(s, token);

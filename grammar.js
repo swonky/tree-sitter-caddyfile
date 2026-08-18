@@ -64,6 +64,7 @@ export default grammar({
 		$._ext_sym_asterisk,
 		$._ext_sym_exclaim,
 
+		$._ext_sym_block_start,
 		// error recovery indicator
 		$._error_sentinel,
 	],
@@ -133,7 +134,7 @@ export default grammar({
 
 		_block: $ =>
 			seq(
-				$._sym_brace_o,
+				$._sym_block_start,
 				repeat1($._eol),
 				repeat(seq($.expression, repeat1($._eol))),
 				$._sym_brace_c,
@@ -141,7 +142,7 @@ export default grammar({
 
 		_matcher_block: $ =>
 			seq(
-				$._sym_brace_o,
+				$._sym_block_start,
 				repeat1($._eol),
 				repeat(seq($.matcher_clause, repeat1($._eol))),
 				$._sym_brace_c,
@@ -149,7 +150,7 @@ export default grammar({
 
 		_vars_block: $ =>
 			seq(
-				$._sym_brace_o,
+				$._sym_block_start,
 				repeat1($._eol),
 				repeat(seq($._vars_clause, repeat1($._eol))),
 				$._sym_brace_c,
@@ -304,6 +305,8 @@ export default grammar({
 		_sym_grave: $ => alias($._ext_sym_grave, '`'),
 		_sym_quote: $ => alias($._ext_sym_quote, '"'),
 		_sym_asterisk: $ => alias($._ext_sym_asterisk, '*'),
+
+		_sym_block_start: $ => alias($._ext_sym_block_start, '{'),
 
 		_ws: $ => $._ext_ws,
 		_eol: $ => choice($.comment, $._ext_eol),
