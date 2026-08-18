@@ -4,7 +4,7 @@
     "named": true,
     "subtypes": [
       {
-        "type": "cel_expression",
+        "type": "embedded_content",
         "named": true
       },
       {
@@ -35,6 +35,10 @@
     "subtypes": [
       {
         "type": "directive",
+        "named": true
+      },
+      {
+        "type": "invoke_statement",
         "named": true
       },
       {
@@ -75,6 +79,14 @@
           "named": true
         },
         {
+          "type": "global_block",
+          "named": true
+        },
+        {
+          "type": "named_route_definition",
+          "named": true
+        },
+        {
           "type": "site_block",
           "named": true
         },
@@ -90,25 +102,9 @@
     }
   },
   {
-    "type": "cel_content",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "cel_expression",
     "named": true,
-    "fields": {
-      "content": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "cel_content",
-            "named": true
-          }
-        ]
-      }
-    }
+    "fields": {}
   },
   {
     "type": "comment",
@@ -166,6 +162,21 @@
     }
   },
   {
+    "type": "embedded_content",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cel_expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "environment_variable",
     "named": true,
     "fields": {
@@ -179,6 +190,95 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "expression_matcher",
+    "named": true,
+    "fields": {
+      "matcher": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "keyword_expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "cel_expression",
+          "named": true
+        },
+        {
+          "type": "embedded_content",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "generic_matcher",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
+      "matcher": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "matcher_clause",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "global_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -220,6 +320,42 @@
     }
   },
   {
+    "type": "invoke_statement",
+    "named": true,
+    "fields": {
+      "matcher": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "matcher",
+            "named": true
+          }
+        ]
+      },
+      "route": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "keyword_invoke",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "matcher",
     "named": true,
     "fields": {},
@@ -245,28 +381,27 @@
   {
     "type": "matcher_clause",
     "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expression_matcher",
+          "named": true
+        },
+        {
+          "type": "generic_matcher",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "matcher_definition",
+    "named": true,
     "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "argument",
-            "named": true
-          }
-        ]
-      },
-      "keyword": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "matcher": {
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -286,43 +421,7 @@
           "named": true
         },
         {
-          "type": "matcher_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "matcher_definition",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "argument",
-            "named": true
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "comment",
+          "type": "heredoc",
           "named": true
         },
         {
@@ -339,6 +438,44 @@
       "name": {
         "multiple": false,
         "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "named_route_definition",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "comment",
+            "named": true
+          },
+          {
+            "type": "expression",
+            "named": true
+          },
+          {
+            "type": "{",
+            "named": false
+          },
+          {
+            "type": "}",
+            "named": false
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -441,7 +578,7 @@
       },
       "site": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "identifier",
@@ -664,6 +801,10 @@
     "named": false
   },
   {
+    "type": "&",
+    "named": false
+  },
+  {
     "type": "(",
     "named": false
   },
@@ -712,7 +853,15 @@
     "named": true
   },
   {
+    "type": "keyword_expression",
+    "named": true
+  },
+  {
     "type": "keyword_import",
+    "named": true
+  },
+  {
+    "type": "keyword_invoke",
     "named": true
   },
   {

@@ -27,6 +27,7 @@ export default grammar({
 		$._ext_str_upper,
 		$._ext_str_num,
 		$._ext_str_cel,
+		$._ext_str_cel_inline,
 		$._ext_str_comment,
 
 		// whitespace
@@ -38,6 +39,7 @@ export default grammar({
 		$.keyword_invoke,
 		$.keyword_private_ranges,
 		$.keyword_client_ip,
+		$.keyword_expression,
 
 		// symbols
 		$._ext_sym_paren_o,
@@ -68,9 +70,19 @@ export default grammar({
 
 	rules: {
 		caddyfile: $ =>
-			repeat1(choice($.site_block, $.snippet_definition, $.snippet_reference, $._eol)),
+			repeat1(
+				choice(
+					$.global_block,
+					$.site_block,
+					$.snippet_definition,
+					$.named_route_definition,
+					$.snippet_reference,
+					$._eol,
+				),
+			),
 
-		site_block: $ => seq(repeat(seq($._site_field, $._sd)), field('content', $._block)),
+		global_block: $ => $._block,
+		site_block: $ => seq(repeat1(seq($._site_field, $._sd)), field('content', $._block)),
 
 		_sd: $ => seq(repeat1($._d), optional(seq($._eol, repeat($._d)))),
 		_d: $ => choice($._ws, $._sym_comma),
@@ -79,7 +91,6 @@ export default grammar({
 
 		_word: $ => $._ext_str_word,
 
-		// identifier: $ => $._ext_str_bare,
 		_nested_string: $ => alias($._ext_str_word, $.string),
 		_bare_string: $ => alias($._ext_str_bare, $.string),
 
@@ -146,7 +157,18 @@ export default grammar({
 
 		snippet_definition: $ => seq($._snippet_name, field('content', $._block)),
 
-		expression: $ => choice($.directive, $.matcher_definition, $.snippet_reference),
+		expression: $ =>
+			choice($.directive, $.matcher_definition, $.snippet_reference, $.invoke_statement),
+
+		_named_route_name: $ =>
+			seq(
+				$._sym_ampersand,
+				$._sym_paren_o,
+				optional(field('name', $._bare_identifier)),
+				$._sym_paren_c,
+			),
+
+		named_route_definition: $ => seq($._named_route_name, field('content', $._block)),
 
 		named_matcher: $ => $._matcher_name,
 		path_matcher: $ => prec.left(seq(field('path', $.path), $._ws)),
@@ -167,15 +189,31 @@ export default grammar({
 		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
 
 		matcher_definition: $ =>
-			seq($._matcher_name, repeat($._arguments_field), optional($._matcher_block)),
-
-		matcher_clause: $ =>
 			seq(
-				$._keyword_field,
-				field('matcher', $.identifier),
-				repeat($._arguments_field),
-				optional($._matcher_block),
+				$._matcher_name,
+				optional($._ws),
+				choice($.matcher_clause, $._matcher_block, $.heredoc),
 			),
+
+		matcher_clause: $ => choice($.generic_matcher, $.expression_matcher),
+
+		generic_matcher: $ =>
+			prec.left(
+				seq(
+					field('matcher', $.identifier),
+					repeat($._arguments_field),
+					optional($._matcher_block),
+				),
+			),
+
+		expression_matcher: $ =>
+			seq(
+				field('matcher', $.keyword_expression),
+				repeat($._ws),
+				choice($._implied_cel_expression, $.embedded_content),
+			),
+
+		_implied_cel_expression: $ => alias($._ext_str_cel_inline, $.cel_expression),
 
 		_clause: $ =>
 			prec.left(
@@ -188,7 +226,7 @@ export default grammar({
 
 		argument: $ =>
 			choice(
-				$.cel_expression,
+				$.embedded_content,
 				$.string,
 				$.numeric,
 				$.verb,
@@ -198,6 +236,17 @@ export default grammar({
 
 		heredoc: $ => seq($._sym_heredoc, $.heredoc_tag, $.heredoc_content, $.heredoc_suffix),
 		_sym_heredoc: $ => alias($._ext_heredoc_operator, '<<'),
+
+		invoke_statement: $ =>
+			prec.right(
+				seq(
+					$.keyword_invoke,
+					repeat($._ws),
+					optional($._matcher_field),
+					field('route', $._bare_identifier),
+					// repeat($._ws),
+				),
+			),
 
 		snippet_reference: $ =>
 			prec.right(
@@ -213,9 +262,8 @@ export default grammar({
 		_quoted_string: $ =>
 			seq($._sym_quote, repeat(choice($._substring, $._ws)), $._sym_quote),
 
-		cel_expression: $ =>
-			seq($._sym_grave, optional(field('content', $.cel_content)), $._sym_grave),
-		cel_content: $ => $._ext_str_cel,
+		embedded_content: $ => seq($._sym_grave, $.cel_expression, $._sym_grave),
+		cel_expression: $ => $._ext_str_cel,
 
 		// symbols
 		_sym_paren_o: $ => alias($._ext_sym_paren_o, '('),

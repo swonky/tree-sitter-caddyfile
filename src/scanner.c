@@ -34,6 +34,7 @@ enum TokenType {
 	STR_UPPER,
 	STR_NUM,
 	STR_CEL,
+	STR_CEL_INLINE,
 	STR_COMMENT,
 
 	/*
@@ -49,6 +50,7 @@ enum TokenType {
 	KEY_INVOKE,
 	KEY_PRIVATE_RANGES,
 	KEY_CLIENT_IP,
+	KEY_EXPRESSION,
 
 	/*
 	 * symbolic operators
@@ -128,6 +130,7 @@ static const Keyword keywords[] = {
     KEYWORD("invoke", KEY_INVOKE),
     KEYWORD("private_ranges", KEY_PRIVATE_RANGES),
     KEYWORD("client_ip", KEY_CLIENT_IP),
+    KEYWORD("expression", KEY_EXPRESSION),
 };
 
 /**
@@ -273,7 +276,9 @@ static inline void advance(Scanner *s)
 	if (s->word_len == 0) {
 		if (s->consumed < TAGLEN)
 			s->word[s->consumed] = s->previous;
-		if (is_ws(peek(s)))
+
+		UnicodeChar c = peek(s);
+		if (is_eol(c) || is_ws(c))
 			s->word_len = s->consumed + 1;
 	}
 
@@ -469,6 +474,21 @@ static void scan_text(Scanner *s, const bool *vs)
 				continue;
 			}
 			set_result(s, STR_CEL);
+			return;
+		}
+
+		if (!vs[ERROR_SENTINEL] && vs[STR_CEL_INLINE] && c != '`') {
+			while (!eof(s) && !is_eol(peek(s))) {
+				if (is_ws(peek(s))) {
+					advance(s);
+					if (peek(s) == '#')
+						break;
+					continue;
+				}
+				advance(s);
+			}
+			mark_end(s);
+			set_result(s, STR_CEL_INLINE);
 			return;
 		}
 

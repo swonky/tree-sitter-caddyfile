@@ -1,4 +1,4 @@
-((cel_content) @injection.content
+((cel_expression) @injection.content
   (#set! injection.language "cel"))
 
 (heredoc

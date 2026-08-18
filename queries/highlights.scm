@@ -17,11 +17,22 @@
 	name: (_) @constant.macro
 )
 
-(keyword_import) @keyword
+(named_route_definition
+	name: (_) @constant.macro
+)
 
-["{" "}"] @punctuation.bracket
-["$" "*" "@" "<<"] @punctuation.special
+(keyword_import) @function.macro
+(keyword_invoke) @function.macro
+
+["(" ")" "{" "}"] @punctuation.bracket
+["&" "$" "*" "@" "<<"] @punctuation.special
 ["/"] @punctuation.delimiter
+
+
+(substitution
+	["{" "}"] @punctuation.special
+)
+
 
 (directive
 	keyword: (_) @function.call
@@ -37,6 +48,14 @@
 ;
 (matcher_definition
 	name: (_) @type.definition
+)
+
+(generic_matcher
+	matcher: (_) @type.builtin
+)
+
+(named_matcher
+	name: (_) @type
 )
 ;
 ; (named_matcher
