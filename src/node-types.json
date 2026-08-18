@@ -397,6 +397,10 @@
         {
           "type": "generic_matcher",
           "named": true
+        },
+        {
+          "type": "negative_matcher",
+          "named": true
         }
       ]
     }
@@ -487,6 +491,33 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "negative_matcher",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "generic_matcher",
+          "named": true
+        },
+        {
+          "type": "keyword_not",
+          "named": true
+        },
+        {
+          "type": "matcher_clause",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -880,6 +911,10 @@
   },
   {
     "type": "keyword_invoke",
+    "named": true
+  },
+  {
+    "type": "keyword_not",
     "named": true
   },
   {

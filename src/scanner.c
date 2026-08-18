@@ -52,6 +52,7 @@ enum TokenType {
 	KEY_CLIENT_IP,
 	KEY_EXPRESSION,
 	KEY_VARS,
+	KEY_NOT,
 
 	/*
 	 * symbolic operators
@@ -133,6 +134,7 @@ static const Keyword keywords[] = {
     KEYWORD("client_ip", KEY_CLIENT_IP),
     KEYWORD("expression", KEY_EXPRESSION),
     KEYWORD("vars", KEY_VARS),
+    KEYWORD("not", KEY_NOT),
 };
 
 /**

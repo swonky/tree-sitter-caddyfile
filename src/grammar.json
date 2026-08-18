@@ -857,11 +857,37 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "negative_matcher"
+        },
+        {
+          "type": "SYMBOL",
           "name": "generic_matcher"
         },
         {
           "type": "SYMBOL",
           "name": "expression_matcher"
+        }
+      ]
+    },
+    "negative_matcher": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "keyword_not"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "generic_matcher"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_matcher_block"
+            }
+          ]
         }
       ]
     },
@@ -1522,6 +1548,10 @@
     {
       "type": "SYMBOL",
       "name": "keyword_vars"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "keyword_not"
     },
     {
       "type": "SYMBOL",

@@ -41,6 +41,7 @@ export default grammar({
 		$.keyword_client_ip,
 		$.keyword_expression,
 		$.keyword_vars,
+		$.keyword_not,
 
 		// symbols
 		$._ext_sym_paren_o,
@@ -210,7 +211,10 @@ export default grammar({
 				choice($.matcher_clause, $._matcher_block, $.heredoc),
 			),
 
-		matcher_clause: $ => choice($.generic_matcher, $.expression_matcher),
+		matcher_clause: $ =>
+			choice($.negative_matcher, $.generic_matcher, $.expression_matcher),
+
+		negative_matcher: $ => seq($.keyword_not, choice($.generic_matcher, $._matcher_block)),
 
 		generic_matcher: $ =>
 			prec.left(
