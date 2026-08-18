@@ -557,7 +557,7 @@ void *tree_sitter_caddyfile_external_scanner_create(void)
 
 void tree_sitter_caddyfile_external_scanner_destroy(void *payload)
 {
-	free(payload);
+	ts_free(payload);
 }
 
 static inline void ser_u32_le(char *buffer, uint32_t value)
