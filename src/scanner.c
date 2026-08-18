@@ -51,6 +51,7 @@ enum TokenType {
 	KEY_PRIVATE_RANGES,
 	KEY_CLIENT_IP,
 	KEY_EXPRESSION,
+	KEY_VARS,
 
 	/*
 	 * symbolic operators
@@ -131,6 +132,7 @@ static const Keyword keywords[] = {
     KEYWORD("private_ranges", KEY_PRIVATE_RANGES),
     KEYWORD("client_ip", KEY_CLIENT_IP),
     KEYWORD("expression", KEY_EXPRESSION),
+    KEYWORD("vars", KEY_VARS),
 };
 
 /**

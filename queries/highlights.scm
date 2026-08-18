@@ -21,8 +21,14 @@
 	name: (_) @constant.macro
 )
 
-(keyword_import) @function.macro
-(keyword_invoke) @function.macro
+(keyword_import) @keyword.directive
+(keyword_invoke) @keyword.directive
+(keyword_vars) @keyword
+
+
+(variable_declaration
+	name: (_) @variable
+)
 
 ["(" ")" "{" "}"] @punctuation.bracket
 ["&" "$" "*" "@" "<<"] @punctuation.special
@@ -34,11 +40,7 @@
 )
 
 
-(directive
-	keyword: (_) @function.call
-)
-
-(subdirective
+(construction
 	keyword: (_) @function.call
 )
 
@@ -53,6 +55,8 @@
 (generic_matcher
 	matcher: (_) @type.builtin
 )
+; special matchers
+(keyword_expression) @type.builtin
 
 (named_matcher
 	name: (_) @type

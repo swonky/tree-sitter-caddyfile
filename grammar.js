@@ -40,6 +40,7 @@ export default grammar({
 		$.keyword_private_ranges,
 		$.keyword_client_ip,
 		$.keyword_expression,
+		$.keyword_vars,
 
 		// symbols
 		$._ext_sym_paren_o,
@@ -137,18 +138,19 @@ export default grammar({
 				$._sym_brace_c,
 			),
 
-		_directive_block: $ =>
-			seq(
-				$._sym_brace_o,
-				repeat1($._eol),
-				repeat(seq($.subdirective, repeat1($._eol))),
-				$._sym_brace_c,
-			),
 		_matcher_block: $ =>
 			seq(
 				$._sym_brace_o,
 				repeat1($._eol),
 				repeat(seq($.matcher_clause, repeat1($._eol))),
+				$._sym_brace_c,
+			),
+
+		_vars_block: $ =>
+			seq(
+				$._sym_brace_o,
+				repeat1($._eol),
+				repeat(seq($._vars_clause, repeat1($._eol))),
 				$._sym_brace_c,
 			),
 
@@ -158,7 +160,13 @@ export default grammar({
 		snippet_definition: $ => seq($._snippet_name, field('content', $._block)),
 
 		expression: $ =>
-			choice($.directive, $.matcher_definition, $.snippet_reference, $.invoke_statement),
+			choice(
+				$.construction,
+				$.matcher_definition,
+				$.snippet_reference,
+				$.invoke_statement,
+				$.variable_declaration,
+			),
 
 		_named_route_name: $ =>
 			seq(
@@ -167,6 +175,15 @@ export default grammar({
 				optional(field('name', $._bare_identifier)),
 				$._sym_paren_c,
 			),
+
+		variable_declaration: $ =>
+			seq(
+				$.keyword_vars,
+				optional($._matcher_field),
+				choice($._vars_clause, $._vars_block),
+			),
+
+		_vars_clause: $ => seq(field('name', $._bare_identifier), repeat1($._value_field)),
 
 		named_route_definition: $ => seq($._named_route_name, field('content', $._block)),
 
@@ -182,9 +199,7 @@ export default grammar({
 		matcher: $ => choice($.wildcard, $.named_matcher, $.path_matcher),
 		wildcard: $ => $._sym_asterisk,
 
-		directive: $ => seq($._clause, optional($._directive_block)),
-
-		subdirective: $ => $._clause,
+		construction: $ => seq($._clause, optional($._block)),
 
 		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
 
@@ -223,6 +238,7 @@ export default grammar({
 		_keyword_field: $ => field('keyword', $.identifier),
 		_matcher_field: $ => seq(field('matcher', $.matcher), repeat($._ws)),
 		_arguments_field: $ => seq(field('argument', $.argument), repeat($._ws)),
+		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
 
 		argument: $ =>
 			choice(

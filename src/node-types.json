@@ -34,7 +34,7 @@
     "named": true,
     "subtypes": [
       {
-        "type": "directive",
+        "type": "construction",
         "named": true
       },
       {
@@ -47,6 +47,10 @@
       },
       {
         "type": "snippet_reference",
+        "named": true
+      },
+      {
+        "type": "variable_declaration",
         "named": true
       }
     ]
@@ -112,7 +116,7 @@
     "fields": {}
   },
   {
-    "type": "directive",
+    "type": "construction",
     "named": true,
     "fields": {
       "argument": {
@@ -155,7 +159,7 @@
           "named": true
         },
         {
-          "type": "subdirective",
+          "type": "expression",
           "named": true
         }
       ]
@@ -688,42 +692,6 @@
     }
   },
   {
-    "type": "subdirective",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "argument",
-            "named": true
-          }
-        ]
-      },
-      "keyword": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "matcher": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "matcher",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "substitution",
     "named": true,
     "fields": {},
@@ -776,6 +744,56 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "variable_declaration",
+    "named": true,
+    "fields": {
+      "matcher": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "matcher",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "keyword_vars",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -866,6 +884,10 @@
   },
   {
     "type": "keyword_private_ranges",
+    "named": true
+  },
+  {
+    "type": "keyword_vars",
     "named": true
   },
   {
