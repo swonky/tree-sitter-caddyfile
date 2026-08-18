@@ -4,6 +4,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "dot_delimited",
+        "named": true
+      },
+      {
         "type": "embedded_content",
         "named": true
       },
@@ -160,6 +164,25 @@
         },
         {
           "type": "expression",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "dot_delimited",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "numeric",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]

@@ -33,6 +33,7 @@ enum TokenType {
 	STR_BARE,
 	STR_UPPER,
 	STR_NUM,
+	STR_NUM_DOT,
 	STR_CEL,
 	STR_CEL_INLINE,
 	STR_COMMENT,
@@ -528,16 +529,17 @@ static void scan_text(Scanner *s, const bool *vs)
 			break;
 		}
 
-		if (!is_num(c))
-			digits = false;
-
-		if (!is_upper(c))
-			upper = false;
-
 		enum TokenType token = get_token(c);
 		if (token != _UNSPECIFIED && vs[token]) {
 			break;
 		}
+
+		if (digits && !is_num(c)) {
+			digits = false;
+		}
+
+		if (upper && !is_upper(c))
+			upper = false;
 
 		advance(s);
 		mark_end(s);
@@ -557,6 +559,8 @@ static void scan_text(Scanner *s, const bool *vs)
 
 	if (upper && vs[STR_UPPER])
 		set_result(s, STR_UPPER);
+	else if (digits && vs[STR_NUM_DOT] && peek(s) == '.')
+		set_result(s, STR_NUM_DOT);
 	else if (digits && vs[STR_NUM])
 		set_result(s, STR_NUM);
 	else if (!vs[ERROR_SENTINEL] && vs[STR_CEL])

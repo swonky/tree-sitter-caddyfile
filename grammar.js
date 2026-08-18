@@ -26,6 +26,7 @@ export default grammar({
 		$._ext_str_bare,
 		$._ext_str_upper,
 		$._ext_str_num,
+		$._ext_str_num_dot,
 		$._ext_str_cel,
 		$._ext_str_cel_inline,
 		$._ext_str_comment,
@@ -103,6 +104,15 @@ export default grammar({
 		verb: $ => $._ext_str_upper,
 		numeric: $ => $._ext_str_num,
 
+		// dot_delimited: $ =>
+		// 	prec.right(
+		// 		seq(
+		// 			optional($._sym_period),
+		// 			repeat1(seq($._primitive, repeat1($._sym_period))),
+		// 			$._primitive,
+		// 		),
+		// 	),
+
 		substitution: $ => seq($._sym_brace_o, optional($.reference), $._sym_brace_c),
 
 		identifier: $ => choice($.templated_identifier, $._ext_str_bare),
@@ -128,6 +138,16 @@ export default grammar({
 					repeat1(
 						choice($.templated_identifier, $._sym_solidus, $._sym_at, $._sym_colon),
 					),
+					optional($._ws),
+				),
+			),
+
+		dot_delimited: $ =>
+			prec.right(
+				seq(
+					optional($._primitive),
+					$._sym_period,
+					repeat1(choice($._primitive, $._sym_period)),
 					optional($._ws),
 				),
 			),
@@ -221,6 +241,7 @@ export default grammar({
 			prec.left(
 				seq(
 					field('matcher', $.identifier),
+					optional($._ws),
 					repeat($._arguments_field),
 					optional($._matcher_block),
 				),
@@ -237,22 +258,31 @@ export default grammar({
 
 		_clause: $ =>
 			prec.left(
-				seq($._keyword_field, optional($._matcher_field), repeat($._arguments_field)),
+				seq(
+					$._keyword_field,
+					repeat($._ws),
+					optional(seq($._matcher_field, repeat($._ws))),
+					repeat($._arguments_field),
+				),
 			),
 
 		_keyword_field: $ => field('keyword', $.identifier),
-		_matcher_field: $ => seq(field('matcher', $.matcher), repeat($._ws)),
+		_matcher_field: $ => prec.left(seq(field('matcher', $.matcher), repeat($._ws))),
 		_arguments_field: $ => seq(field('argument', $.argument), repeat($._ws)),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
 
+		_primitive: $ => choice($.string, $.numeric),
+
 		argument: $ =>
-			choice(
-				$.embedded_content,
-				$.string,
-				$.numeric,
-				$.verb,
-				$.heredoc,
-				$.keyword_private_ranges,
+			prec.right(
+				choice(
+					$._primitive,
+					$.embedded_content,
+					$.verb,
+					$.heredoc,
+					$.keyword_private_ranges,
+					$.dot_delimited,
+				),
 			),
 
 		heredoc: $ => seq($._sym_heredoc, $.heredoc_tag, $.heredoc_content, $.heredoc_suffix),
