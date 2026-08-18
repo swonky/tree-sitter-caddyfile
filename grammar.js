@@ -49,6 +49,8 @@ export default grammar({
 		$._ext_sym_paren_c,
 		$._ext_sym_brace_o,
 		$._ext_sym_brace_c,
+		$._ext_sym_bracket_o,
+		$._ext_sym_bracket_c,
 		$._ext_sym_colon,
 		$._ext_sym_solidus,
 		$._ext_sym_hyphen,
@@ -91,7 +93,7 @@ export default grammar({
 		_sd: $ => seq(repeat1($._d), optional(seq($._eol, repeat($._d)))),
 		_d: $ => choice($._ws, $._sym_comma),
 
-		_site_field: $ => field('site', $.identifier),
+		_site_field: $ => field('site', $.address),
 
 		_word: $ => $._ext_str_word,
 
@@ -132,23 +134,65 @@ export default grammar({
 		environment_variable: $ =>
 			seq($._sym_dollar, optional(field('reference', $.identifier))),
 
-		url: $ =>
-			prec.right(
-				seq(
-					repeat1(
-						choice($.templated_identifier, $._sym_solidus, $._sym_at, $._sym_colon),
-					),
-					optional($._ws),
+		// url: $ =>
+		// 	prec.right(
+		// 		seq(
+		// 			optional($._protocol_field),
+		// 			repeat1(
+		// 				choice(
+		// 					$._primitive,
+		// 					$._sym_period,
+		// 					$._sym_solidus,
+		// 					$._sym_at,
+		// 					$._sym_colon,
+		// 				),
+		// 			),
+		// 			optional($._ws),
+		// 		),
+		// 	),
+
+		dotted_address: $ =>
+			repeat1(field('segment', choice($._primitive, $._sym_period, $.wildcard))),
+
+		_scheme: $ => prec(1, seq($.string, $._sym_colon, $._sym_solidus, $._sym_solidus)),
+		_scheme_field: $ => field('scheme', $._scheme),
+
+		// _scheme_field: $ =>
+		// 	field('scheme', seq($.string, $._sym_colon, $._sym_solidus, $._sym_solidus)),
+
+		_port_field: $ => field('port', seq($._sym_colon, $._primitive)),
+		_path_field: $ => field('path', seq($._sym_solidus, $.string)),
+		_prefix_length_field: $ => field('prefix_length', seq($._sym_solidus, $.numeric)),
+		_addr_suffix: $ => choice($._path_field, $._prefix_length_field),
+		_ipv4_octet: $ => field('octet', $.numeric),
+		_domain_segment: $ => field('segment', choice($.string, $.wildcard)),
+
+		ipv6: $ =>
+			seq(
+				$._sym_bracket_o,
+				repeat(choice(field('hextet', $._primitive), $._sym_colon)),
+				$._sym_bracket_c,
+			),
+
+		_host_field: $ => field('host', choice($.ipv6, $.dotted_address)),
+
+		_address: $ =>
+			prec.left(
+				choice(
+					seq($._host_field, optional($._port_field), optional($._addr_suffix)),
+					seq($._port_field, optional($._addr_suffix)),
+					$._addr_suffix,
 				),
 			),
 
-		dot_delimited: $ =>
-			prec.right(
+		address: $ =>
+			choice(
+				$._address,
 				seq(
-					optional($._primitive),
-					$._sym_period,
-					repeat1(choice($._primitive, $._sym_period)),
-					optional($._ws),
+					$._scheme_field,
+					optional($._host_field),
+					optional($._port_field),
+					optional($._addr_suffix),
 				),
 			),
 
@@ -271,18 +315,15 @@ export default grammar({
 		_arguments_field: $ => seq(field('argument', $.argument), repeat($._ws)),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
 
-		_primitive: $ => choice($.string, $.numeric),
+		_primitive: $ => prec.right(choice($.string, $.numeric)),
 
 		argument: $ =>
-			prec.right(
-				choice(
-					$._primitive,
-					$.embedded_content,
-					$.verb,
-					$.heredoc,
-					$.keyword_private_ranges,
-					$.dot_delimited,
-				),
+			choice(
+				$._primitive,
+				$.embedded_content,
+				$.verb,
+				$.heredoc,
+				$.keyword_private_ranges,
 			),
 
 		heredoc: $ => seq($._sym_heredoc, $.heredoc_tag, $.heredoc_content, $.heredoc_suffix),
@@ -321,6 +362,8 @@ export default grammar({
 		_sym_paren_c: $ => alias($._ext_sym_paren_c, ')'),
 		_sym_brace_o: $ => alias($._ext_sym_brace_o, '{'),
 		_sym_brace_c: $ => alias($._ext_sym_brace_c, '}'),
+		_sym_bracket_o: $ => alias($._ext_sym_bracket_o, '['),
+		_sym_bracket_c: $ => alias($._ext_sym_bracket_c, ']'),
 		_sym_colon: $ => alias($._ext_sym_colon, ':'),
 		_sym_solidus: $ => alias($._ext_sym_solidus, '/'),
 		_sym_hyphen: $ => alias($._ext_sym_hyphen, '-'),

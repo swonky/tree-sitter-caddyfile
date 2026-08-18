@@ -33,7 +33,7 @@
 
 ["(" ")" "{" "}"] @punctuation.bracket
 ["&" "$" "*" "@" "<<"] @punctuation.special
-["/" "."] @punctuation.delimiter
+["/" "." ":"] @punctuation.delimiter
 
 
 (substitution

@@ -4,10 +4,6 @@
     "named": true,
     "subtypes": [
       {
-        "type": "dot_delimited",
-        "named": true
-      },
-      {
         "type": "embedded_content",
         "named": true
       },
@@ -72,6 +68,90 @@
         "named": true
       }
     ]
+  },
+  {
+    "type": "address",
+    "named": true,
+    "fields": {
+      "host": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "dotted_address",
+            "named": true
+          },
+          {
+            "type": "ipv6",
+            "named": true
+          }
+        ]
+      },
+      "path": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "port": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "numeric",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "prefix_length": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": "numeric",
+            "named": true
+          }
+        ]
+      },
+      "scheme": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "/",
+            "named": false
+          },
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "caddyfile",
@@ -170,22 +250,31 @@
     }
   },
   {
-    "type": "dot_delimited",
+    "type": "dotted_address",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "numeric",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        }
-      ]
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": ".",
+            "named": false
+          },
+          {
+            "type": "numeric",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "wildcard",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -380,6 +469,26 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "ipv6",
+    "named": true,
+    "fields": {
+      "hextet": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "numeric",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -639,7 +748,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "address",
             "named": true
           }
         ]
@@ -901,11 +1010,23 @@
     "named": false
   },
   {
+    "type": ":",
+    "named": false
+  },
+  {
     "type": "<<",
     "named": false
   },
   {
     "type": "@",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {
