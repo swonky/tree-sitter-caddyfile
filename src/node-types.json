@@ -716,6 +716,10 @@
           {
             "type": "numeric",
             "named": true
+          },
+          {
+            "type": "range",
+            "named": true
           }
         ]
       },
@@ -739,6 +743,36 @@
             "type": "identifier",
             "named": true
           },
+          {
+            "type": "numeric",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "range",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "numeric",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": false,
+        "required": false,
+        "types": [
           {
             "type": "numeric",
             "named": true

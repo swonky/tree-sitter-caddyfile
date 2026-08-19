@@ -133,7 +133,19 @@ export default grammar({
 
 		// parameter: $ => repeat1(choice($.string, )),
 		_index: $ =>
-			field('index', seq($._sym_bracket_o, optional($.numeric), $._sym_bracket_c)),
+			field(
+				'index',
+				seq($._sym_bracket_o, optional(choice($.numeric, $.range)), $._sym_bracket_c),
+			),
+
+		range: $ =>
+			prec.left(
+				seq(
+					optional(field('left', $.numeric)),
+					$._sym_colon,
+					optional(field('right', $.numeric)),
+				),
+			),
 
 		placeholder: $ =>
 			field('reference', repeat1(choice($.identifier, $._sym_period, $._index))),
