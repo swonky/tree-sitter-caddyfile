@@ -6,6 +6,8 @@
 
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
 
+#define BETWEEN(x, lo, hi) {x >= lo && y <= hi}
+
 enum {
 	U32LEN = sizeof(uint32_t),
 	HDRLEN = sizeof(uint8_t) + U32LEN,
@@ -153,10 +155,14 @@ static const Keyword keywords[] = {
  * @param len Character length.
  * @return Matching keyword token, or NULL
  */
-static const Keyword *find_keyword(const UnicodeChar *text, size_t len)
+static const Keyword *find_keyword(
+    const UnicodeChar *text, size_t len, const bool *vs)
 {
 	for (size_t i = 0; i < sizeof(keywords) / sizeof(keywords[0]); i++) {
 		const Keyword *kw = &keywords[i];
+
+		if (!vs[kw->token])
+			continue;
 
 		if (kw->len != len)
 			continue;
@@ -176,8 +182,6 @@ static const Keyword *find_keyword(const UnicodeChar *text, size_t len)
 	return NULL;
 }
 
-static const UnicodeChar import_string[] = {'i', 'm', 'p', 'o', 'r', 't'};
-
 static inline enum TokenType get_token(UnicodeChar c)
 {
 	if (c >= 128)
@@ -186,6 +190,7 @@ static inline enum TokenType get_token(UnicodeChar c)
 }
 
 typedef bool (*Asserter)(UnicodeChar);
+
 typedef struct {
 	/* persistent fields */
 	uint8_t tag_len;
@@ -193,14 +198,15 @@ typedef struct {
 	UnicodeChar previous;
 	/* transient fields */
 	TSLexer *lexer;
+	const bool *vs;
 	unsigned int consumed;
 	uint8_t word_len;
 	UnicodeChar word[TAGLEN];
 } Scanner;
 
-static enum TokenType check_keyword(Scanner *scanner)
+static enum TokenType check_keyword(Scanner *s)
 {
-	const Keyword *kw = find_keyword(scanner->word, scanner->word_len);
+	const Keyword *kw = find_keyword(s->word, s->word_len, s->vs);
 	if (kw == NULL)
 		return _UNSPECIFIED;
 	return kw->token;
@@ -338,14 +344,21 @@ static inline void advance_rol(Scanner *s)
 		advance(s);
 }
 
-static bool scan_heredoc(Scanner *s, const bool *vs)
+static inline bool is_valid(Scanner *s, enum TokenType token)
 {
-	if (vs[ERROR_SENTINEL])
+	return s->vs != NULL && s->vs[token];
+}
+
+static inline bool is_error(Scanner *s) { return is_valid(s, ERROR_SENTINEL); }
+
+static bool scan_heredoc(Scanner *s)
+{
+	if (is_error(s))
 		return false;
 
 	uint8_t n;
 
-	if (vs[HEREDOC_CONTENT] && s->tag_len != 0) {
+	if (is_valid(s, HEREDOC_CONTENT) && s->tag_len != 0) {
 		while (!eof(s)) {
 			advance_while(s, is_ws);
 			mark_end(s);
@@ -371,7 +384,7 @@ static bool scan_heredoc(Scanner *s, const bool *vs)
 		return true;
 	}
 
-	if (vs[HEREDOC_SUFFIX]) {
+	if (is_valid(s, HEREDOC_SUFFIX)) {
 		for (int i = 0; i < s->tag_len; i++)
 			advance(s);
 		if (s->tag_len != s->consumed) {
@@ -384,7 +397,7 @@ static bool scan_heredoc(Scanner *s, const bool *vs)
 		return true;
 	}
 
-	if (vs[HEREDOC_OPERATOR]) {
+	if (is_valid(s, HEREDOC_OPERATOR)) {
 		if (peek(s) != '<')
 			return false;
 		advance(s);
@@ -398,7 +411,7 @@ static bool scan_heredoc(Scanner *s, const bool *vs)
 		return true;
 	}
 
-	if (vs[HEREDOC_TAG]) {
+	if (is_valid(s, HEREDOC_TAG)) {
 		while (!eof(s)) {
 			UnicodeChar c = peek(s);
 			if (is_ws(c) || is_eol(c) || c == '#')
@@ -418,11 +431,11 @@ static bool scan_heredoc(Scanner *s, const bool *vs)
 	return false;
 }
 
-static void scan_text(Scanner *s, const bool *vs)
+static void scan_text(Scanner *s)
 {
 	UnicodeChar prefix = previous(s);
 
-	if (vs[WS] && is_ws(peek(s))) {
+	if (is_valid(s, WS) && is_ws(peek(s))) {
 		advance_while(s, is_ws);
 		set_result(s, WS);
 		mark_end(s);
@@ -440,7 +453,7 @@ static void scan_text(Scanner *s, const bool *vs)
 
 	UnicodeChar c = peek(s);
 
-	if (vs[SYM_BLOCK_START] && c == '{') {
+	if (is_valid(s, SYM_BLOCK_START) && c == '{') {
 		advance(s);
 		mark_end(s);
 		advance_while(s, is_ws);
@@ -449,7 +462,7 @@ static void scan_text(Scanner *s, const bool *vs)
 			set_result(s, SYM_BLOCK_START);
 			return;
 		}
-		if (vs[SYM_BRACE_O]) {
+		if (is_valid(s, SYM_BRACE_O)) {
 			set_result(s, SYM_BRACE_O);
 			return;
 		}
@@ -457,7 +470,7 @@ static void scan_text(Scanner *s, const bool *vs)
 
 	enum TokenType token = get_token(c);
 
-	if (token != _UNSPECIFIED && vs[token]) {
+	if (token != _UNSPECIFIED && is_valid(s, token)) {
 		set_result(s, token);
 		advance(s);
 		mark_end(s);
@@ -481,7 +494,7 @@ static void scan_text(Scanner *s, const bool *vs)
 
 		UnicodeChar c = peek(s);
 
-		if (vs[STR_COMMENT]) {
+		if (is_valid(s, STR_COMMENT)) {
 			mark_end(s);
 			if (!is_eol(c)) {
 				advance(s);
@@ -497,7 +510,7 @@ static void scan_text(Scanner *s, const bool *vs)
 			continue;
 		}
 
-		if (vs[STR_CEL] && prefix == '`') {
+		if (is_valid(s, STR_CEL) && prefix == '`') {
 			mark_end(s);
 			if (c != '`') {
 				advance(s);
@@ -507,7 +520,8 @@ static void scan_text(Scanner *s, const bool *vs)
 			return;
 		}
 
-		if (!vs[ERROR_SENTINEL] && vs[STR_CEL_INLINE] && c != '`') {
+		if (!is_valid(s, ERROR_SENTINEL) &&
+		    is_valid(s, STR_CEL_INLINE) && c != '`') {
 			while (!eof(s) && !is_eol(peek(s))) {
 				if (is_ws(peek(s))) {
 					advance(s);
@@ -525,7 +539,8 @@ static void scan_text(Scanner *s, const bool *vs)
 		if (is_eol(c) || is_ws(c)) {
 			if (kw) {
 				enum TokenType token = check_keyword(s);
-				if (token != _UNSPECIFIED && vs[token]) {
+				if (token != _UNSPECIFIED &&
+				    is_valid(s, token)) {
 					mark_end(s);
 					set_result(s, token);
 					return;
@@ -536,7 +551,7 @@ static void scan_text(Scanner *s, const bool *vs)
 		}
 
 		enum TokenType token = get_token(c);
-		if (token != _UNSPECIFIED && vs[token]) {
+		if (token != _UNSPECIFIED && is_valid(s, token)) {
 			break;
 		}
 
@@ -557,21 +572,22 @@ static void scan_text(Scanner *s, const bool *vs)
 	if (s->consumed == 0)
 		return;
 
-	if (vs[STR_WORD] && !vs[STR_CEL] && (eof(s) || peek(s) == '{')) {
+	if (is_valid(s, STR_WORD) && !is_valid(s, STR_CEL) &&
+	    (eof(s) || peek(s) == '{')) {
 		set_result(s, STR_WORD);
 		mark_end(s);
 		return;
 	}
 
-	if (upper && vs[STR_UPPER])
+	if (upper && is_valid(s, STR_UPPER))
 		set_result(s, STR_UPPER);
-	else if (digits && vs[STR_NUM_DOT] && peek(s) == '.')
+	else if (digits && is_valid(s, STR_NUM_DOT) && peek(s) == '.')
 		set_result(s, STR_NUM_DOT);
-	else if (digits && vs[STR_NUM])
+	else if (digits && is_valid(s, STR_NUM))
 		set_result(s, STR_NUM);
-	else if (!vs[ERROR_SENTINEL] && vs[STR_CEL])
+	else if (!is_valid(s, ERROR_SENTINEL) && is_valid(s, STR_CEL))
 		set_result(s, STR_CEL);
-	else if (vs[STR_BARE] && (get_column(s) == 0 || prefix != '}'))
+	else if (is_valid(s, STR_BARE) && (get_column(s) == 0 || prefix != '}'))
 		set_result(s, STR_BARE);
 	else
 		set_result(s, STR_WORD);
@@ -680,10 +696,11 @@ bool tree_sitter_caddyfile_external_scanner_scan(
 {
 	Scanner *scanner = payload;
 	scanner->lexer = lexer;
+	scanner->vs = valid_symbols;
 
-	if (scan_heredoc(scanner, valid_symbols))
+	if (scan_heredoc(scanner))
 		return scanner->consumed != 0;
 
-	scan_text(scanner, valid_symbols);
+	scan_text(scanner);
 	return scanner->consumed != 0;
 }

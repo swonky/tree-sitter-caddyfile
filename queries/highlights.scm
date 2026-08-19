@@ -1,6 +1,3 @@
-; (environment_variable
-; 	reference: (identifier) @keyword.directive
-; )
 (heredoc_tag) @label
 (heredoc_suffix) @label
 
@@ -62,7 +59,11 @@
 (named_matcher
 	name: (_) @type
 )
-;
+
+(environment_variable
+	reference: (_) @constant.macro
+)
+
 ; (named_matcher
 ; 	name: (_) @type
 ; )
