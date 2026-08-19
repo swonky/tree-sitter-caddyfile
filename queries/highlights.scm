@@ -27,8 +27,8 @@
 (keyword_not) @keyword.operator
 
 
-(variable_declaration
-	name: (_) @variable
+(assignment
+	key: (_) @variable
 )
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket

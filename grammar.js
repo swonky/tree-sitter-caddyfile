@@ -234,7 +234,7 @@ export default grammar({
 			seq(
 				$._sym_block_start,
 				repeat1($._eol),
-				repeat(seq($._vars_clause, repeat1($._eol))),
+				repeat(seq($.assignment, repeat1($._eol))),
 				$._sym_brace_c,
 			),
 
@@ -264,10 +264,10 @@ export default grammar({
 			seq(
 				$.keyword_vars,
 				optional($._matcher_field),
-				choice($._vars_clause, $._vars_block),
+				choice($.assignment, $._vars_block),
 			),
 
-		_vars_clause: $ => seq(field('name', $._bare_identifier), repeat1($._value_field)),
+		assignment: $ => seq(field('key', $._bare_identifier), repeat1($._value_field)),
 
 		named_route_definition: $ => seq($._named_route_name, field('content', $._block)),
 
@@ -366,6 +366,7 @@ export default grammar({
 					field('snippet', $._bare_identifier),
 					repeat($._ws),
 					repeat($._arguments_field),
+					optional($._block),
 				),
 			),
 

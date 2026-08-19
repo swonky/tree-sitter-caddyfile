@@ -154,6 +154,32 @@
     }
   },
   {
+    "type": "assignment",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "caddyfile",
     "named": true,
     "root": true,
@@ -893,9 +919,17 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "expression",
+          "named": true
+        },
         {
           "type": "keyword_import",
           "named": true
@@ -986,32 +1020,16 @@
             "named": true
           }
         ]
-      },
-      "name": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "value": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "argument",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "assignment",
+          "named": true
+        },
         {
           "type": "comment",
           "named": true

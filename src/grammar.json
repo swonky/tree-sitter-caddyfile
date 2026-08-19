@@ -863,7 +863,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "_vars_clause"
+                "name": "assignment"
               },
               {
                 "type": "REPEAT1",
@@ -1009,7 +1009,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_vars_clause"
+              "name": "assignment"
             },
             {
               "type": "SYMBOL",
@@ -1019,12 +1019,12 @@
         }
       ]
     },
-    "_vars_clause": {
+    "assignment": {
       "type": "SEQ",
       "members": [
         {
           "type": "FIELD",
-          "name": "name",
+          "name": "key",
           "content": {
             "type": "SYMBOL",
             "name": "_bare_identifier"
@@ -1613,6 +1613,18 @@
               "type": "SYMBOL",
               "name": "_arguments_field"
             }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_block"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
