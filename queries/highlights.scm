@@ -21,6 +21,7 @@
 (keyword_import) @keyword.directive
 (keyword_invoke) @keyword.directive
 (keyword_vars) @keyword
+(keyword_args) @variable.builtin
 (keyword_not) @keyword.operator
 
 
@@ -63,7 +64,6 @@
 (environment_variable
 	reference: (_) @constant.macro
 )
-
 ; (named_matcher
 ; 	name: (_) @type
 ; )

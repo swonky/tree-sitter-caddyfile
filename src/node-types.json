@@ -64,6 +64,10 @@
         "named": true
       },
       {
+        "type": "parameter",
+        "named": true
+      },
+      {
         "type": "placeholder",
         "named": true
       }
@@ -684,6 +688,44 @@
     "fields": {}
   },
   {
+    "type": "parameter",
+    "named": true,
+    "fields": {
+      "index": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "numeric",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "keyword_args",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "path",
     "named": true,
     "fields": {
@@ -727,28 +769,6 @@
     "type": "placeholder",
     "named": true,
     "fields": {
-      "index": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "]",
-            "named": false
-          },
-          {
-            "type": "numeric",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          }
-        ]
-      },
       "reference": {
         "multiple": true,
         "required": true,
@@ -758,23 +778,7 @@
             "named": false
           },
           {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "]",
-            "named": false
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "numeric",
-            "named": true
-          },
-          {
-            "type": "range",
             "named": true
           }
         ]
@@ -1125,6 +1129,10 @@
   },
   {
     "type": "heredoc_tag",
+    "named": true
+  },
+  {
+    "type": "keyword_args",
     "named": true
   },
   {

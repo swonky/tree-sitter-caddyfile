@@ -312,6 +312,10 @@
         {
           "type": "SYMBOL",
           "name": "placeholder"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parameter"
         }
       ]
     },
@@ -398,6 +402,27 @@
         ]
       }
     },
+    "parameter": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "keyword_args"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_index"
+        }
+      ]
+    },
     "placeholder": {
       "type": "FIELD",
       "name": "reference",
@@ -413,10 +438,6 @@
             {
               "type": "SYMBOL",
               "name": "_sym_period"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_index"
             }
           ]
         }

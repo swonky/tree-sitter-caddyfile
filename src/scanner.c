@@ -6,8 +6,6 @@
 
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
 
-#define BETWEEN(x, lo, hi) {x >= lo && y <= hi}
-
 enum {
 	U32LEN = sizeof(uint32_t),
 	HDRLEN = sizeof(uint8_t) + U32LEN,
@@ -148,44 +146,11 @@ static const Keyword keywords[] = {
     KEYWORD("not", KEY_NOT),
 };
 
-/**
- * Checks @ref keywords entries for a given string.
- *
- * @param *text Unicode character array.
- * @param len Character length.
- * @return Matching keyword token, or NULL
- */
-static const Keyword *find_keyword(
-    const UnicodeChar *text, size_t len, const bool *vs)
-{
-	for (size_t i = 0; i < sizeof(keywords) / sizeof(keywords[0]); i++) {
-		const Keyword *kw = &keywords[i];
-
-		if (!vs[kw->token])
-			continue;
-
-		if (kw->len != len)
-			continue;
-
-		bool match = true;
-
-		for (size_t j = 0; j < len; j++)
-			if (text[j] != (UnicodeChar)kw->text[j]) {
-				match = false;
-				break;
-			}
-
-		if (match)
-			return kw;
-	}
-
-	return NULL;
-}
-
 static inline enum TokenType get_token(UnicodeChar c)
 {
 	if (c >= 128)
 		return _UNSPECIFIED;
+
 	return sym_map[c];
 }
 
@@ -196,6 +161,7 @@ typedef struct {
 	uint8_t tag_len;
 	UnicodeChar tag[TAGLEN];
 	UnicodeChar previous;
+
 	/* transient fields */
 	TSLexer *lexer;
 	const bool *vs;
@@ -204,20 +170,38 @@ typedef struct {
 	UnicodeChar word[TAGLEN];
 } Scanner;
 
+static inline bool is_valid(Scanner *s, enum TokenType token)
+{
+	return s->vs != NULL && s->vs[token];
+}
+
+static bool word_equals(Scanner *s, const Keyword *kw)
+{
+	if (s->word_len != kw->len)
+		return false;
+
+	for (size_t i = 0; i < s->word_len; i++)
+		if (s->word[i] != (UnicodeChar)kw->text[i])
+			return false;
+
+	return true;
+}
+
 static enum TokenType check_keyword(Scanner *s)
 {
-	const Keyword *kw = find_keyword(s->word, s->word_len, s->vs);
-	if (kw == NULL)
-		return _UNSPECIFIED;
-	return kw->token;
+	for (size_t i = 0; i < sizeof(keywords) / sizeof(keywords[0]); i++) {
+		const Keyword *kw = &keywords[i];
+
+		if (is_valid(s, kw->token) && word_equals(s, kw))
+			return kw->token;
+	}
+
+	return _UNSPECIFIED;
 }
 
 static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
-
 static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
-
 static inline UnicodeChar previous(Scanner *s) { return s->previous; }
-
 static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
 
 static inline void set_result(Scanner *s, enum TokenType token)
@@ -230,10 +214,14 @@ static inline uint32_t get_column(Scanner *s)
 	return s->lexer->get_column(s->lexer);
 }
 
-static inline bool is_num(UnicodeChar c) { return (c >= '0' && c <= '9'); }
-static inline bool is_posnum(UnicodeChar c) { return (c >= '1' && c <= '9'); }
-static inline bool is_upper(UnicodeChar c) { return (c >= 'A' && c <= 'Z'); }
-static inline bool is_lower(UnicodeChar c) { return (c >= 'a' && c <= 'z'); }
+static inline bool between(UnicodeChar x, UnicodeChar lo, UnicodeChar hi)
+{
+	return (x >= lo && x <= hi);
+}
+static inline bool is_num(UnicodeChar c) { return between(c, '0', '9'); }
+static inline bool is_posnum(UnicodeChar c) { return between(c, '1', '9'); }
+static inline bool is_upper(UnicodeChar c) { return between(c, 'A', 'Z'); }
+static inline bool is_lower(UnicodeChar c) { return between(c, 'a', 'z'); }
 
 static inline bool is_alpha(UnicodeChar c)
 {
@@ -297,7 +285,7 @@ static inline void advance(Scanner *s)
 			s->word[s->consumed] = s->previous;
 
 		UnicodeChar c = peek(s);
-		if (is_eol(c) || is_ws(c))
+		if (!is_alpha(c) && c != '_')
 			s->word_len = s->consumed + 1;
 	}
 
@@ -343,12 +331,6 @@ static inline void advance_rol(Scanner *s)
 	if (previous(s) == '\r' && !eof(s) && peek(s) == '\n')
 		advance(s);
 }
-
-static inline bool is_valid(Scanner *s, enum TokenType token)
-{
-	return s->vs != NULL && s->vs[token];
-}
-
 static inline bool is_error(Scanner *s) { return is_valid(s, ERROR_SENTINEL); }
 
 static bool scan_heredoc(Scanner *s)
@@ -539,8 +521,7 @@ static void scan_text(Scanner *s)
 		if (is_eol(c) || is_ws(c)) {
 			if (kw) {
 				enum TokenType token = check_keyword(s);
-				if (token != _UNSPECIFIED &&
-				    is_valid(s, token)) {
+				if (token != _UNSPECIFIED) {
 					mark_end(s);
 					set_result(s, token);
 					return;
@@ -552,6 +533,15 @@ static void scan_text(Scanner *s)
 
 		enum TokenType token = get_token(c);
 		if (token != _UNSPECIFIED && is_valid(s, token)) {
+			if (kw) {
+				enum TokenType token = check_keyword(s);
+				if (token != _UNSPECIFIED) {
+					mark_end(s);
+					set_result(s, token);
+					return;
+				}
+				kw = false;
+			}
 			break;
 		}
 

@@ -129,7 +129,7 @@ export default grammar({
 		_tmpl_identifier_fragment: $ =>
 			field('fragment', choice($._nested_identifier, $.substitution)),
 
-		reference: $ => choice($.environment_variable, $.placeholder),
+		reference: $ => choice($.environment_variable, $.placeholder, $.parameter),
 
 		// parameter: $ => repeat1(choice($.string, )),
 		_index: $ =>
@@ -147,8 +147,8 @@ export default grammar({
 				),
 			),
 
-		placeholder: $ =>
-			field('reference', repeat1(choice($.identifier, $._sym_period, $._index))),
+		parameter: $ => seq(optional($.keyword_args), $._index),
+		placeholder: $ => field('reference', repeat1(choice($.identifier, $._sym_period))),
 		environment_variable: $ =>
 			seq($._sym_dollar, optional(field('reference', $.identifier))),
 
