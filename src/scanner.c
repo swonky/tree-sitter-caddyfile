@@ -54,6 +54,8 @@ enum TokenType {
 	KEY_EXPRESSION,
 	KEY_VARS,
 	KEY_ARGS,
+	KEY_ENV,
+	KEY_FILE,
 	KEY_NOT,
 
 	/*
@@ -144,6 +146,8 @@ static const Keyword keywords[] = {
     KEYWORD("vars", KEY_VARS),
     KEYWORD("args", KEY_ARGS),
     KEYWORD("not", KEY_NOT),
+    KEYWORD("env", KEY_ENV),
+    KEYWORD("file", KEY_FILE),
 };
 
 static inline enum TokenType get_token(UnicodeChar c)

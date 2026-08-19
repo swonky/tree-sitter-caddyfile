@@ -25,6 +25,7 @@
 (keyword_not) @keyword.operator
 
 
+
 (assignment
 	key: (_) @variable
 )
@@ -33,6 +34,15 @@
 ["&" "$" "*" "@" "<<"] @punctuation.special
 ["/" "." ":"] @punctuation.delimiter
 
+(path
+	"/" @string.special.path
+)
+
+(path
+	segment: (_) @string.special.path
+)
+
+; (address) @string.special.url
 
 (substitution
 	["{" "}"] @punctuation.special

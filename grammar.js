@@ -43,6 +43,8 @@ export default grammar({
 		$.keyword_expression,
 		$.keyword_vars,
 		$.keyword_args,
+		$.keyword_env,
+		$.keyword_file,
 		$.keyword_not,
 
 		// symbols
@@ -146,9 +148,44 @@ export default grammar({
 					optional(field('right', $.numeric)),
 				),
 			),
+		placeholder: $ =>
+			choice(
+				$._placeholder_shorthand,
+				$.placeholder_env,
+				$.placeholder_file,
+				$._placeholder_namespaced,
+			),
+
+		placeholder_env: $ =>
+			seq(
+				optional($._sym_period),
+				field('module', $.keyword_env),
+				$._sym_period,
+				optional(field('reference', $.identifier)),
+			),
+
+		placeholder_file: $ =>
+			seq(
+				optional($._sym_period),
+				field('module', $.keyword_file),
+				$._sym_period,
+				optional(field('path', alias($._path, $.path))),
+			),
+
+		_placeholder_shorthand: $ => field('member', $.identifier),
+		_placeholder_namespaced: $ =>
+			seq(
+				optional($._sym_period),
+				field('module', $.identifier),
+				$._sym_period,
+				field('member', $.identifier),
+				repeat(seq($._sym_period, field('member', $.identifier))),
+			),
+
+		_path: $ => repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
 
 		parameter: $ => seq(optional($.keyword_args), $._index),
-		placeholder: $ => field('reference', repeat1(choice($.identifier, $._sym_period))),
+		// placeholder: $ => field('reference', repeat1(choice($.identifier, $._sym_period))),
 		environment_variable: $ =>
 			seq($._sym_dollar, optional(field('reference', $.identifier))),
 
