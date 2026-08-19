@@ -31,7 +31,7 @@
 	name: (_) @variable
 )
 
-["(" ")" "{" "}"] @punctuation.bracket
+["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 ["&" "$" "*" "@" "<<"] @punctuation.special
 ["/" "." ":"] @punctuation.delimiter
 

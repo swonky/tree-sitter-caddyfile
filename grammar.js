@@ -42,6 +42,7 @@ export default grammar({
 		$.keyword_client_ip,
 		$.keyword_expression,
 		$.keyword_vars,
+		$.keyword_args,
 		$.keyword_not,
 
 		// symbols
@@ -130,7 +131,12 @@ export default grammar({
 
 		reference: $ => choice($.environment_variable, $.placeholder),
 
-		placeholder: $ => field('reference', repeat1(choice($.identifier, $._sym_period))),
+		// parameter: $ => repeat1(choice($.string, )),
+		_index: $ =>
+			field('index', seq($._sym_bracket_o, optional($.numeric), $._sym_bracket_c)),
+
+		placeholder: $ =>
+			field('reference', repeat1(choice($.identifier, $._sym_period, $._index))),
 		environment_variable: $ =>
 			seq($._sym_dollar, optional(field('reference', $.identifier))),
 

@@ -701,6 +701,24 @@
     "type": "placeholder",
     "named": true,
     "fields": {
+      "index": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "numeric",
+            "named": true
+          }
+        ]
+      },
       "reference": {
         "multiple": true,
         "required": true,
@@ -710,7 +728,19 @@
             "named": false
           },
           {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "numeric",
             "named": true
           }
         ]

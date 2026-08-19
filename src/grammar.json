@@ -315,6 +315,35 @@
         }
       ]
     },
+    "_index": {
+      "type": "FIELD",
+      "name": "index",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_sym_bracket_o"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "numeric"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_sym_bracket_c"
+          }
+        ]
+      }
+    },
     "placeholder": {
       "type": "FIELD",
       "name": "reference",
@@ -330,6 +359,10 @@
             {
               "type": "SYMBOL",
               "name": "_sym_period"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_index"
             }
           ]
         }
@@ -1899,6 +1932,10 @@
     {
       "type": "SYMBOL",
       "name": "keyword_vars"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "keyword_args"
     },
     {
       "type": "SYMBOL",
