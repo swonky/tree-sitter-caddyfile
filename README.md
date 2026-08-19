@@ -33,3 +33,8 @@ The grammar supports the following Caddyfile language syntax structures:
 - **Language injection** incl. cel expressions and heredocs.
 
 # TODO
+- [ ] Durations
+- [ ] Decimals
+- [ ] Address/path/CIDR capture groups in directive args
+- [ ] Folds
+- [ ] !-prefix
