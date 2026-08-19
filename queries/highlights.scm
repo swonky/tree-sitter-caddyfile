@@ -8,21 +8,24 @@
 ; (comment) @comment 
 (cel_expression) @string.special
 (verb) @string.special
-(numeric) @number
+(integer) @number
+(decimal) @number.float
 (identifier) @variable
 (snippet_definition
 	name: (_) @constant.macro
 )
 
+(ipv4) @number.float
+
 (named_route_definition
 	name: (_) @constant.macro
 )
 
-(keyword_import) @keyword.directive
-(keyword_invoke) @keyword.directive
-(keyword_vars) @keyword
-(keyword_args) @variable.builtin
-(keyword_not) @keyword.operator
+"import" @keyword.directive
+"invoke" @keyword.directive
+"vars" @keyword
+"args" @variable.builtin
+"not" @keyword.operator
 
 
 
@@ -65,7 +68,6 @@
 	matcher: (_) @type.builtin
 )
 ; special matchers
-(keyword_expression) @type.builtin
 
 (named_matcher
 	name: (_) @type
@@ -78,12 +80,16 @@
 ; 	name: (_) @type
 ; )
 
+(ipv6
+	hextet: (_) @number
+)
 
 ; (path
 ; 	segment: (string) @string.special.url
 ; )
 ; (site_block (string) @string.special.url ) 
-(keyword_private_ranges) @constant.builtin
 
+"expression" @type.builtin
+"private_ranges" @constant.builtin
 
 (ERROR) @error-node

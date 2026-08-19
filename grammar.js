@@ -26,26 +26,29 @@ export default grammar({
 		$._ext_str_bare,
 		$._ext_str_upper,
 		$._ext_str_num,
-		$._ext_str_num_dot,
+		$._ext_str_decimal,
+		$._ext_str_ipv4,
 		$._ext_str_cel,
 		$._ext_str_cel_inline,
 		$._ext_str_comment,
+		$._ext_str_dur_integer,
+		$._ext_str_dur_decimal,
+		$.unit,
 
 		// whitespace
 		$._ext_eol,
 		$._ext_ws,
 
 		// keywords
-		$.keyword_import,
-		$.keyword_invoke,
-		$.keyword_private_ranges,
-		$.keyword_client_ip,
-		$.keyword_expression,
-		$.keyword_vars,
-		$.keyword_args,
-		$.keyword_env,
-		$.keyword_file,
-		$.keyword_not,
+		$._key_import,
+		$._key_invoke,
+		$._key_private_ranges,
+		$._key_expression,
+		$._key_vars,
+		$._key_args,
+		$._key_env,
+		$._key_file,
+		$._key_not,
 
 		// symbols
 		$._ext_sym_paren_o,
@@ -107,7 +110,7 @@ export default grammar({
 		_bare_identifier: $ => alias($._ext_str_bare, $.identifier),
 
 		verb: $ => $._ext_str_upper,
-		numeric: $ => $._ext_str_num,
+		integer: $ => $._ext_str_num,
 
 		// dot_delimited: $ =>
 		// 	prec.right(
@@ -137,15 +140,15 @@ export default grammar({
 		_index: $ =>
 			field(
 				'index',
-				seq($._sym_bracket_o, optional(choice($.numeric, $.range)), $._sym_bracket_c),
+				seq($._sym_bracket_o, optional(choice($.integer, $.range)), $._sym_bracket_c),
 			),
 
 		range: $ =>
 			prec.left(
 				seq(
-					optional(field('left', $.numeric)),
+					optional(field('left', $.integer)),
 					$._sym_colon,
-					optional(field('right', $.numeric)),
+					optional(field('right', $.integer)),
 				),
 			),
 		placeholder: $ =>
@@ -159,7 +162,7 @@ export default grammar({
 		placeholder_env: $ =>
 			seq(
 				optional($._sym_period),
-				field('module', $.keyword_env),
+				field('module', $._keyword_env),
 				$._sym_period,
 				optional(field('reference', $.identifier)),
 			),
@@ -167,7 +170,7 @@ export default grammar({
 		placeholder_file: $ =>
 			seq(
 				optional($._sym_period),
-				field('module', $.keyword_file),
+				field('module', $._keyword_file),
 				$._sym_period,
 				optional(field('path', alias($._path, $.path))),
 			),
@@ -184,7 +187,7 @@ export default grammar({
 
 		_path: $ => repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
 
-		parameter: $ => seq(optional($.keyword_args), $._index),
+		parameter: $ => seq(optional($._keyword_args), $._index),
 		// placeholder: $ => field('reference', repeat1(choice($.identifier, $._sym_period))),
 		environment_variable: $ =>
 			seq($._sym_dollar, optional(field('reference', $.identifier))),
@@ -206,8 +209,8 @@ export default grammar({
 		// 		),
 		// 	),
 
-		dotted_address: $ =>
-			repeat1(field('segment', choice($._primitive, $._sym_period, $.wildcard))),
+		// dotted_address: $ =>
+		// 	repeat1(field('segment', choice($.string, $._sym_period, $.wildcard))),
 
 		_scheme: $ => prec(1, seq($.string, $._sym_colon, $._sym_solidus, $._sym_solidus)),
 		_scheme_field: $ => field('scheme', $._scheme),
@@ -217,9 +220,9 @@ export default grammar({
 
 		_port_field: $ => field('port', seq($._sym_colon, $._primitive)),
 		_path_field: $ => field('path', seq($._sym_solidus, $.string)),
-		_prefix_length_field: $ => field('prefix_length', seq($._sym_solidus, $.numeric)),
+		_prefix_length_field: $ => field('prefix_length', seq($._sym_solidus, $.integer)),
 		_addr_suffix: $ => choice($._path_field, $._prefix_length_field),
-		_ipv4_octet: $ => field('octet', $.numeric),
+		_ipv4_octet: $ => field('octet', $.integer),
 		_domain_segment: $ => field('segment', choice($.string, $.wildcard)),
 
 		ipv6: $ =>
@@ -229,7 +232,7 @@ export default grammar({
 				$._sym_bracket_c,
 			),
 
-		_host_field: $ => field('host', choice($.ipv6, $.dotted_address)),
+		_host_field: $ => field('host', choice($.ipv6, $.ipv4, $.string)),
 
 		_address: $ =>
 			prec.left(
@@ -299,7 +302,7 @@ export default grammar({
 
 		variable_declaration: $ =>
 			seq(
-				$.keyword_vars,
+				$._keyword_vars,
 				optional($._matcher_field),
 				choice($.assignment, $._vars_block),
 			),
@@ -334,7 +337,7 @@ export default grammar({
 		matcher_clause: $ =>
 			choice($.negative_matcher, $.generic_matcher, $.expression_matcher),
 
-		negative_matcher: $ => seq($.keyword_not, choice($.generic_matcher, $._matcher_block)),
+		negative_matcher: $ => seq($._keyword_not, choice($.generic_matcher, $._matcher_block)),
 
 		generic_matcher: $ =>
 			prec.left(
@@ -348,7 +351,7 @@ export default grammar({
 
 		expression_matcher: $ =>
 			seq(
-				field('matcher', $.keyword_expression),
+				field('matcher', $._keyword_expression),
 				repeat($._ws),
 				choice($._implied_cel_expression, $.embedded_content),
 			),
@@ -358,27 +361,43 @@ export default grammar({
 		_clause: $ =>
 			prec.left(
 				seq(
-					$._keyword_field,
+					$.__keyword_field,
 					repeat($._ws),
 					optional(seq($._matcher_field, repeat($._ws))),
 					repeat($._arguments_field),
 				),
 			),
 
-		_keyword_field: $ => field('keyword', $.identifier),
+		__keyword_field: $ => field('keyword', $.identifier),
 		_matcher_field: $ => prec.left(seq(field('matcher', $.matcher), repeat($._ws))),
 		_arguments_field: $ => seq(field('argument', $.argument), repeat($._ws)),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
 
-		_primitive: $ => prec.right(choice($.string, $.numeric)),
+		_primitive: $ => prec.right(choice($.string, $.integer)),
+
+		_duration_decimal: $ => alias($._ext_str_dur_decimal, $.decimal),
+		_duration_integer: $ => alias($._ext_str_dur_integer, $.integer),
+		duration: $ =>
+			seq(
+				field('value', choice($._duration_integer, $._duration_decimal)),
+				field('unit', $.unit),
+			),
+
+		ipv4: $ => $._ext_str_ipv4,
+		decimal: $ => $._ext_str_decimal,
 
 		argument: $ =>
-			choice(
-				$._primitive,
-				$.embedded_content,
-				$.verb,
-				$.heredoc,
-				$.keyword_private_ranges,
+			prec.right(
+				choice(
+					$._primitive,
+					$.embedded_content,
+					$.verb,
+					$.heredoc,
+					$._keyword_private_ranges,
+					$.duration,
+					$.decimal,
+					$.ipv4,
+				),
 			),
 
 		heredoc: $ => seq($._sym_heredoc, $.heredoc_tag, $.heredoc_content, $.heredoc_suffix),
@@ -387,7 +406,7 @@ export default grammar({
 		invoke_statement: $ =>
 			prec.right(
 				seq(
-					$.keyword_invoke,
+					$._keyword_invoke,
 					repeat($._ws),
 					optional($._matcher_field),
 					field('route', $._bare_identifier),
@@ -398,7 +417,7 @@ export default grammar({
 		snippet_reference: $ =>
 			prec.right(
 				seq(
-					$.keyword_import,
+					$._keyword_import,
 					repeat($._ws),
 					field('snippet', $._bare_identifier),
 					repeat($._ws),
@@ -434,6 +453,16 @@ export default grammar({
 		_sym_grave: $ => alias($._ext_sym_grave, '`'),
 		_sym_quote: $ => alias($._ext_sym_quote, '"'),
 		_sym_asterisk: $ => alias($._ext_sym_asterisk, '*'),
+
+		_keyword_import: $ => alias($._key_import, 'import'),
+		_keyword_invoke: $ => alias($._key_invoke, 'invoke'),
+		_keyword_private_ranges: $ => alias($._key_private_ranges, 'private_ranges'),
+		_keyword_expression: $ => alias($._key_expression, 'expression'),
+		_keyword_vars: $ => alias($._key_vars, 'vars'),
+		_keyword_args: $ => alias($._key_args, 'args'),
+		_keyword_env: $ => alias($._key_env, 'env'),
+		_keyword_file: $ => alias($._key_file, 'file'),
+		_keyword_not: $ => alias($._key_not, 'not'),
 
 		_sym_block_start: $ => alias($._ext_sym_block_start, '{'),
 

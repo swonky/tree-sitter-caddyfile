@@ -1,10 +1,12 @@
 #include "tree_sitter/alloc.h"
 #include "tree_sitter/parser.h"
+#include <assert.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
+#define UNIT(text) KEYWORD(text, STR_DUR_UNIT)
 
 enum {
 	U32LEN = sizeof(uint32_t),
@@ -33,10 +35,14 @@ enum TokenType {
 	STR_BARE,
 	STR_UPPER,
 	STR_NUM,
-	STR_NUM_DOT,
+	STR_DECIMAL,
+	STR_IPV4,
 	STR_CEL,
 	STR_CEL_INLINE,
 	STR_COMMENT,
+	STR_DUR_INTEGER,
+	STR_DUR_DECIMAL,
+	STR_DUR_UNIT,
 
 	/*
 	 * whitespace
@@ -50,7 +56,6 @@ enum TokenType {
 	KEY_IMPORT,
 	KEY_INVOKE,
 	KEY_PRIVATE_RANGES,
-	KEY_CLIENT_IP,
 	KEY_EXPRESSION,
 	KEY_VARS,
 	KEY_ARGS,
@@ -141,13 +146,22 @@ static const Keyword keywords[] = {
     KEYWORD("import", KEY_IMPORT),
     KEYWORD("invoke", KEY_INVOKE),
     KEYWORD("private_ranges", KEY_PRIVATE_RANGES),
-    KEYWORD("client_ip", KEY_CLIENT_IP),
     KEYWORD("expression", KEY_EXPRESSION),
     KEYWORD("vars", KEY_VARS),
     KEYWORD("args", KEY_ARGS),
     KEYWORD("not", KEY_NOT),
     KEYWORD("env", KEY_ENV),
     KEYWORD("file", KEY_FILE),
+
+    /* units */
+    // UNIT("ns"),
+    // UNIT("us"),
+    // UNIT("µs"),
+    // UNIT("ms"),
+    // UNIT("s"),
+    // UNIT("m"),
+    // UNIT("h"),
+    // UNIT("d"),
 };
 
 static inline enum TokenType get_token(UnicodeChar c)
@@ -176,11 +190,15 @@ typedef struct {
 
 static inline bool is_valid(Scanner *s, enum TokenType token)
 {
+	assert(s != NULL);
+
 	return s->vs != NULL && s->vs[token];
 }
 
 static bool word_equals(Scanner *s, const Keyword *kw)
 {
+	assert(s != NULL);
+
 	if (s->word_len != kw->len)
 		return false;
 
@@ -191,8 +209,43 @@ static bool word_equals(Scanner *s, const Keyword *kw)
 	return true;
 }
 
+static bool is_unit(const UnicodeChar *kw, uint8_t len)
+{
+	assert(kw != NULL);
+
+	switch (len) {
+	case 1:
+		switch (kw[0]) {
+		case 's':
+		case 'm':
+		case 'h':
+		case 'd':
+			return true;
+		default:
+			return false;
+		}
+	case 2:
+		switch (kw[0]) {
+		case 'n':
+		case 'u':
+		case 0x00B5:
+		case 'm':
+			return kw[1] == 's';
+		default:
+			return false;
+		}
+	default:
+		return false;
+	}
+}
+
 static enum TokenType check_keyword(Scanner *s)
 {
+	assert(s != NULL);
+
+	if (is_valid(s, STR_DUR_UNIT) && is_unit(s->word, s->word_len))
+		return STR_DUR_UNIT;
+
 	for (size_t i = 0; i < sizeof(keywords) / sizeof(keywords[0]); i++) {
 		const Keyword *kw = &keywords[i];
 
@@ -210,11 +263,13 @@ static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
 
 static inline void set_result(Scanner *s, enum TokenType token)
 {
+	assert(s != NULL);
 	s->lexer->result_symbol = token;
 }
 
 static inline uint32_t get_column(Scanner *s)
 {
+	assert(s != NULL);
 	return s->lexer->get_column(s->lexer);
 }
 
@@ -467,6 +522,7 @@ static void scan_text(Scanner *s)
 	bool digits = true;
 	bool upper = true;
 	bool kw = true;
+	int nperiod = 0;
 
 	while (!eof(s)) {
 
@@ -535,11 +591,20 @@ static void scan_text(Scanner *s)
 			break;
 		}
 
+		if (upper && !is_upper(c))
+			upper = false;
+
+		nperiod += (c == '.');
+
 		enum TokenType token = get_token(c);
 		if (token != _UNSPECIFIED && is_valid(s, token)) {
 			if (kw) {
 				enum TokenType token = check_keyword(s);
 				if (token != _UNSPECIFIED) {
+					if (token == SYM_PERIOD && digits &&
+					    (is_valid(s, STR_DECIMAL) ||
+						is_valid(s, STR_IPV4)))
+						break;
 					mark_end(s);
 					set_result(s, token);
 					return;
@@ -549,12 +614,49 @@ static void scan_text(Scanner *s)
 			break;
 		}
 
-		if (digits && !is_num(c)) {
+		if (digits && !is_num(c) && c != '.') {
+			mark_end(s);
 			digits = false;
-		}
+			if (s->consumed > 0 && nperiod <= 1 &&
+			    is_valid(s, STR_DUR_INTEGER) &&
+			    is_valid(s, STR_DUR_DECIMAL)) {
+				advance(s);
 
-		if (upper && !is_upper(c))
-			upper = false;
+				UnicodeChar next = peek(s);
+				if (next == c) {
+					continue;
+				}
+
+				UnicodeChar suffix[2] = {c};
+				uint8_t len = 1;
+				if (!(is_ws(next) || is_eol(next))) {
+					suffix[1] = next;
+					len = 2;
+				}
+
+				if (!is_unit(suffix, len))
+					continue;
+
+				if (len == 2) {
+					advance(s);
+					next = peek(s);
+					if (!(is_ws(next) || is_eol(next)))
+						continue;
+				}
+
+				switch (nperiod) {
+				case 0:
+					set_result(s, STR_DUR_INTEGER);
+				case 1:
+					set_result(s, STR_DUR_DECIMAL);
+				default:
+					continue;
+				}
+
+				return;
+			}
+			continue;
+		}
 
 		advance(s);
 		mark_end(s);
@@ -575,10 +677,12 @@ static void scan_text(Scanner *s)
 
 	if (upper && is_valid(s, STR_UPPER))
 		set_result(s, STR_UPPER);
-	else if (digits && is_valid(s, STR_NUM_DOT) && peek(s) == '.')
-		set_result(s, STR_NUM_DOT);
-	else if (digits && is_valid(s, STR_NUM))
+	else if (digits && is_valid(s, STR_NUM) && nperiod == 0)
 		set_result(s, STR_NUM);
+	else if (digits && is_valid(s, STR_DECIMAL) && nperiod == 1)
+		set_result(s, STR_DECIMAL);
+	else if (digits && is_valid(s, STR_IPV4) && nperiod == 3)
+		set_result(s, STR_IPV4);
 	else if (!is_valid(s, ERROR_SENTINEL) && is_valid(s, STR_CEL))
 		set_result(s, STR_CEL);
 	else if (is_valid(s, STR_BARE) && (get_column(s) == 0 || prefix != '}'))

@@ -4,6 +4,14 @@
     "named": true,
     "subtypes": [
       {
+        "type": "decimal",
+        "named": true
+      },
+      {
+        "type": "duration",
+        "named": true
+      },
+      {
         "type": "embedded_content",
         "named": true
       },
@@ -12,12 +20,16 @@
         "named": true
       },
       {
-        "type": "keyword_private_ranges",
+        "type": "integer",
         "named": true
       },
       {
-        "type": "numeric",
+        "type": "ipv4",
         "named": true
+      },
+      {
+        "type": "private_ranges",
+        "named": false
       },
       {
         "type": "string",
@@ -82,11 +94,15 @@
         "required": false,
         "types": [
           {
-            "type": "dotted_address",
+            "type": "ipv4",
             "named": true
           },
           {
             "type": "ipv6",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -114,7 +130,7 @@
             "named": false
           },
           {
-            "type": "numeric",
+            "type": "integer",
             "named": true
           },
           {
@@ -132,7 +148,7 @@
             "named": false
           },
           {
-            "type": "numeric",
+            "type": "integer",
             "named": true
           }
         ]
@@ -280,27 +296,34 @@
     }
   },
   {
-    "type": "dotted_address",
+    "type": "decimal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "duration",
     "named": true,
     "fields": {
-      "segment": {
-        "multiple": true,
+      "unit": {
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": ".",
-            "named": false
-          },
+            "type": "unit",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
           {
-            "type": "numeric",
+            "type": "decimal",
             "named": true
           },
           {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "wildcard",
+            "type": "integer",
             "named": true
           }
         ]
@@ -347,8 +370,8 @@
         "required": true,
         "types": [
           {
-            "type": "keyword_expression",
-            "named": true
+            "type": "expression",
+            "named": false
           }
         ]
       }
@@ -466,6 +489,11 @@
     }
   },
   {
+    "type": "integer",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "invoke_statement",
     "named": true,
     "fields": {
@@ -489,17 +517,12 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "keyword_invoke",
-          "named": true
-        }
-      ]
     }
+  },
+  {
+    "type": "ipv4",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "ipv6",
@@ -510,7 +533,7 @@
         "required": false,
         "types": [
           {
-            "type": "numeric",
+            "type": "integer",
             "named": true
           },
           {
@@ -661,7 +684,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "comment",
@@ -672,20 +695,11 @@
           "named": true
         },
         {
-          "type": "keyword_not",
-          "named": true
-        },
-        {
           "type": "matcher_clause",
           "named": true
         }
       ]
     }
-  },
-  {
-    "type": "numeric",
-    "named": true,
-    "fields": {}
   },
   {
     "type": "parameter",
@@ -704,7 +718,7 @@
             "named": false
           },
           {
-            "type": "numeric",
+            "type": "integer",
             "named": true
           },
           {
@@ -713,16 +727,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "keyword_args",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -814,8 +818,8 @@
         "required": true,
         "types": [
           {
-            "type": "keyword_env",
-            "named": true
+            "type": "env",
+            "named": false
           }
         ]
       },
@@ -840,8 +844,8 @@
         "required": true,
         "types": [
           {
-            "type": "keyword_file",
-            "named": true
+            "type": "file",
+            "named": false
           }
         ]
       },
@@ -866,7 +870,7 @@
         "required": false,
         "types": [
           {
-            "type": "numeric",
+            "type": "integer",
             "named": true
           }
         ]
@@ -876,7 +880,7 @@
         "required": false,
         "types": [
           {
-            "type": "numeric",
+            "type": "integer",
             "named": true
           }
         ]
@@ -996,7 +1000,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "comment",
@@ -1004,10 +1008,6 @@
         },
         {
           "type": "expression",
-          "named": true
-        },
-        {
-          "type": "keyword_import",
           "named": true
         }
       ]
@@ -1100,7 +1100,7 @@
     },
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "assignment",
@@ -1108,10 +1108,6 @@
         },
         {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "keyword_vars",
           "named": true
         }
       ]
@@ -1192,6 +1188,22 @@
     "named": false
   },
   {
+    "type": "args",
+    "named": false
+  },
+  {
+    "type": "env",
+    "named": false
+  },
+  {
+    "type": "expression",
+    "named": false
+  },
+  {
+    "type": "file",
+    "named": false
+  },
+  {
     "type": "heredoc_content",
     "named": true
   },
@@ -1204,40 +1216,28 @@
     "named": true
   },
   {
-    "type": "keyword_args",
+    "type": "import",
+    "named": false
+  },
+  {
+    "type": "invoke",
+    "named": false
+  },
+  {
+    "type": "not",
+    "named": false
+  },
+  {
+    "type": "private_ranges",
+    "named": false
+  },
+  {
+    "type": "unit",
     "named": true
   },
   {
-    "type": "keyword_env",
-    "named": true
-  },
-  {
-    "type": "keyword_expression",
-    "named": true
-  },
-  {
-    "type": "keyword_file",
-    "named": true
-  },
-  {
-    "type": "keyword_import",
-    "named": true
-  },
-  {
-    "type": "keyword_invoke",
-    "named": true
-  },
-  {
-    "type": "keyword_not",
-    "named": true
-  },
-  {
-    "type": "keyword_private_ranges",
-    "named": true
-  },
-  {
-    "type": "keyword_vars",
-    "named": true
+    "type": "vars",
+    "named": false
   },
   {
     "type": "{",
