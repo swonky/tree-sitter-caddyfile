@@ -58,13 +58,16 @@ Bindings are available under [./bindings](bindings/) for C, Go, Java, JavaScript
 ## Development
 
 ### Testing
-> [!WARNING] Yet to do
+> [!WARNING]
+> Yet to do
 
 ## Example
 ### Syntax highlighting
-> [!WARNING] Yet to do
+> [!WARNING]
+> Yet to do
 ### Concrete syntax tree
-> [!WARNING] Yet to do
+> [!WARNING]
+> Yet to do
 
 ## References
 [^5]: Language injection requires the associated tree-sitter grammar for that language.
