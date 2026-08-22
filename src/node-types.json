@@ -42,32 +42,6 @@
     ]
   },
   {
-    "type": "expression",
-    "named": true,
-    "subtypes": [
-      {
-        "type": "construction",
-        "named": true
-      },
-      {
-        "type": "invoke_statement",
-        "named": true
-      },
-      {
-        "type": "matcher_definition",
-        "named": true
-      },
-      {
-        "type": "snippet_reference",
-        "named": true
-      },
-      {
-        "type": "variable_declaration",
-        "named": true
-      }
-    ]
-  },
-  {
     "type": "reference",
     "named": true,
     "subtypes": [
@@ -243,7 +217,28 @@
   {
     "type": "comment",
     "named": true,
-    "fields": {}
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "comment",
+            "named": true
+          }
+        ]
+      },
+      "doc": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "construction",
@@ -289,7 +284,27 @@
           "named": true
         },
         {
-          "type": "expression",
+          "type": "construction",
+          "named": true
+        },
+        {
+          "type": "invoke_statement",
+          "named": true
+        },
+        {
+          "type": "matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_block",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -444,7 +459,27 @@
           "named": true
         },
         {
-          "type": "expression",
+          "type": "construction",
+          "named": true
+        },
+        {
+          "type": "invoke_statement",
+          "named": true
+        },
+        {
+          "type": "matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_block",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -644,28 +679,6 @@
     "type": "named_route_definition",
     "named": true,
     "fields": {
-      "content": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "comment",
-            "named": true
-          },
-          {
-            "type": "expression",
-            "named": true
-          },
-          {
-            "type": "{",
-            "named": false
-          },
-          {
-            "type": "}",
-            "named": false
-          }
-        ]
-      },
       "name": {
         "multiple": false,
         "required": false,
@@ -676,6 +689,40 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "construction",
+          "named": true
+        },
+        {
+          "type": "invoke_statement",
+          "named": true
+        },
+        {
+          "type": "matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_block",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -839,28 +886,6 @@
     "type": "site_block",
     "named": true,
     "fields": {
-      "content": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "comment",
-            "named": true
-          },
-          {
-            "type": "expression",
-            "named": true
-          },
-          {
-            "type": "{",
-            "named": false
-          },
-          {
-            "type": "}",
-            "named": false
-          }
-        ]
-      },
       "site": {
         "multiple": true,
         "required": true,
@@ -879,6 +904,30 @@
         {
           "type": "comment",
           "named": true
+        },
+        {
+          "type": "construction",
+          "named": true
+        },
+        {
+          "type": "invoke_statement",
+          "named": true
+        },
+        {
+          "type": "matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_block",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
         }
       ]
     }
@@ -887,28 +936,6 @@
     "type": "snippet_definition",
     "named": true,
     "fields": {
-      "content": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "comment",
-            "named": true
-          },
-          {
-            "type": "expression",
-            "named": true
-          },
-          {
-            "type": "{",
-            "named": false
-          },
-          {
-            "type": "}",
-            "named": false
-          }
-        ]
-      },
       "name": {
         "multiple": false,
         "required": false,
@@ -919,6 +946,40 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "construction",
+          "named": true
+        },
+        {
+          "type": "invoke_statement",
+          "named": true
+        },
+        {
+          "type": "matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_block",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -955,7 +1016,27 @@
           "named": true
         },
         {
-          "type": "expression",
+          "type": "construction",
+          "named": true
+        },
+        {
+          "type": "invoke_statement",
+          "named": true
+        },
+        {
+          "type": "matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_block",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
           "named": true
         }
       ]

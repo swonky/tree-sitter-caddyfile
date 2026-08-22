@@ -101,6 +101,11 @@
 	hextet: (_) @number
 )
 
+(comment
+	"@" @type
+	doc: (_) @type
+) @comment.documentation
+
 ; (path
 ; 	segment: (string) @string.special.url
 ; )

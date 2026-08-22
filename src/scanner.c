@@ -62,6 +62,7 @@ enum TokenType {
 	KEY_ENV,
 	KEY_FILE,
 	KEY_NOT,
+	KEY_SITE,
 
 	/*
 	 * symbolic operators
@@ -152,6 +153,7 @@ static const Keyword keywords[] = {
     KEYWORD("not", KEY_NOT),
     KEYWORD("env", KEY_ENV),
     KEYWORD("file", KEY_FILE),
+    KEYWORD("site", KEY_SITE),
 
     /* units */
     // UNIT("ns"),
@@ -521,7 +523,6 @@ static void scan_text(Scanner *s)
 	bool escape = false;
 	bool digits = true;
 	bool upper = true;
-	// bool alpha = true;
 	bool kw = true;
 	int nperiod = 0;
 
@@ -537,7 +538,7 @@ static void scan_text(Scanner *s)
 
 		UnicodeChar c = peek(s);
 
-		if (is_valid(s, STR_COMMENT)) {
+		if (is_valid(s, STR_COMMENT) && c != '@' && prefix != '@') {
 			mark_end(s);
 			if (!is_eol(c)) {
 				advance(s);
