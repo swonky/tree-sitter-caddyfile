@@ -32,6 +32,10 @@
         "named": false
       },
       {
+        "type": "quoted_expression",
+        "named": true
+      },
+      {
         "type": "string",
         "named": true
       },
@@ -55,6 +59,20 @@
       },
       {
         "type": "placeholder",
+        "named": true
+      }
+    ]
+  },
+  {
+    "type": "string",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "literal_string",
+        "named": true
+      },
+      {
+        "type": "templated_string",
         "named": true
       }
     ]
@@ -338,7 +356,7 @@
         "required": true,
         "types": [
           {
-            "type": "string",
+            "type": "literal_string",
             "named": true
           }
         ]
@@ -578,6 +596,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "literal_string",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "matcher",
@@ -857,6 +880,22 @@
     }
   },
   {
+    "type": "quoted_expression",
+    "named": true,
+    "fields": {
+      "content": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "range",
     "named": true,
     "fields": {
@@ -1043,21 +1082,6 @@
     }
   },
   {
-    "type": "string",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "templated_string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "substitution",
     "named": true,
     "fields": {},
@@ -1101,7 +1125,7 @@
         "required": true,
         "types": [
           {
-            "type": "string",
+            "type": "literal_string",
             "named": true
           },
           {

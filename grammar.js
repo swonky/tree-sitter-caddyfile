@@ -10,7 +10,7 @@
 export default grammar({
 	name: 'caddyfile',
 
-	supertypes: $ => [$.reference, $.argument],
+	supertypes: $ => [$.reference, $.argument, $.string],
 
 	externals: $ => [
 		$._ext_unspecified,
@@ -104,8 +104,8 @@ export default grammar({
 
 		_word: $ => $._ext_str_word,
 
-		_nested_string: $ => alias($._ext_str_word, $.string),
-		_bare_string: $ => alias($._ext_str_bare, $.string),
+		_nested_string: $ => alias($._ext_str_word, $.literal_string),
+		_bare_string: $ => alias($._ext_str_bare, $.literal_string),
 
 		_nested_identifier: $ => alias($._ext_str_word, $.identifier),
 		_bare_identifier: $ => alias($._ext_str_bare, $.identifier),
@@ -116,8 +116,9 @@ export default grammar({
 		substitution: $ => seq($._sym_brace_o, optional($.reference), $._sym_brace_c),
 
 		identifier: $ => choice($.templated_identifier, $._ext_str_bare),
-		string: $ => choice($._quoted_string, $._substring),
-		_substring: $ => choice($.templated_string, $._ext_str_bare),
+
+		string: $ => choice($.templated_string, $.literal_string),
+		literal_string: $ => $._ext_str_bare,
 
 		templated_identifier: $ => prec.right(seq(repeat1($._tmpl_identifier_fragment))),
 		templated_string: $ => prec.right(seq(repeat1($._tmpl_string_fragment))),
@@ -346,7 +347,7 @@ export default grammar({
 		duration: $ =>
 			seq(
 				field('quantity', choice($._duration_integer, $._duration_decimal)),
-				field('unit', alias($._ext_str_unit, $.string)),
+				field('unit', alias($._ext_str_unit, $.literal_string)),
 			),
 
 		ipv4: $ => $._ext_str_ipv4,
@@ -356,6 +357,7 @@ export default grammar({
 			prec.right(
 				choice(
 					$._primitive,
+					$.quoted_expression,
 					$.embedded_content,
 					$.verb,
 					$.heredoc,
@@ -392,8 +394,10 @@ export default grammar({
 				),
 			),
 
-		_quoted_string: $ =>
-			seq($._sym_quote, repeat(choice($._substring, $._ws)), $._sym_quote),
+		quoted_expression: $ =>
+			seq($._sym_quote, optional(field('content', $.string)), $._sym_quote),
+
+		// _permissive_string: $ => alias(repeat1(choice($.string, $._ws)), $.string),
 
 		embedded_content: $ => seq($._sym_grave, $.cel_expression, $._sym_grave),
 		cel_expression: $ => $._ext_str_cel,

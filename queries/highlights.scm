@@ -46,6 +46,8 @@
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 ["&" "$" "*" "@" "<<"] @punctuation.special
 ["/" "." ":"] @punctuation.delimiter
+["`"] @punctuation.special
+["\""] @string
 
 (path
 	"/" @string.special.path

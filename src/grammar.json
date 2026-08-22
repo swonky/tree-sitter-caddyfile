@@ -131,7 +131,7 @@
         "name": "_ext_str_word"
       },
       "named": true,
-      "value": "string"
+      "value": "literal_string"
     },
     "_bare_string": {
       "type": "ALIAS",
@@ -140,7 +140,7 @@
         "name": "_ext_str_bare"
       },
       "named": true,
-      "value": "string"
+      "value": "literal_string"
     },
     "_nested_identifier": {
       "type": "ALIAS",
@@ -211,26 +211,17 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_quoted_string"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_substring"
-        }
-      ]
-    },
-    "_substring": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
           "name": "templated_string"
         },
         {
           "type": "SYMBOL",
-          "name": "_ext_str_bare"
+          "name": "literal_string"
         }
       ]
+    },
+    "literal_string": {
+      "type": "SYMBOL",
+      "name": "_ext_str_bare"
     },
     "templated_identifier": {
       "type": "PREC_RIGHT",
@@ -1754,7 +1745,7 @@
               "name": "_ext_str_unit"
             },
             "named": true,
-            "value": "string"
+            "value": "literal_string"
           }
         }
       ]
@@ -1776,6 +1767,10 @@
           {
             "type": "SYMBOL",
             "name": "_primitive"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "quoted_expression"
           },
           {
             "type": "SYMBOL",
@@ -1932,7 +1927,7 @@
         ]
       }
     },
-    "_quoted_string": {
+    "quoted_expression": {
       "type": "SEQ",
       "members": [
         {
@@ -1940,20 +1935,20 @@
           "name": "_sym_quote"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "content",
+              "content": {
                 "type": "SYMBOL",
-                "name": "_substring"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_ws"
+                "name": "string"
               }
-            ]
-          }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
@@ -2621,7 +2616,8 @@
   "inline": [],
   "supertypes": [
     "reference",
-    "argument"
+    "argument",
+    "string"
   ],
   "reserved": {}
 }
