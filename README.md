@@ -6,11 +6,6 @@ A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://git
 > [!NOTE]
 > This project is not affiliated with or endorsed by the ZeroSSL Project or the maintainers of caddy.
 
-# TODO
-- [ ] Fold scheme file
-- [ ] !-prefix
-- [ ] Tests
-- [ ] Benchmarks
 
 ## Contents
 - [Features](#features)
@@ -38,9 +33,15 @@ The grammar supports the following Caddyfile language syntax structures:
 - **Negations** ("not" keyword)
 - **Comments**
 - **Language injection**
-    - Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")
-    - Grave (`\``) quoted cel expressions
-    - `expression` matcher cel expressions
+    - Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")[^5]
+    - Grave (`\``) quoted cel expressions[^6]
+    - `expression` matcher cel expressions[^6]
+
+### To do
+- [ ] Fold scheme file
+- [ ] !-prefix
+- [ ] Tests
+- [ ] Benchmarks
 
 ### Scheme files 
 The following scheme files[^8] are included in [./queries](queries/) to facilitate editor integrations and syntax highlight.
@@ -48,7 +49,7 @@ The following scheme files[^8] are included in [./queries](queries/) to facilita
 | File | Content |
 | ---- | ------- |
 | [highlights.scm](queries/highlights.scm)  | syntax highlighting & spell check  |
-| [injections.scm](queries/injections.scm)  | YAML[^7] language injection        |
+| [injections.scm](queries/injections.scm)  | language injection[^7]       |
 <!-- | [folds.scm](queries/folds.scm)            | code folding                       | -->
 
 ### Language bindings
@@ -57,13 +58,16 @@ Bindings are available under [./bindings](bindings/) for C, Go, Java, JavaScript
 ## Development
 
 ### Testing
-> [!TODO]
+> [!WARNING] Yet to do
 
 ## Example
 ### Syntax highlighting
-> [!TODO]
+> [!WARNING] Yet to do
 ### Concrete syntax tree
-> [!TODO]
+> [!WARNING] Yet to do
 
 ## References
-> [!TODO]
+[^5]: Language injection requires the associated tree-sitter grammar for that language.
+[^6]: tree-sitter-cel
+[^7]: [tree-sitter: Language injection](https://tree-sitter.github.io/tree-sitter/3-syntax-highlighting.html#language-injection)
+[^8]: [tree-sitter: Query syntax](https://tree-sitter.github.io/tree-sitter/using-parsers/queries/1-syntax.html)
