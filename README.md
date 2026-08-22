@@ -6,6 +6,12 @@ A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://git
 > [!NOTE]
 > This project is not affiliated with or endorsed by the ZeroSSL Project or the maintainers of caddy.
 
+# TODO
+- [ ] Fold scheme file
+- [ ] !-prefix
+- [ ] Tests
+- [ ] Benchmarks
+
 ## Contents
 - [Features](#features)
     - [Syntax](#base-syntax)
@@ -13,7 +19,6 @@ A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://git
     - [Language bindings](#language-bindings)
 - [Development](#development)
     - [Testing](#testing)
-    - [Benchmarking](#benchmarking)
 - [Example](#example)
     - [Syntax highlighting](#syntax-highlighting)
     - [Concrete syntax tree](#concrete-syntax-tree)
@@ -23,18 +28,42 @@ A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://git
 ### Base syntax
 The grammar supports the following Caddyfile language syntax structures:
 
+- **Primitive value types**: `literal_string`, `integer`, `decimal`, `ipv4`
+- **Compound value types**: `templated_string`, `duration`, `address`, `ipv6`
 - **Global block**
 - **Site blocks**
-- **Snippets**
+- **Snippet** definitions and references
 - **Named routes**
-- **Directives**
-- **Negations**
+- **Directives** with arguments and/or subdirective blocks
+- **Negations** ("not" keyword)
 - **Comments**
-- **Language injection** incl. cel expressions and heredocs.
+- **Language injection**
+    - Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")
+    - Grave (`\``) quoted cel expressions
+    - `expression` matcher cel expressions
 
-# TODO
-- [ ] Durations
-- [ ] Decimals
-- [ ] Address/path/CIDR capture groups in directive args
-- [ ] Folds
-- [ ] !-prefix
+### Scheme files 
+The following scheme files[^8] are included in [./queries](queries/) to facilitate editor integrations and syntax highlight.
+
+| File | Content |
+| ---- | ------- |
+| [highlights.scm](queries/highlights.scm)  | syntax highlighting & spell check  |
+| [injections.scm](queries/injections.scm)  | YAML[^7] language injection        |
+<!-- | [folds.scm](queries/folds.scm)            | code folding                       | -->
+
+### Language bindings
+Bindings are available under [./bindings](bindings/) for C, Go, Java, JavaScript, Python, Rust, Swift, and Zig.
+
+## Development
+
+### Testing
+> [!TODO]
+
+## Example
+### Syntax highlighting
+> [!TODO]
+### Concrete syntax tree
+> [!TODO]
+
+## References
+> [!TODO]
