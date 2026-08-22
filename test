@@ -1,0 +1,16 @@
+
+
+
+
+
+www_matcher := (request.url == "www.example.com")
+
+mk_upstream: (a, b) => upstream{host: joinpath(a, example), port: b}
+
+
+
+
+
+
+
+

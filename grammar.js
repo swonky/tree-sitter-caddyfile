@@ -33,7 +33,7 @@ export default grammar({
 		$._ext_str_comment,
 		$._ext_str_dur_integer,
 		$._ext_str_dur_decimal,
-		$.unit,
+		$._ext_str_unit,
 
 		// whitespace
 		$._ext_eol,
@@ -154,25 +154,25 @@ export default grammar({
 		placeholder: $ =>
 			choice(
 				$._placeholder_shorthand,
-				$.placeholder_env,
-				$.placeholder_file,
+				$._placeholder_env,
+				$._placeholder_file,
 				$._placeholder_namespaced,
 			),
 
-		placeholder_env: $ =>
+		_placeholder_env: $ =>
 			seq(
 				optional($._sym_period),
-				field('module', $._keyword_env),
+				field('module', alias($._keyword_env, $.identifier)),
 				$._sym_period,
 				optional(field('reference', $.identifier)),
 			),
 
-		placeholder_file: $ =>
+		_placeholder_file: $ =>
 			seq(
 				optional($._sym_period),
-				field('module', $._keyword_file),
+				field('module', alias($._keyword_file, $.identifier)),
 				$._sym_period,
-				optional(field('path', alias($._path, $.path))),
+				optional(field('member', alias($._path, $.path))),
 			),
 
 		_placeholder_shorthand: $ => field('member', $.identifier),
@@ -368,7 +368,7 @@ export default grammar({
 				),
 			),
 
-		__keyword_field: $ => field('keyword', $.identifier),
+		__keyword_field: $ => seq(field('keyword', $._bare_identifier), $._ws),
 		_matcher_field: $ => prec.left(seq(field('matcher', $.matcher), repeat($._ws))),
 		_arguments_field: $ => seq(field('argument', $.argument), repeat($._ws)),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
@@ -379,8 +379,8 @@ export default grammar({
 		_duration_integer: $ => alias($._ext_str_dur_integer, $.integer),
 		duration: $ =>
 			seq(
-				field('value', choice($._duration_integer, $._duration_decimal)),
-				field('unit', $.unit),
+				field('quantity', choice($._duration_integer, $._duration_decimal)),
+				field('unit', alias($._ext_str_unit, $.string)),
 			),
 
 		ipv4: $ => $._ext_str_ipv4,

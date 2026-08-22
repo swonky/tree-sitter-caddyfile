@@ -41,6 +41,11 @@ zig-out/
 *.obj
 *.o
 
+# Workspace artifacts
+*.lua
+*.workspace
+.envrc
+
 # Archives
 *.tar.gz
 *.tgz

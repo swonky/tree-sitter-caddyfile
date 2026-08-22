@@ -304,17 +304,7 @@
     "type": "duration",
     "named": true,
     "fields": {
-      "unit": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "unit",
-            "named": true
-          }
-        ]
-      },
-      "value": {
+      "quantity": {
         "multiple": false,
         "required": true,
         "types": [
@@ -324,6 +314,16 @@
           },
           {
             "type": "integer",
+            "named": true
+          }
+        ]
+      },
+      "unit": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -780,6 +780,10 @@
           {
             "type": "identifier",
             "named": true
+          },
+          {
+            "type": "path",
+            "named": true
           }
         ]
       },
@@ -790,36 +794,6 @@
           {
             "type": "identifier",
             "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "placeholder_env",
-          "named": true
-        },
-        {
-          "type": "placeholder_file",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "placeholder_env",
-    "named": true,
-    "fields": {
-      "module": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "env",
-            "named": false
           }
         ]
       },
@@ -829,32 +803,6 @@
         "types": [
           {
             "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "placeholder_file",
-    "named": true,
-    "fields": {
-      "module": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "file",
-            "named": false
-          }
-        ]
-      },
-      "path": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "path",
             "named": true
           }
         ]
@@ -1230,10 +1178,6 @@
   {
     "type": "private_ranges",
     "named": false
-  },
-  {
-    "type": "unit",
-    "named": true
   },
   {
     "type": "vars",

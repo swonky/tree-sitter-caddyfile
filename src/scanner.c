@@ -521,6 +521,7 @@ static void scan_text(Scanner *s)
 	bool escape = false;
 	bool digits = true;
 	bool upper = true;
+	// bool alpha = true;
 	bool kw = true;
 	int nperiod = 0;
 
@@ -591,9 +592,6 @@ static void scan_text(Scanner *s)
 			break;
 		}
 
-		if (upper && !is_upper(c))
-			upper = false;
-
 		nperiod += (c == '.');
 
 		enum TokenType token = get_token(c);
@@ -611,8 +609,12 @@ static void scan_text(Scanner *s)
 				}
 				kw = false;
 			}
+			mark_end(s);
 			break;
 		}
+
+		if (upper && !is_upper(c))
+			upper = false;
 
 		if (digits && !is_num(c) && c != '.') {
 			mark_end(s);
@@ -644,11 +646,16 @@ static void scan_text(Scanner *s)
 						continue;
 				}
 
+				// advance(s);
+				// mark_end(s);
+
 				switch (nperiod) {
 				case 0:
 					set_result(s, STR_DUR_INTEGER);
+					return;
 				case 1:
 					set_result(s, STR_DUR_DECIMAL);
+					return;
 				default:
 					continue;
 				}
@@ -667,6 +674,8 @@ static void scan_text(Scanner *s)
 
 	if (s->consumed == 0)
 		return;
+
+	c = peek(s);
 
 	if (is_valid(s, STR_WORD) && !is_valid(s, STR_CEL) &&
 	    (eof(s) || peek(s) == '{')) {

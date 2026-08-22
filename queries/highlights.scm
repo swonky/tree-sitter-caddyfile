@@ -27,7 +27,17 @@
 "args" @variable.builtin
 "not" @keyword.operator
 
+(placeholder
+	module: (_) @module
+)
 
+(placeholder
+	member: (identifier) @variable.member
+)
+
+(placeholder
+	reference: (identifier) @constant
+)
 
 (assignment
 	key: (_) @variable
@@ -76,9 +86,16 @@
 (environment_variable
 	reference: (_) @constant.macro
 )
-; (named_matcher
-; 	name: (_) @type
-; )
+
+(duration
+	quantity: (integer) @number
+	unit: (_) @number
+)
+
+(duration
+	quantity: (decimal) @number.float
+	unit: (_) @number.float
+)
 
 (ipv6
 	hextet: (_) @number
