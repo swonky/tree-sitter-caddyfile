@@ -6,7 +6,6 @@ A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://git
 > [!NOTE]
 > This project is not affiliated with or endorsed by the ZeroSSL Project or the maintainers of caddy.
 
-
 ## Contents
 - [Features](#features)
     - [Syntax](#base-syntax)
@@ -36,6 +35,15 @@ The grammar supports the following Caddyfile language syntax structures:
     - Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")[^5]
     - Grave (`\``) quoted cel expressions[^6]
     - `expression` matcher cel expressions[^6]
+
+### Disclaimer
+At the time of writing, I believe that this Caddyfile grammar provides greater and more accurate coverage of the modern Caddyfile syntax than the official release. However, I have taken a slightly unconventional approach to writing it. The parser is highly dependant on the custom scanner, so much so that not a single regular expression is used.
+
+This was partially due to the nature of project. The Caddyfile language is highly context dependant and has very little syntactic sugar to help ground the lexer. My approach was to use the parser context to direct the scanner, especially with regards to delineating token boundaries. This proved to be quite effective and, soon, the custom scanner logic grew to dominate the lexing process. Rather than having to contend with the mental strain of reasoning the behaviour of two independent lexers, I decided to translate the remaining declarative logic to the scanner. 
+
+(The other reason is that I really hate writing regex.)
+
+The lexer is written in C11 and is still in early stages of testing. I'm reasonably confident that there are no remaining infinite loops or fatal errors, however I urge caution until a more comprehensive test suite has been written to cover more syntactic combinations.
 
 ### To do
 - [ ] Fold scheme file
