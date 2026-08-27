@@ -802,6 +802,8 @@ bool tree_sitter_caddyfile_external_scanner_scan(
     void *payload, TSLexer *lexer, const bool *valid_symbols)
 {
 	Scanner *scanner = payload;
+	reset_transient_fields(scanner);
+
 	scanner->lexer = lexer;
 	scanner->vs = valid_symbols;
 
