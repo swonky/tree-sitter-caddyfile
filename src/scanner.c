@@ -204,7 +204,7 @@ static bool word_equals(Scanner *s, const Keyword *kw)
 	if (s->word_len != kw->len)
 		return false;
 
-	for (size_t i = 0; i < s->word_len; i++)
+	for (size_t i = 0; i < s->word_len && i < TAGLEN; i++)
 		if (s->word[i] != (UnicodeChar)kw->text[i])
 			return false;
 
@@ -341,9 +341,8 @@ static inline void advance(Scanner *s)
 	s->previous = peek(s);
 	s->lexer->advance(s->lexer, false);
 
-	if (s->word_len == 0) {
-		if (s->consumed < TAGLEN)
-			s->word[s->consumed] = s->previous;
+	if (s->word_len == 0 && s->consumed < TAGLEN) {
+		s->word[s->consumed] = s->previous;
 
 		UnicodeChar c = peek(s);
 		if (!is_alpha(c) && c != '_')
