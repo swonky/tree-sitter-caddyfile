@@ -8,7 +8,9 @@
 			"scope": "source.caddyfile",
 			"file-types": ["caddyfile", "Caddyfile"],
 			"injection-regex": "^caddyfile$",
-			"class-name": "TreeSitterCaddyfile"
+			"class-name": "TreeSitterCaddyfile",
+			"highlights": "queries/highlights.scm",
+			"injections": "queries/injections.scm"
 		}
 	],
 	"metadata": {

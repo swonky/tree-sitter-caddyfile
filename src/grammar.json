@@ -1433,6 +1433,10 @@
         {
           "type": "SYMBOL",
           "name": "expression_matcher"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "embedded_content"
         }
       ]
     },

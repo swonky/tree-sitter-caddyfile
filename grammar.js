@@ -302,7 +302,12 @@ export default grammar({
 			),
 
 		matcher_clause: $ =>
-			choice($.negative_matcher, $.generic_matcher, $.expression_matcher),
+			choice(
+				$.negative_matcher,
+				$.generic_matcher,
+				$.expression_matcher,
+				$.embedded_content,
+			),
 
 		negative_matcher: $ => seq($._keyword_not, choice($.generic_matcher, $._matcher_block)),
 

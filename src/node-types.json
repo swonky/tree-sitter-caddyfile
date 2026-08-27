@@ -634,6 +634,10 @@
       "required": true,
       "types": [
         {
+          "type": "embedded_content",
+          "named": true
+        },
+        {
           "type": "expression_matcher",
           "named": true
         },

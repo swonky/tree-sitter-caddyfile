@@ -63,8 +63,8 @@ Bindings are available under [./bindings](bindings/) for C, Go, Java, JavaScript
 
 ## Example
 ### Syntax highlighting
-> [!WARNING]
-> Yet to do
+![Syntax highlighting example](docs/example.svg)
+
 ### Concrete syntax tree
 > [!WARNING]
 > Yet to do

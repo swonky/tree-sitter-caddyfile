@@ -108,10 +108,11 @@
 	doc: (_) @type
 ) @comment.documentation
 
-; (path
-; 	segment: (string) @string.special.url
-; )
-; (site_block (string) @string.special.url ) 
+(path
+	segment: (_) @string.special.url
+)
+
+(site_block (string) @string.special.url ) 
 
 "expression" @type.builtin
 "private_ranges" @constant.builtin
