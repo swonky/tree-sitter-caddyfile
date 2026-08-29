@@ -4,7 +4,7 @@
 A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://github.com/tree-sitter/tree-sitter) parser generator.
 
 > [!NOTE]
-> This project is not affiliated with or endorsed by the ZeroSSL Project or the maintainers of caddy.
+> This project is not affiliated with or endorsed by the maintainers of caddy server.
 
 ## Contents
 - [Features](#features)
@@ -27,6 +27,7 @@ The grammar supports the following Caddyfile language syntax structures:
 - **Global block**
 - **Site blocks**
 - **Snippet** definitions and references
+- **Named matchers**
 - **Named routes**
 - **Directives** with arguments and/or subdirective blocks
 - **Negations** ("not" keyword)
@@ -35,6 +36,7 @@ The grammar supports the following Caddyfile language syntax structures:
     - Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")[^5]
     - Grave (`\``) quoted cel expressions[^6]
     - `expression` matcher cel expressions[^6]
+    - regular expressions[^9]
 
 ### Disclaimer
 At the time of writing, I believe that this Caddyfile grammar provides greater and more accurate coverage of the modern Caddyfile syntax than the official release. However, I have taken a slightly unconventional approach to writing it. The parser is highly dependant on the custom scanner, so much so that not a single regular expression is used.
@@ -48,7 +50,7 @@ The lexer is written in C11 and is still in early stages of testing. I'm reasona
 ### To do
 - [ ] Fold scheme file
 - [ ] !-prefix
-- [ ] Tests
+- [ ] More comprehensive tests
 - [ ] Benchmarks
 
 ### Scheme files 
@@ -79,6 +81,7 @@ Bindings are available under [./bindings](bindings/) for C, Go, Java, JavaScript
 
 ## References
 [^5]: Language injection requires the associated tree-sitter grammar for that language.
-[^6]: tree-sitter-cel
+[^6]: requires [tree-sitter-cel](https://github.com/bufbuild/tree-sitter-cel) or alternative.
+[^9]: requires [tree-sitter-regex](https://github.com/tree-sitter/tree-sitter-regex) or alternative.
 [^7]: [tree-sitter: Language injection](https://tree-sitter.github.io/tree-sitter/3-syntax-highlighting.html#language-injection)
 [^8]: [tree-sitter: Query syntax](https://tree-sitter.github.io/tree-sitter/using-parsers/queries/1-syntax.html)
