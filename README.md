@@ -45,7 +45,7 @@ This was partially due to the nature of project. The Caddyfile language is highl
 
 (The other reason is that I really hate writing regex.)
 
-The lexer is written in C11 and is still in early stages of testing. I'm reasonably confident that there are no remaining infinite loops or fatal errors, however I urge caution until a more comprehensive test suite has been written to cover more syntactic combinations.
+The lexer is written in C11 and is still in early stages of testing. I'm reasonably confident that there are no remaining infinite loops or fatal errors, however I urge caution until automated testing and fuzzing is implemented and an official release is posted.
 
 ### To do
 - [ ] Fold scheme file
