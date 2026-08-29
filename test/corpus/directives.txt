@@ -1,0 +1,42 @@
+=====================
+Single-site with Root
+=====================
+
+example.com
+
+root * /var/www/
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (literal_string))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (literal_string))))
+
+===========================================
+Single-site with Multiple Wildcard Matchers
+===========================================
+
+example.com
+
+path *.txt *.md *.mdown /site/*
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (literal_string))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (literal_string)
+      (literal_string)
+      (literal_string)
+      (literal_string))))

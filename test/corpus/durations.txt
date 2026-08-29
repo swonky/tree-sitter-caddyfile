@@ -1,0 +1,19 @@
+========
+Duration
+========
+
+example.com
+
+respond 5s
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (literal_string))
+    (construction
+      (identifier)
+      (duration
+        (integer)
+        (literal_string)))))

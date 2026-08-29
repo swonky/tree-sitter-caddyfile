@@ -1,0 +1,72 @@
+===================
+Single-site Heredoc
+===================
+
+example.com
+
+respond <<EOF
+Hello, world
+EOF
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (literal_string))
+    (construction
+      keyword: (identifier)
+      argument: (heredoc
+        (heredoc_tag)
+        (heredoc_content)
+        (heredoc_suffix)))))
+
+=====================
+Heredoc in Site-block
+=====================
+
+example.com {
+	respond <<EOF
+		Hello, world
+EOF 200
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      site: (address
+        host: (literal_string))
+      (construction
+        keyword: (identifier)
+        argument: (heredoc
+          (heredoc_tag)
+          (heredoc_content)
+          (heredoc_suffix))
+        argument: (integer)))))
+
+==============================
+Heredoc in Site-block Indented
+==============================
+
+example.com {
+	respond <<EOF
+		Hello, world
+	EOF 200
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      site: (address
+        host: (literal_string))
+      (construction
+        keyword: (identifier)
+        argument: (heredoc
+          (heredoc_tag)
+          (heredoc_content)
+          (heredoc_suffix))
+        argument: (integer)))))

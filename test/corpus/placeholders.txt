@@ -1,0 +1,74 @@
+=================
+Array Placeholder
+=================
+
+example.com
+
+root * {args[0]}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (literal_string))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (templated_string
+        (substitution
+          (parameter
+            (integer)))))))
+
+========================
+Nested Field Placeholder
+========================
+
+example.com
+
+root * {something.args[0]}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (literal_string))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (templated_string
+        (substitution
+          (placeholder
+            (identifier)
+            (identifier)))))))
+
+=====================================================
+Field Placeholder with nested Environment Placeholder
+=====================================================
+
+example.com
+
+dns cloudflare {file.{$CF_API_TOKEN_FILE}}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (literal_string))
+    (construction
+      (identifier)
+      (literal_string)
+      (templated_string
+        (substitution
+          (placeholder
+            (identifier)
+            (path
+              (identifier
+                (templated_identifier
+                  (substitution
+                    (environment_variable
+                      (identifier))))))))))))
