@@ -82,7 +82,7 @@
     "named": true,
     "fields": {
       "host": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -92,20 +92,6 @@
           {
             "type": "ipv6",
             "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      },
-      "path": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "/",
-            "named": false
           },
           {
             "type": "string",
@@ -131,30 +117,12 @@
           }
         ]
       },
-      "prefix_length": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "integer",
-            "named": true
-          }
-        ]
-      },
       "scheme": {
         "multiple": true,
         "required": false,
         "types": [
           {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": ":",
+            "type": "://",
             "named": false
           },
           {
@@ -198,7 +166,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "comment",
@@ -209,19 +177,11 @@
           "named": true
         },
         {
-          "type": "named_route_definition",
+          "type": "multi_site",
           "named": true
         },
         {
-          "type": "site_block",
-          "named": true
-        },
-        {
-          "type": "snippet_definition",
-          "named": true
-        },
-        {
-          "type": "snippet_reference",
+          "type": "single_site",
           "named": true
         }
       ]
@@ -310,7 +270,7 @@
           "named": true
         },
         {
-          "type": "matcher_definition",
+          "type": "named_matcher_definition",
           "named": true
         },
         {
@@ -395,76 +355,6 @@
     }
   },
   {
-    "type": "expression_matcher",
-    "named": true,
-    "fields": {
-      "matcher": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "expression",
-            "named": false
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "cel_expression",
-          "named": true
-        },
-        {
-          "type": "embedded_content",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "generic_matcher",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "argument",
-            "named": true
-          }
-        ]
-      },
-      "matcher": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "matcher_clause",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "global_block",
     "named": true,
     "fields": {},
@@ -485,7 +375,7 @@
           "named": true
         },
         {
-          "type": "matcher_definition",
+          "type": "named_matcher_definition",
           "named": true
         },
         {
@@ -611,7 +501,7 @@
       "required": true,
       "types": [
         {
-          "type": "named_matcher",
+          "type": "named_matcher_reference",
           "named": true
         },
         {
@@ -626,34 +516,38 @@
     }
   },
   {
-    "type": "matcher_clause",
+    "type": "multi_site",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "embedded_content",
+          "type": "comment",
           "named": true
         },
         {
-          "type": "expression_matcher",
+          "type": "named_route_definition",
           "named": true
         },
         {
-          "type": "generic_matcher",
+          "type": "site_block",
           "named": true
         },
         {
-          "type": "negative_matcher",
+          "type": "snippet_definition",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "matcher_definition",
+    "type": "named_matcher_definition",
     "named": true,
     "fields": {
       "name": {
@@ -668,26 +562,18 @@
       }
     },
     "children": {
-      "multiple": true,
-      "required": false,
+      "multiple": false,
+      "required": true,
       "types": [
         {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "heredoc",
-          "named": true
-        },
-        {
-          "type": "matcher_clause",
+          "type": "request_matcher",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "named_matcher",
+    "type": "named_matcher_reference",
     "named": true,
     "fields": {
       "name": {
@@ -734,7 +620,7 @@
           "named": true
         },
         {
-          "type": "matcher_definition",
+          "type": "named_matcher_definition",
           "named": true
         },
         {
@@ -747,29 +633,6 @@
         },
         {
           "type": "variable_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "negative_matcher",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "comment",
-          "named": true
-        },
-        {
-          "type": "generic_matcher",
-          "named": true
-        },
-        {
-          "type": "matcher_clause",
           "named": true
         }
       ]
@@ -926,12 +789,87 @@
     }
   },
   {
-    "type": "site_block",
+    "type": "regular_expression",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "request_matcher",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          },
+          {
+            "type": "cel_expression",
+            "named": true
+          },
+          {
+            "type": "literal_string",
+            "named": true
+          },
+          {
+            "type": "regular_expression",
+            "named": true
+          }
+        ]
+      },
+      "matcher": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "modifier": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "not",
+            "named": false
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "embedded_content",
+          "named": true
+        },
+        {
+          "type": "heredoc",
+          "named": true
+        },
+        {
+          "type": "request_matcher",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "single_site",
     "named": true,
     "fields": {
       "site": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "address",
@@ -957,7 +895,57 @@
           "named": true
         },
         {
-          "type": "matcher_definition",
+          "type": "named_matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_block",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "site_block",
+    "named": true,
+    "fields": {
+      "site": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "address",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "construction",
+          "named": true
+        },
+        {
+          "type": "invoke_statement",
+          "named": true
+        },
+        {
+          "type": "named_matcher_definition",
           "named": true
         },
         {
@@ -1007,7 +995,7 @@
           "named": true
         },
         {
-          "type": "matcher_definition",
+          "type": "named_matcher_definition",
           "named": true
         },
         {
@@ -1067,7 +1055,7 @@
           "named": true
         },
         {
-          "type": "matcher_definition",
+          "type": "named_matcher_definition",
           "named": true
         },
         {
@@ -1225,6 +1213,10 @@
     "named": false
   },
   {
+    "type": "://",
+    "named": false
+  },
+  {
     "type": "<<",
     "named": false
   },
@@ -1250,10 +1242,6 @@
   },
   {
     "type": "env",
-    "named": false
-  },
-  {
-    "type": "expression",
     "named": false
   },
   {

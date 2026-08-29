@@ -50,6 +50,11 @@ export default grammar({
 		$._key_file,
 		$._key_not,
 		$._key_site,
+		$._key_path_regexp,
+		$._key_host_regexp,
+		$._key_header_regexp,
+		$._key_cookie_regexp,
+		$._key_vars_regexp,
 
 		// symbols
 		$._ext_sym_paren_o,
@@ -75,6 +80,7 @@ export default grammar({
 		$._ext_sym_exclaim,
 
 		$._ext_sym_block_start,
+		$._ext_sym_scheme,
 		// error recovery indicator
 		$._error_sentinel,
 	],
@@ -83,21 +89,26 @@ export default grammar({
 
 	rules: {
 		caddyfile: $ =>
-			repeat1(
-				choice(
-					$.global_block,
-					$.site_block,
-					$.snippet_definition,
-					$.named_route_definition,
-					$.snippet_reference,
-					$._eol,
-				),
+			seq(
+				repeat($._eol),
+				optional(seq($.global_block, repeat($._eol))),
+				choice($.single_site, $.multi_site),
+			),
+
+		single_site: $ => seq($._site_list, repeat1($._eol), optional($._block_body)),
+		multi_site: $ => seq($._content, repeat(choice($._content, $._eol))),
+		_content: $ =>
+			choice(
+				$.site_block,
+				$.snippet_definition,
+				$.named_route_definition,
+				$.snippet_reference,
 			),
 
 		global_block: $ => $._block,
-		site_block: $ => seq(repeat1(seq($._site_field, $._sd)), $._block),
-
-		_sd: $ => seq(repeat1($._d), optional(seq($._eol, repeat($._d)))),
+		site_block: $ => seq($._site_list, $._block),
+		_site_list: $ => repeat1(choice($._sd, $._site_field)),
+		_sd: $ => prec.right(seq(repeat1($._d), optional(seq($._eol, repeat($._d))))),
 		_d: $ => choice($._ws, $._sym_comma),
 
 		_site_field: $ => field('site', $.address),
@@ -175,48 +186,27 @@ export default grammar({
 				repeat1(seq($._sym_period, optional(field('member', $.identifier)))),
 			),
 
-		_path: $ => repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
-
 		parameter: $ => seq(optional($._keyword_args), $._index),
 		environment_variable: $ =>
 			seq($._sym_dollar, optional(field('reference', $.identifier))),
 
-		_scheme: $ => prec(1, seq($.string, $._sym_colon, $._sym_solidus, $._sym_solidus)),
-		_scheme_field: $ => field('scheme', $._scheme),
-
-		_port_field: $ => field('port', seq($._sym_colon, $._primitive)),
-		_path_field: $ => field('path', seq($._sym_solidus, $.string)),
-		_prefix_length_field: $ => field('prefix_length', seq($._sym_solidus, $.integer)),
-		_addr_suffix: $ => choice($._path_field, $._prefix_length_field),
 		_ipv4_octet: $ => field('octet', $.integer),
-		_domain_segment: $ => field('segment', choice($.string, $.wildcard)),
-
 		ipv6: $ =>
 			seq(
 				$._sym_bracket_o,
 				repeat(choice(field('hextet', $._primitive), $._sym_colon)),
 				$._sym_bracket_c,
 			),
-
-		_host_field: $ => field('host', choice($.ipv6, $.ipv4, $.string)),
-
-		_address: $ =>
-			prec.left(
-				choice(
-					seq($._host_field, optional($._port_field), optional($._addr_suffix)),
-					seq($._port_field, optional($._addr_suffix)),
-					$._addr_suffix,
-				),
-			),
+		_path: $ => repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
 
 		address: $ =>
-			choice(
-				$._address,
-				seq(
-					$._scheme_field,
-					optional($._host_field),
-					optional($._port_field),
-					optional($._addr_suffix),
+			prec.right(
+				repeat1(
+					choice(
+						field('scheme', seq($.string, $._sym_scheme)),
+						field('port', seq($._sym_colon, $._primitive)),
+						field('host', choice($.ipv6, $.ipv4, $.string)),
+					),
 				),
 			),
 
@@ -225,14 +215,6 @@ export default grammar({
 
 		_block_body: $ =>
 			seq($._expression, repeat(seq(repeat1($._eol), $._expression)), repeat1($._eol)),
-
-		_matcher_block: $ =>
-			seq(
-				$._sym_block_start,
-				repeat1($._eol),
-				repeat(seq($.matcher_clause, repeat1($._eol))),
-				$._sym_brace_c,
-			),
 
 		_vars_block: $ =>
 			seq(
@@ -250,7 +232,7 @@ export default grammar({
 		_expression: $ =>
 			choice(
 				$.construction,
-				$.matcher_definition,
+				$.named_matcher_definition,
 				$.snippet_reference,
 				$.invoke_statement,
 				$.variable_declaration,
@@ -278,40 +260,48 @@ export default grammar({
 
 		named_route_definition: $ => seq($._named_route_name, $._block),
 
-		named_matcher: $ => $._matcher_name,
-		path_matcher: $ => prec.left(seq(field('path', $.path), $._ws)),
+		named_matcher_reference: $ => $._matcher_name,
+		path_matcher: $ => prec.left(seq(field('path', $.path), optional($._ws))),
 
 		path: $ =>
-			seq(
-				$._sym_solidus,
-				repeat(field('segment', choice($.wildcard, $.identifier, $._sym_solidus))),
+			prec.right(
+				seq(
+					$._sym_solidus,
+					repeat(field('segment', choice($.wildcard, $.identifier, $._sym_solidus))),
+				),
 			),
 
-		matcher: $ => choice($.wildcard, $.named_matcher, $.path_matcher),
+		matcher: $ => choice($.wildcard, $.named_matcher_reference, $.path_matcher),
 		wildcard: $ => $._sym_asterisk,
 
 		construction: $ => seq($._clause, optional($._block)),
 
 		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
 
-		matcher_definition: $ =>
+		named_matcher_definition: $ => seq($._matcher_name, optional($._ws), $.request_matcher),
+
+		_matcher_block: $ =>
 			seq(
-				$._matcher_name,
-				optional($._ws),
-				choice($.matcher_clause, $._matcher_block, $.heredoc),
+				$._sym_block_start,
+				repeat1($._eol),
+				repeat(seq($.request_matcher, repeat1($._eol))),
+				$._sym_brace_c,
 			),
 
-		matcher_clause: $ =>
-			choice(
-				$.negative_matcher,
-				$.generic_matcher,
-				$.expression_matcher,
-				$.embedded_content,
+		request_matcher: $ =>
+			seq(
+				optional(field('modifier', $._keyword_not)),
+				choice(
+					$._regexp_matcher,
+					$._generic_matcher,
+					$._expression_matcher,
+					$.embedded_content,
+					$.heredoc,
+					$._matcher_block,
+				),
 			),
 
-		negative_matcher: $ => seq($._keyword_not, choice($.generic_matcher, $._matcher_block)),
-
-		generic_matcher: $ =>
+		_generic_matcher: $ =>
 			prec.left(
 				seq(
 					field('matcher', $.identifier),
@@ -321,11 +311,34 @@ export default grammar({
 				),
 			),
 
-		expression_matcher: $ =>
+		_expression_matcher: $ =>
 			seq(
 				field('matcher', $._keyword_expression),
 				repeat($._ws),
-				choice($._implied_cel_expression, $.embedded_content),
+				field('argument', choice($._implied_cel_expression, $.embedded_content)),
+			),
+
+		_keyword_regex_matcher: $ =>
+			choice(
+				$._key_path_regexp,
+				$._key_host_regexp,
+				$._key_header_regexp,
+				$._key_cookie_regexp,
+				$._key_vars_regexp,
+			),
+		regular_expression: $ => repeat1($._ext_str_bare),
+		_regexp_matcher: $ =>
+			seq(
+				field('matcher', alias($._keyword_regex_matcher, $.identifier)),
+				repeat($._ws),
+				choice(
+					seq(
+						field('argument', $.literal_string),
+						$._ws,
+						field('argument', $.regular_expression),
+					),
+					field('argument', $.regular_expression),
+				),
 			),
 
 		_implied_cel_expression: $ => alias($._ext_str_cel_inline, $.cel_expression),
@@ -340,9 +353,9 @@ export default grammar({
 				),
 			),
 
-		__keyword_field: $ => seq(field('keyword', $._bare_identifier), $._ws),
+		__keyword_field: $ => field('keyword', $._bare_identifier),
 		_matcher_field: $ => prec.left(seq(field('matcher', $.matcher), repeat($._ws))),
-		_arguments_field: $ => seq(field('argument', $.argument), repeat($._ws)),
+		_arguments_field: $ => prec.right(seq(field('argument', $.argument), repeat($._ws))),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
 
 		_primitive: $ => prec.right(choice($.string, $.integer)),
@@ -359,7 +372,7 @@ export default grammar({
 		decimal: $ => $._ext_str_decimal,
 
 		argument: $ =>
-			prec.right(
+			prec.left(
 				choice(
 					$._primitive,
 					$.quoted_expression,
@@ -402,8 +415,6 @@ export default grammar({
 		quoted_expression: $ =>
 			seq($._sym_quote, optional(field('content', $.string)), $._sym_quote),
 
-		// _permissive_string: $ => alias(repeat1(choice($.string, $._ws)), $.string),
-
 		embedded_content: $ => seq($._sym_grave, $.cel_expression, $._sym_grave),
 		cel_expression: $ => $._ext_str_cel,
 
@@ -432,14 +443,22 @@ export default grammar({
 		_keyword_import: $ => alias($._key_import, 'import'),
 		_keyword_invoke: $ => alias($._key_invoke, 'invoke'),
 		_keyword_private_ranges: $ => alias($._key_private_ranges, 'private_ranges'),
-		_keyword_expression: $ => alias($._key_expression, 'expression'),
 		_keyword_vars: $ => alias($._key_vars, 'vars'),
 		_keyword_args: $ => alias($._key_args, 'args'),
 		_keyword_env: $ => alias($._key_env, 'env'),
 		_keyword_file: $ => alias($._key_file, 'file'),
 		_keyword_not: $ => alias($._key_not, 'not'),
 
+		_keyword_expression: $ => alias($._key_expression, $.identifier),
+
+		// _keyword_path_regexp: $ => alias($._key_path_regexp, $.identifier),
+		// _keyword_host_regexp: $ => alias($._key_host_regexp, $.identifier),
+		// _keyword_header_regexp: $ => alias($._key_header_regexp, $.identifier),
+		// _keyword_cookie_regexp: $ => alias($._key_cookie_regexp, $.identifier),
+		// _keyword_vars_regexp: $ => alias($._key_vars_regexp, $.identifier),
+		//
 		_sym_block_start: $ => alias($._ext_sym_block_start, '{'),
+		_sym_scheme: $ => alias($._ext_sym_scheme, '://'),
 
 		_ws: $ => $._ext_ws,
 		_eol: $ => choice($.comment, $._ext_eol),

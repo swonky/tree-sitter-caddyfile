@@ -10,7 +10,7 @@
 
 enum {
 	U32LEN = sizeof(uint32_t),
-	HDRLEN = sizeof(uint8_t) + U32LEN,
+	HDRLEN = sizeof(uint8_t) + U32LEN + sizeof(uint8_t),
 	TAGLEN = 64,
 };
 
@@ -63,6 +63,11 @@ enum TokenType {
 	KEY_FILE,
 	KEY_NOT,
 	KEY_SITE,
+	KEY_PATH_REGEXP,
+	KEY_HOST_REGEXP,
+	KEY_HEADER_REGEXP,
+	KEY_COOKIE_REGEXP,
+	KEY_VARS_REGEXP,
 
 	/*
 	 * symbolic operators
@@ -90,6 +95,7 @@ enum TokenType {
 	SYM_EXCLAIM,
 
 	SYM_BLOCK_START,
+	SYM_SCHEME,
 
 	/*
 	 * indicates that tree-sitter
@@ -154,16 +160,11 @@ static const Keyword keywords[] = {
     KEYWORD("env", KEY_ENV),
     KEYWORD("file", KEY_FILE),
     KEYWORD("site", KEY_SITE),
-
-    /* units */
-    // UNIT("ns"),
-    // UNIT("us"),
-    // UNIT("µs"),
-    // UNIT("ms"),
-    // UNIT("s"),
-    // UNIT("m"),
-    // UNIT("h"),
-    // UNIT("d"),
+    KEYWORD("path_regexp", KEY_PATH_REGEXP),
+    KEYWORD("host_regexp", KEY_HOST_REGEXP),
+    KEYWORD("header_regexp", KEY_HEADER_REGEXP),
+    KEYWORD("cookie_regexp", KEY_COOKIE_REGEXP),
+    KEYWORD("vars_regexp", KEY_VARS_REGEXP),
 };
 
 static inline enum TokenType get_token(UnicodeChar c)
@@ -178,6 +179,7 @@ typedef bool (*Asserter)(UnicodeChar);
 
 typedef struct {
 	/* persistent fields */
+	bool in_quotation;
 	uint8_t tag_len;
 	UnicodeChar tag[TAGLEN];
 	UnicodeChar previous;
@@ -513,9 +515,20 @@ static void scan_text(Scanner *s)
 	enum TokenType token = get_token(c);
 
 	if (token != _UNSPECIFIED && is_valid(s, token)) {
-		set_result(s, token);
 		advance(s);
 		mark_end(s);
+		set_result(s, token);
+		if (token == SYM_QUOTE)
+			s->in_quotation = !s->in_quotation;
+		if (token == SYM_COLON && is_valid(s, SYM_SCHEME) &&
+		    peek(s) == '/') {
+			advance(s);
+			if (peek(s) == '/') {
+				advance(s);
+				mark_end(s);
+				set_result(s, SYM_SCHEME);
+			}
+		}
 		return;
 	}
 
@@ -579,7 +592,7 @@ static void scan_text(Scanner *s)
 			return;
 		}
 
-		if (is_eol(c) || is_ws(c)) {
+		if (is_eol(c) || (is_ws(c) && !s->in_quotation)) {
 			if (kw) {
 				enum TokenType token = check_keyword(s);
 				if (token != _UNSPECIFIED) {
@@ -589,6 +602,7 @@ static void scan_text(Scanner *s)
 				}
 				kw = false;
 			}
+			s->in_quotation = false;
 			break;
 		}
 
@@ -709,6 +723,7 @@ static void scan_text(Scanner *s)
  */
 static inline void init_persistent_fields(Scanner *s)
 {
+	s->in_quotation = false;
 	s->tag_len = 0;
 	s->previous = '\0';
 }
@@ -764,6 +779,7 @@ unsigned tree_sitter_caddyfile_external_scanner_serialize(
 
 	buffer[0] = (char)s->tag_len;
 	ser_u32_le(buffer + 1, (uint32_t)s->previous);
+	buffer[1 + U32LEN] = (char)s->in_quotation;
 
 	for (unsigned i = 0; i < s->tag_len; i++)
 		ser_u32_le(buffer + HDRLEN + i * U32LEN, (uint32_t)s->tag[i]);
@@ -783,6 +799,7 @@ void tree_sitter_caddyfile_external_scanner_deserialize(
 
 	s->tag_len = (uint8_t)buffer[0];
 	s->previous = (UnicodeChar)deser_u32_le(buffer + 1);
+	s->in_quotation = buffer[1 + U32LEN] != 0;
 
 	if (s->tag_len > TAGLEN)
 		s->tag_len = TAGLEN;
