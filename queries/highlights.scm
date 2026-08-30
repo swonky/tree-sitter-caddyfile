@@ -68,20 +68,12 @@
 	keyword: (_) @function.call
 )
 
-; (matcher_clause
-; 	matcher (_) @type
-; )
-;
-(matcher_definition
-	name: (_) @type.definition
-)
 
-(generic_matcher
+(request_matcher
 	matcher: (_) @type.builtin
 )
-; special matchers
 
-(named_matcher
+(named_matcher_definition
 	name: (_) @type
 )
 
@@ -114,7 +106,6 @@
 
 (site_block (string) @string.special.url ) 
 
-"expression" @type.builtin
 "private_ranges" @constant.builtin
 
 (ERROR) @error-node

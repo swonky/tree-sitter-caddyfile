@@ -4,6 +4,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "address",
+        "named": true
+      },
+      {
         "type": "decimal",
         "named": true
       },
@@ -41,6 +45,24 @@
       },
       {
         "type": "verb",
+        "named": true
+      }
+    ]
+  },
+  {
+    "type": "host",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "domain_name",
+        "named": true
+      },
+      {
+        "type": "ipv4",
+        "named": true
+      },
+      {
+        "type": "ipv6",
         "named": true
       }
     ]
@@ -86,15 +108,7 @@
         "required": false,
         "types": [
           {
-            "type": "ipv4",
-            "named": true
-          },
-          {
-            "type": "ipv6",
-            "named": true
-          },
-          {
-            "type": "string",
+            "type": "host",
             "named": true
           }
         ]
@@ -292,6 +306,22 @@
     "type": "decimal",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "domain_name",
+    "named": true,
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "duration",

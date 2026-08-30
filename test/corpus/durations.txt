@@ -1,5 +1,5 @@
 ========
-Duration
+Integer Duration
 ========
 
 example.com
@@ -11,9 +11,36 @@ respond 5s
 (caddyfile
   (single_site
     (address
-      (literal_string))
+      (domain_name
+        (literal_string)
+        (literal_string)))
     (construction
       (identifier)
+      (duration
+        (integer)
+        (literal_string)))))
+
+========
+Decimal Duration
+========
+
+example.com
+
+respond 5.5s
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (decimal)
+      (address
+        (domain_name))
       (duration
         (integer)
         (literal_string)))))

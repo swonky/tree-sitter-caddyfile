@@ -1,0 +1,1798 @@
+=========
+Hostnames
+=========
+
+example.com
+
+reverse_proxy example.com
+reverse_proxy example.com:8080
+reverse_proxy http://example.com
+reverse_proxy http://example.com:8080
+reverse_proxy https://example.com
+reverse_proxy https://example.com:8080
+
+reverse_proxy my.really.dumb.hostname
+reverse_proxy https://my.really.dumb.hostname
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string))))
+    (construction
+      (identifier)
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string))
+        (integer)))
+    (construction
+      (identifier)
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (construction
+      (identifier)
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))
+        (integer)))
+    (construction
+      (identifier)
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (construction
+      (identifier)
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)
+          (literal_string))))
+    (construction
+      (identifier)
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
+
+================
+File Descriptors
+================
+
+example.com
+
+reverse_proxy fdgram/3
+reverse_proxy fd/4
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string))))
+
+============
+Unix Sockets
+============
+
+example.com
+
+reverse_proxy unix//run/grafana/grafana.sock
+reverse_proxy unix+h2c//run/grafana/grafana.sock
+reverse_proxy unixgram//run/grafana/grafana.sock
+reverse_proxy unixpacket//run/grafana/grafana.sock
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string))))))
+
+=================
+Bare IP Addresses
+=================
+
+example.com
+
+reverse_proxy 127.0.0.1
+reverse_proxy 127.0.0.1:8080
+reverse_proxy [::1]
+reverse_proxy [::1]:8080
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer))
+    (construction
+      (identifier)
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer)
+      (address
+        (integer)))
+    (construction
+      (identifier)
+      (address
+        (ipv6
+          (integer))))
+    (construction
+      (identifier)
+      (address
+        (ipv6
+          (integer))
+        (integer)))))
+
+=========================
+IP Address with Protocol
+=========================
+
+example.com
+
+reverse_proxy ip/127.0.0.1
+reverse_proxy ip/127.0.0.1:8080
+reverse_proxy ip/[::1]
+reverse_proxy ip/[::1]:8080
+reverse_proxy ip4/127.0.0.1
+reverse_proxy ip4/127.0.0.1:8080
+reverse_proxy ip6/[::1]
+reverse_proxy ip6/[::1]:8080
+
+reverse_proxy tcp/127.0.0.1
+reverse_proxy tcp/127.0.0.1:8080
+reverse_proxy tcp/[::1]
+reverse_proxy tcp/[::1]:8080
+reverse_proxy tcp4/127.0.0.1
+reverse_proxy tcp4/127.0.0.1:8080
+reverse_proxy tcp6/[::1]
+reverse_proxy tcp6/[::1]:8080
+
+reverse_proxy udp/127.0.0.1
+reverse_proxy udp/127.0.0.1:8080
+reverse_proxy udp/[::1]
+reverse_proxy udp/[::1]:8080
+reverse_proxy udp4/127.0.0.1
+reverse_proxy udp4/127.0.0.1:8080
+reverse_proxy udp6/[::1]
+reverse_proxy udp6/[::1]:8080
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer)
+      (address
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer)
+      (address
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer)
+      (address
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer)
+      (address
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer)
+      (address
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (decimal)
+      (address
+        (domain_name))
+      (integer)
+      (address
+        (integer)))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))))
+    (construction
+      (identifier)
+      (literal_string)
+      (literal_string)
+      (address
+        (ipv6
+          (integer))
+        (integer)))))
+
+=================
+URL with Fragment
+=================
+
+example.com
+
+redir https://example.com/#/about 302
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (comment
+      (comment))))
+
+==============================
+Single Site Block with Comment
+==============================
+
+example.com
+
+#redir https://example.com/#/about 302
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (comment
+      (comment))))
+
+=================================
+Multiple Site Blocks with Comment
+=================================
+
+example.com {
+	#respond "Hello, world!"
+}
+
+foobar.com {
+	#respond "Hello, world!"
+}
+
+# foobar.com {
+#	respond "Hello, world!"
+# }
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (comment
+        (comment)))
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (comment
+        (comment)))
+    (comment
+      (comment))
+    (comment
+      (comment))
+    (comment
+      (comment))))
+
+=====================
+Single-site with Root
+=====================
+
+example.com
+
+root * /var/www/
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (literal_string))))
+
+===========================================
+Single-site with Multiple Wildcard Matchers
+===========================================
+
+example.com
+
+path *.txt *.md *.mdown /site/*
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (address
+        (domain_name
+          (literal_string)))
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string)))
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string)))
+      (literal_string))))
+
+========
+Duration
+========
+
+example.com
+
+respond 5s
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (duration
+        (integer)
+        (literal_string)))))
+
+====================
+Environment Variable
+====================
+
+example.com
+
+root * {$ROOT}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (templated_string
+        (substitution
+          (environment_variable
+            (identifier)))))))
+
+=======================================
+Environment Variable with Default Value
+=======================================
+
+example.com
+
+root * {$ROOT:/var/www}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (templated_string
+        (substitution
+          (environment_variable
+            (identifier)))))))
+
+===================
+Single-site Heredoc
+===================
+
+example.com
+
+respond <<EOF
+Hello, world
+EOF
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)))
+    (construction
+      keyword: (identifier)
+      argument: (heredoc
+        (heredoc_tag)
+        (heredoc_content)
+        (heredoc_suffix)))))
+
+=====================
+Heredoc in Site-block
+=====================
+
+example.com {
+	respond <<EOF
+		Hello, world
+EOF 200
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      site: (address
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string)))
+      (construction
+        keyword: (identifier)
+        argument: (heredoc
+          (heredoc_tag)
+          (heredoc_content)
+          (heredoc_suffix))
+        argument: (integer)))))
+
+==============================
+Heredoc in Site-block Indented
+==============================
+
+example.com {
+	respond <<EOF
+		Hello, world
+	EOF 200
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      site: (address
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string)))
+      (construction
+        keyword: (identifier)
+        argument: (heredoc
+          (heredoc_tag)
+          (heredoc_content)
+          (heredoc_suffix))
+        argument: (integer)))))
+
+================
+Wildcard Matcher
+================
+
+example.com
+
+reverse_proxy * 127.0.0.1
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)))
+    (construction
+      keyword: (identifier)
+      matcher: (matcher
+        (wildcard))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (integer))))
+
+============
+Path Matcher
+============
+
+example.com
+
+reverse_proxy /path 127.0.0.1
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)))
+    (construction
+      keyword: (identifier)
+      matcher: (matcher
+        (path_matcher
+          path: (path
+            segment: (identifier))))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (integer))))
+
+=====================
+Wildcard Path Matcher
+=====================
+
+example.com
+
+reverse_proxy /path* 127.0.0.1
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)))
+    (construction
+      keyword: (identifier)
+      matcher: (matcher
+        (path_matcher
+          path: (path
+            segment: (identifier)
+            segment: (wildcard))))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (integer))))
+
+=============
+Named Matcher
+=============
+
+*.example.com
+
+@test host test.example.com
+
+reverse_proxy @test 127.0.0.1
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)
+        segment: (literal_string)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (literal_string)
+        argument: (address
+          host: (domain_name
+            segment: (literal_string)
+            segment: (literal_string)))))
+    (construction
+      keyword: (identifier)
+      matcher: (matcher
+        (named_matcher_reference
+          name: (identifier)))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (integer))))
+
+===================
+Named Matcher Block
+===================
+
+*.example.com
+
+@test {
+	host test.example.com
+}
+
+reverse_proxy @test 127.0.0.1
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)
+        segment: (literal_string)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        (request_matcher
+          matcher: (identifier)
+          argument: (literal_string)
+          argument: (address
+            host: (domain_name
+              segment: (literal_string)
+              segment: (literal_string))))))
+    (construction
+      keyword: (identifier)
+      matcher: (matcher
+        (named_matcher_reference
+          name: (identifier)))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (integer))))
+
+===========
+Not Matcher
+===========
+
+*.example.com
+
+@test not host test.example.com
+
+reverse_proxy @test 127.0.0.1
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)
+        segment: (literal_string)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (literal_string)
+        argument: (address
+          host: (domain_name
+            segment: (literal_string)
+            segment: (literal_string)))))
+    (construction
+      keyword: (identifier)
+      matcher: (matcher
+        (named_matcher_reference
+          name: (identifier)))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (integer))))
+
+===========
+CEL Matcher
+===========
+
+*.example.com
+
+@test `{method}.startsWith("P")`
+@test2 expression `{method}.startsWith("P")`
+@test3 expression {method}.startsWith("P")
+
+reverse_proxy @test 127.0.0.1
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)
+        segment: (literal_string)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        (embedded_content
+          (cel_expression))))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (embedded_content
+          (cel_expression))))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (cel_expression)))
+    (construction
+      keyword: (identifier)
+      matcher: (matcher
+        (named_matcher_reference
+          name: (identifier)))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (integer))))
+
+=========================================
+Matcher Directive with Multiple Arguments
+=========================================
+
+example.com
+
+@private client_ip 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 127.0.0.1/8 fd00::/8 ::1
+
+reverse_proxy @private 127.0.0.1
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (decimal)
+        argument: (address
+          host: (domain_name))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name
+            segment: (literal_string)))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name
+            segment: (literal_string)))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name
+            segment: (literal_string)))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name))
+        argument: (decimal)
+        argument: (address
+          host: (domain_name
+            segment: (literal_string)))
+        argument: (literal_string)
+        argument: (address
+          port: (literal_string))
+        argument: (address
+          port: (literal_string))))
+    (construction
+      keyword: (identifier)
+      matcher: (matcher
+        (named_matcher_reference
+          name: (identifier)))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (decimal)
+      argument: (address
+        host: (domain_name))
+      argument: (integer))))
+
+========================
+path_regexp with Regex
+========================
+
+example.com
+
+@bar path_regexp /foo/(bar|baz).*
+@numeric path_regexp /foo/[0-9]+
+@regex path_regexp ^/path/([a-z]+)/end$
+@static path_regexp \.([a-f0-9]{6})\.(css|js)$
+@static_cel `path_regexp('\.([a-f0-9]{6})\.(css|js)$') && file()`
+
+file_server
+
+---
+
+(caddyfile
+  (single_site
+    site: (address
+      host: (domain_name
+        segment: (literal_string)
+        segment: (literal_string)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (regular_expression)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (regular_expression)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (regular_expression)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        matcher: (identifier)
+        argument: (regular_expression)))
+    (named_matcher_definition
+      name: (identifier)
+      (request_matcher
+        (embedded_content
+          (cel_expression))))
+    (construction
+      keyword: (identifier))))
+
+===========
+Named Route
+===========
+
+&(named_route) {
+	# this is a re-usable named route
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (named_route_definition
+      (identifier)
+      (comment
+        (comment)))))
+
+===============================
+Named Route between Site blocks
+===============================
+
+example.com {
+	invoke snippet
+}
+
+&(named_route) {
+	# this is a re-usable named route
+}
+
+example.net {
+	invoke snippet
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (invoke_statement
+        (identifier)))
+    (named_route_definition
+      (identifier)
+      (comment
+        (comment)))
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (invoke_statement
+        (identifier)))))
+
+=================
+Array Placeholder
+=================
+
+example.com
+
+root * {args[0]}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (templated_string
+        (substitution
+          (parameter
+            (integer)))))))
+
+========================
+Nested Field Placeholder
+========================
+
+example.com
+
+root * {something.args[0]}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (templated_string
+        (substitution
+          (placeholder
+            (identifier)
+            (identifier)))))))
+
+=====================================================
+Field Placeholder with nested Environment Placeholder
+=====================================================
+
+example.com
+
+dns cloudflare {file.{$CF_API_TOKEN_FILE}}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (literal_string)
+      (templated_string
+        (substitution
+          (placeholder
+            (identifier)
+            (path
+              (identifier
+                (templated_identifier
+                  (substitution
+                    (environment_variable
+                      (identifier))))))))))))
+
+==================================
+Single Site Block with one address
+==================================
+
+example.com
+
+root * /var/www
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (literal_string))))
+
+=========================================
+Single Site Block with multiple addresses
+=========================================
+
+http://example.com:8080, https://fake.org:8443, fake.co.uk, {$ENV_SITE}, :{$PORT}, {$DOMAIN}:443
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (literal_string)
+      (domain_name
+        (literal_string)
+        (literal_string))
+      (literal_string))
+    (address
+      (literal_string)
+      (domain_name
+        (literal_string)
+        (literal_string))
+      (literal_string))
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)
+        (literal_string)))
+    (address
+      (domain_name
+        (templated_string
+          (substitution
+            (environment_variable
+              (identifier))))))
+    (address
+      (templated_string
+        (substitution
+          (environment_variable
+            (identifier)))))
+    (address
+      (domain_name
+        (templated_string
+          (substitution
+            (environment_variable
+              (identifier)))))
+      (integer))))
+
+=====================================
+Single Site Block with Global Options
+=====================================
+
+{
+	hello
+}
+
+example.com
+
+root * /var/www
+
+---
+
+(caddyfile
+  (global_block
+    (construction
+      (identifier)))
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (literal_string))))
+
+=================
+Single Site Block
+=================
+
+example.com {
+	respond "Hello, world!"
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (construction
+        (identifier)
+        (quoted_expression
+          (literal_string))))))
+
+====================
+Multiple Site Blocks
+====================
+
+example.com {
+	respond "Hello, world!"
+}
+
+foobar.com {
+	respond "Hello, world!"
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (construction
+        (identifier)
+        (quoted_expression
+          (literal_string))))
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (construction
+        (identifier)
+        (quoted_expression
+          (literal_string))))))
+
+=======
+Snippet
+=======
+
+(snippet) {
+	# this is a reusable snippet
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (snippet_definition
+      (identifier)
+      (comment
+        (comment)))))
+
+===========================
+Snippet between Site blocks
+===========================
+
+example.com {
+	import snippet
+}
+
+(snippet) {
+	# this is a reusable snippet
+}
+
+example.net {
+	import snippet
+}
+
+---
+
+(caddyfile
+  (multi_site
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (snippet_reference
+        (identifier)))
+    (snippet_definition
+      (identifier)
+      (comment
+        (comment)))
+    (site_block
+      (address
+        (domain_name
+          (literal_string)
+          (literal_string)))
+      (snippet_reference
+        (identifier)))))
+
+=====================
+Nested Global Options
+=====================
+
+{
+	debug
+	admin off
+	on_demand_tls {
+		ask https://example.com
+	}
+}
+
+example.com
+
+root * /var/www
+
+---
+
+(caddyfile
+  (global_block
+    (construction
+      (identifier))
+    (construction
+      (identifier)
+      (literal_string))
+    (construction
+      (identifier)
+      (construction
+        (identifier)
+        (address
+          (literal_string)
+          (domain_name
+            (literal_string)
+            (literal_string))))))
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (literal_string))))
+
+================
+Character Escape
+================
+
+example.com
+
+respond "\"hello"
+
+root * /var/www
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (quoted_expression
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (literal_string))))
+
+====================
+Status Code Fallback
+====================
+
+example.com
+
+try_files {path} {path}/ /index.html =404
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (templated_string
+        (substitution
+          (placeholder
+            (identifier))))
+      (templated_string
+        (substitution
+          (placeholder
+            (identifier)))
+        (literal_string))
+      (literal_string)
+      (address
+        (domain_name
+          (literal_string)))
+      (literal_string))))
+
+==================
+replaceVars Syntax
+==================
+
+example.com
+
+root * @longhorn-ui@/share/share/lib/longhorn-ui
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (matcher
+        (wildcard))
+      (literal_string))))
+
+=======================
+Domain with Underscores
+=======================
+
+example.com
+
+reverse_proxy some_other_host:1234
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (literal_string)
+      (address
+        (integer)))))
+
+========================
+Hashed password argument
+========================
+
+example.com
+
+basic_auth {
+    username $2a$14$HAb527dB7kq9wMpYa9Ff7.LWvUQAUEeDmXh.WDudhwcJ318l1LufO
+}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (construction
+        (identifier)
+        (literal_string)
+        (address
+          (domain_name
+            (literal_string)
+            (literal_string)))))))
+
+====================
+MAC address argument
+====================
+
+example.com
+
+exec wakeonlan 78:f4:53:67:7a:a9 {
+    pass_thru
+}
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (literal_string)
+      (integer)
+      (address
+        (literal_string))
+      (construction
+        (identifier)))))
+
+===============
+Complex Headers
+===============
+
+example.com
+
+header ?Content-Type
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (domain_name
+        (literal_string)
+        (literal_string)))
+    (construction
+      (identifier)
+      (literal_string))))

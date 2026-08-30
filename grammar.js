@@ -10,7 +10,7 @@
 export default grammar({
 	name: 'caddyfile',
 
-	supertypes: $ => [$.reference, $.argument, $.string],
+	supertypes: $ => [$.reference, $.argument, $.string, $.host],
 
 	externals: $ => [
 		$._ext_unspecified,
@@ -205,10 +205,15 @@ export default grammar({
 					choice(
 						field('scheme', seq($.string, $._sym_scheme)),
 						field('port', seq($._sym_colon, $._primitive)),
-						field('host', choice($.ipv6, $.ipv4, $.string)),
+						field('host', $.host),
 					),
 				),
 			),
+
+		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
+
+		domain_name: $ =>
+			prec.right(repeat1(choice(field('segment', $.string), $._sym_period))),
 
 		_block: $ =>
 			seq($._sym_block_start, repeat1($._eol), optional($._block_body), $._sym_brace_c),
@@ -373,15 +378,18 @@ export default grammar({
 
 		argument: $ =>
 			prec.left(
+				1,
 				choice(
-					$._primitive,
+					$.string,
+					$.integer,
+					$.decimal,
+					$.address,
 					$.quoted_expression,
 					$.embedded_content,
 					$.verb,
 					$.heredoc,
 					$._keyword_private_ranges,
 					$.duration,
-					$.decimal,
 					$.ipv4,
 				),
 			),

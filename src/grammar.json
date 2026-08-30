@@ -824,22 +824,50 @@
               "type": "FIELD",
               "name": "host",
               "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "ipv6"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "ipv4"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "string"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "host"
               }
+            }
+          ]
+        }
+      }
+    },
+    "host": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "ipv6"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ipv4"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "domain_name"
+        }
+      ]
+    },
+    "domain_name": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "segment",
+              "content": {
+                "type": "SYMBOL",
+                "name": "string"
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_sym_period"
             }
           ]
         }
@@ -1774,13 +1802,25 @@
     },
     "argument": {
       "type": "PREC_LEFT",
-      "value": 0,
+      "value": 1,
       "content": {
         "type": "CHOICE",
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_primitive"
+            "name": "string"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "integer"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "decimal"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "address"
           },
           {
             "type": "SYMBOL",
@@ -1805,10 +1845,6 @@
           {
             "type": "SYMBOL",
             "name": "duration"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "decimal"
           },
           {
             "type": "SYMBOL",
@@ -2664,7 +2700,8 @@
   "supertypes": [
     "reference",
     "argument",
-    "string"
+    "string",
+    "host"
   ],
   "reserved": {}
 }
