@@ -78,6 +78,7 @@ export default grammar({
 		$._ext_sym_quote,
 		$._ext_sym_asterisk,
 		$._ext_sym_exclaim,
+		$._ext_sym_question,
 
 		$._ext_sym_block_start,
 		$._ext_sym_scheme,
@@ -203,6 +204,7 @@ export default grammar({
 				$._sym_solidus,
 				repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
 			),
+		_query: $ => seq($._sym_question, $.string),
 
 		address: $ =>
 			prec.right(
@@ -215,6 +217,7 @@ export default grammar({
 						),
 					),
 					optional(field('path', $.path)),
+					optional(field('query', $._query)),
 				),
 			),
 
@@ -455,6 +458,8 @@ export default grammar({
 		_sym_grave: $ => alias($._ext_sym_grave, '`'),
 		_sym_quote: $ => alias($._ext_sym_quote, '"'),
 		_sym_asterisk: $ => alias($._ext_sym_asterisk, '*'),
+		_sym_exclaim: $ => alias($._ext_sym_exclaim, '!'),
+		_sym_question: $ => alias($._ext_sym_question, '?'),
 
 		_keyword_import: $ => alias($._key_import, 'import'),
 		_keyword_invoke: $ => alias($._key_invoke, 'invoke'),

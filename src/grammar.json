@@ -815,6 +815,19 @@
         ]
       }
     },
+    "_query": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sym_question"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        }
+      ]
+    },
     "address": {
       "type": "PREC_RIGHT",
       "value": 0,
@@ -880,6 +893,22 @@
                 "content": {
                   "type": "SYMBOL",
                   "name": "path"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "query",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_query"
                 }
               },
               {
@@ -2228,6 +2257,24 @@
       "named": false,
       "value": "*"
     },
+    "_sym_exclaim": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_ext_sym_exclaim"
+      },
+      "named": false,
+      "value": "!"
+    },
+    "_sym_question": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_ext_sym_question"
+      },
+      "named": false,
+      "value": "?"
+    },
     "_keyword_import": {
       "type": "ALIAS",
       "content": {
@@ -2703,6 +2750,10 @@
     {
       "type": "SYMBOL",
       "name": "_ext_sym_exclaim"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_ext_sym_question"
     },
     {
       "type": "SYMBOL",
