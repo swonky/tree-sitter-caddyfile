@@ -198,15 +198,23 @@ export default grammar({
 				$._sym_bracket_c,
 			),
 		_path: $ => repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
+		path: $ =>
+			seq(
+				$._sym_solidus,
+				repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
+			),
 
 		address: $ =>
 			prec.right(
-				repeat1(
-					choice(
-						field('scheme', seq($.string, $._sym_scheme)),
-						field('port', seq($._sym_colon, $._primitive)),
-						field('host', $.host),
+				seq(
+					repeat1(
+						choice(
+							field('scheme', seq($.string, $._sym_scheme)),
+							field('port', seq($._sym_colon, $._primitive)),
+							field('host', $.host),
+						),
 					),
+					optional(field('path', $.path)),
 				),
 			),
 

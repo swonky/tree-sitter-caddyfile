@@ -113,6 +113,16 @@
           }
         ]
       },
+      "path": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      },
       "port": {
         "multiple": true,
         "required": false,
