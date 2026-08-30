@@ -623,9 +623,9 @@ redir https://example.com/#/about 302
         (domain_name
           (literal_string)
           (literal_string))
-        (path)))
-    (comment
-      (comment))))
+        (path)
+        (literal_string))
+      (integer))))
 
 ==============================
 Single Site Block with Comment

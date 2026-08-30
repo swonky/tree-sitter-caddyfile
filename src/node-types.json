@@ -103,6 +103,20 @@
     "type": "address",
     "named": true,
     "fields": {
+      "fragment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "#",
+            "named": false
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
       "host": {
         "multiple": true,
         "required": false,

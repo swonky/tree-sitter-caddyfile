@@ -204,7 +204,8 @@ export default grammar({
 				$._sym_solidus,
 				repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
 			),
-		_query: $ => seq($._sym_question, $.string),
+		_query: $ => prec.right(seq($._sym_question, optional($.string))),
+		_fragment: $ => prec.right(seq($._sym_num, optional($.string))),
 
 		address: $ =>
 			prec.right(
@@ -218,6 +219,7 @@ export default grammar({
 					),
 					optional(field('path', $.path)),
 					optional(field('query', $._query)),
+					optional(field('fragment', $._fragment)),
 				),
 			),
 
