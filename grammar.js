@@ -42,6 +42,7 @@ export default grammar({
 		$._ext_ws,
 
 		// keywords
+		$.boolean,
 		$._key_import,
 		$._key_invoke,
 		$._key_private_ranges,
@@ -448,6 +449,7 @@ export default grammar({
 					$.string,
 					$.integer,
 					$.decimal,
+					$.boolean,
 					$.address,
 					$.network_address,
 					$.path,

@@ -56,6 +56,7 @@ enum TokenType {
 	/*
 	 * keywords
 	 */
+	KEY_BOOLEAN,
 	KEY_IMPORT,
 	KEY_INVOKE,
 	KEY_PRIVATE_RANGES,
@@ -164,6 +165,8 @@ static const UnicodeChar sym_map[128] = {
  *	string-to-token map for keywords.
  */
 static const Keyword keywords[] = {
+    KEYWORD("true", KEY_BOOLEAN),
+    KEYWORD("false", KEY_BOOLEAN),
     KEYWORD("import", KEY_IMPORT),
     KEYWORD("invoke", KEY_INVOKE),
     KEYWORD("private_ranges", KEY_PRIVATE_RANGES),

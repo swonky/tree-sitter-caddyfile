@@ -8,6 +8,7 @@
 (cel_expression) @string.special
 (verb) @string.special
 (integer) @number
+(boolean) @boolean
 (byte) @character
 (decimal) @number.float
 (identifier) @variable

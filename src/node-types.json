@@ -12,6 +12,10 @@
         "named": true
       },
       {
+        "type": "boolean",
+        "named": true
+      },
+      {
         "type": "decimal",
         "named": true
       },
@@ -1582,6 +1586,10 @@
   {
     "type": "args",
     "named": false
+  },
+  {
+    "type": "boolean",
+    "named": true
   },
   {
     "type": "env",
