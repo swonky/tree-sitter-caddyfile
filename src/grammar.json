@@ -1012,6 +1012,47 @@
         }
       ]
     },
+    "byte": {
+      "type": "SYMBOL",
+      "name": "_ext_str_hex_byte"
+    },
+    "mac_address": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "octet",
+            "content": {
+              "type": "SYMBOL",
+              "name": "byte"
+            }
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_sym_colon"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "octet",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "byte"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
     "range_expression": {
       "type": "SEQ",
       "members": [
@@ -2208,6 +2249,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "mac_address"
+          },
+          {
+            "type": "SYMBOL",
             "name": "string"
           },
           {
@@ -2946,6 +2991,10 @@
     {
       "type": "SYMBOL",
       "name": "_ext_str_decimal"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_ext_str_hex_byte"
     },
     {
       "type": "SYMBOL",

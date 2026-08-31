@@ -36,6 +36,10 @@
         "named": true
       },
       {
+        "type": "mac_address",
+        "named": true
+      },
+      {
         "type": "network_address",
         "named": true
       },
@@ -275,6 +279,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "byte",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "caddyfile",
@@ -622,6 +631,22 @@
     "type": "literal_string",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "mac_address",
+    "named": true,
+    "fields": {
+      "octet": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "byte",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "matcher",

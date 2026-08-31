@@ -23,42 +23,31 @@ reverse_proxy https://my.really.dumb.hostname
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (literal_string)
+      (directive
+        (identifier))
       (address
-        (domain_name
-          (literal_string))))
-    (construction
-      (identifier)
-      (literal_string)
-      (address
-        (domain_name
-          (literal_string))
-        (integer)))
-    (construction
-      (identifier)
-      (address
-        (literal_string)
         (domain_name
           (literal_string)
           (literal_string))))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
-        (literal_string)
         (domain_name
           (literal_string)
           (literal_string))
         (integer)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
         (literal_string)
         (domain_name
           (literal_string)
           (literal_string))))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
         (literal_string)
         (domain_name
@@ -66,15 +55,34 @@ reverse_proxy https://my.really.dumb.hostname
           (literal_string))
         (integer)))
     (construction
-      (identifier)
-      (literal_string)
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (construction
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))
+        (integer)))
+    (construction
+      (directive
+        (identifier))
       (address
         (domain_name
           (literal_string)
           (literal_string)
+          (literal_string)
           (literal_string))))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
         (literal_string)
         (domain_name
@@ -101,19 +109,21 @@ reverse_proxy fd/4
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
         (domain_name
           (literal_string))
-        (path))
-      (integer))
+        (path
+          (identifier))))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
         (domain_name
           (literal_string))
-        (path))
-      (integer))))
+        (path
+          (identifier))))))
 
 ============
 Unix Sockets
@@ -135,53 +145,46 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (path
           (identifier)
           (identifier)
-          (identifier)))
-      (address
-        (domain_name
-          (literal_string))))
+          (identifier)
+          (identifier))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (protocol)
         (path
           (identifier)
           (identifier)
-          (identifier)))
-      (address
-        (domain_name
-          (literal_string))))
+          (identifier)
+          (identifier))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (path
           (identifier)
           (identifier)
-          (identifier)))
-      (address
-        (domain_name
-          (literal_string))))
+          (identifier)
+          (identifier))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (path
           (identifier)
           (identifier)
-          (identifier)))
-      (address
-        (domain_name
-          (literal_string))))))
+          (identifier)
+          (identifier))))))
 
 =================
 Bare IP Addresses
@@ -203,38 +206,24 @@ reverse_proxy [::1]:8080
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer))
+      (directive
+        (identifier))
+      (ipv4))
     (construction
-      (identifier)
-      (decimal)
+      (directive
+        (identifier))
       (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer)
-      (address
+        (ipv4)
         (integer)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
         (ipv6
           (integer))))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
         (ipv6
           (integer))
@@ -282,320 +271,170 @@ reverse_proxy udp6/[::1]:8080
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer)
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer)
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer)
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer)
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer)
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer))
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (decimal)
-      (address
-        (domain_name))
-      (integer)
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (ipv4)
         (integer)))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))))
     (construction
-      (identifier)
-      (address
-        (domain_name
-          (literal_string))
-        (path))
-      (address
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
         (ipv6
           (integer))
         (integer)))))
@@ -617,7 +456,8 @@ redir https://example.com/#/about 302
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (address
         (literal_string)
         (domain_name
@@ -704,10 +544,13 @@ root * /var/www/
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
-      (literal_string))))
+      (path
+        (identifier)
+        (identifier)))))
 
 ===========================================
 Single-site with Multiple Wildcard Matchers
@@ -759,10 +602,11 @@ respond 5s
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (duration
+      (directive
+        (identifier))
+      (amount
         (integer)
-        (literal_string)))))
+        (duration)))))
 
 ====================
 Environment Variable
@@ -781,7 +625,8 @@ root * {$ROOT}
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
       (templated_string
@@ -833,7 +678,8 @@ EOF
         segment: (literal_string)
         segment: (literal_string)))
     (construction
-      keyword: (identifier)
+      (directive
+        (identifier))
       argument: (heredoc
         (heredoc_tag)
         (heredoc_content)
@@ -859,7 +705,8 @@ EOF 200
           segment: (literal_string)
           segment: (literal_string)))
       (construction
-        keyword: (identifier)
+        (directive
+          (identifier))
         argument: (heredoc
           (heredoc_tag)
           (heredoc_content)
@@ -886,7 +733,8 @@ example.com {
           segment: (literal_string)
           segment: (literal_string)))
       (construction
-        keyword: (identifier)
+        (directive
+          (identifier))
         argument: (heredoc
           (heredoc_tag)
           (heredoc_content)
@@ -910,19 +758,11 @@ reverse_proxy * 127.0.0.1
         segment: (literal_string)
         segment: (literal_string)))
     (construction
-      keyword: (identifier)
+      (directive
+        (identifier))
       matcher: (matcher
         (wildcard))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (integer))))
+      argument: (ipv4))))
 
 ============
 Path Matcher
@@ -941,21 +781,11 @@ reverse_proxy /path 127.0.0.1
         segment: (literal_string)
         segment: (literal_string)))
     (construction
-      keyword: (identifier)
-      matcher: (matcher
-        (path_matcher
-          path: (path
-            segment: (identifier))))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (integer))))
+      (directive
+        (identifier))
+      argument: (path
+        segment: (identifier))
+      argument: (ipv4))))
 
 =====================
 Wildcard Path Matcher
@@ -974,22 +804,12 @@ reverse_proxy /path* 127.0.0.1
         segment: (literal_string)
         segment: (literal_string)))
     (construction
-      keyword: (identifier)
-      matcher: (matcher
-        (path_matcher
-          path: (path
-            segment: (identifier)
-            segment: (wildcard))))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (integer))))
+      (directive
+        (identifier))
+      argument: (path
+        segment: (identifier)
+        segment: (wildcard))
+      argument: (ipv4))))
 
 =============
 Named Matcher
@@ -1020,20 +840,12 @@ reverse_proxy @test 127.0.0.1
             segment: (literal_string)
             segment: (literal_string)))))
     (construction
-      keyword: (identifier)
+      (directive
+        (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (integer))))
+      argument: (ipv4))))
 
 ===================
 Named Matcher Block
@@ -1067,20 +879,12 @@ reverse_proxy @test 127.0.0.1
               segment: (literal_string)
               segment: (literal_string))))))
     (construction
-      keyword: (identifier)
+      (directive
+        (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (integer))))
+      argument: (ipv4))))
 
 ===========
 Not Matcher
@@ -1111,20 +915,12 @@ reverse_proxy @test 127.0.0.1
             segment: (literal_string)
             segment: (literal_string)))))
     (construction
-      keyword: (identifier)
+      (directive
+        (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (integer))))
+      argument: (ipv4))))
 
 ===========
 CEL Matcher
@@ -1164,20 +960,12 @@ reverse_proxy @test 127.0.0.1
         matcher: (identifier)
         argument: (cel_expression)))
     (construction
-      keyword: (identifier)
+      (directive
+        (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (integer))))
+      argument: (ipv4))))
 
 =========================================
 Matcher Directive with Multiple Arguments
@@ -1201,70 +989,32 @@ reverse_proxy @private 127.0.0.1
       name: (identifier)
       (request_matcher
         matcher: (identifier)
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
+        argument: (ipv4)
+        argument: (path)
+        argument: (integer)
+        argument: (ipv4)
+        argument: (path)
+        argument: (integer)
+        argument: (ipv4)
+        argument: (path)
+        argument: (integer)
+        argument: (ipv4)
+        argument: (path)
         argument: (integer)
         argument: (literal_string)
-        argument: (decimal)
         argument: (address
-          host: (domain_name))
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
+          port: (literal_string)
+          path: (path))
         argument: (integer)
-        argument: (literal_string)
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (integer)
-        argument: (literal_string)
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (decimal)
-        argument: (address
-          host: (domain_name))
-        argument: (integer)
-        argument: (literal_string)
-        argument: (literal_string)
-        argument: (address
-          port: (literal_string))
         argument: (address
           port: (literal_string))))
     (construction
-      keyword: (identifier)
+      (directive
+        (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (decimal)
-      argument: (address
-        host: (domain_name))
-      argument: (integer))))
+      argument: (ipv4))))
 
 ========================
 path_regexp with Regex
@@ -1314,7 +1064,8 @@ file_server
         (embedded_content
           (cel_expression))))
     (construction
-      keyword: (identifier))))
+      (directive
+        (identifier)))))
 
 ===========
 Named Route
@@ -1389,7 +1140,8 @@ root * {args[0]}
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
       (templated_string
@@ -1414,7 +1166,8 @@ root * {something.args[0]}
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
       (templated_string
@@ -1440,18 +1193,18 @@ dns cloudflare {file.{$CF_API_TOKEN_FILE}}
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (literal_string)
       (templated_string
         (substitution
           (placeholder
             (identifier)
             (path
-              (identifier
-                (templated_identifier
-                  (substitution
-                    (environment_variable
-                      (identifier))))))))))))
+              (templated_string
+                (substitution
+                  (environment_variable
+                    (identifier)))))))))))
 
 ==================================
 Single Site Block with one address
@@ -1470,10 +1223,13 @@ root * /var/www
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
-      (literal_string))))
+      (path
+        (identifier)
+        (identifier)))))
 
 =========================================
 Single Site Block with multiple addresses
@@ -1538,17 +1294,21 @@ root * /var/www
 (caddyfile
   (global_block
     (construction
-      (identifier)))
+      (directive
+        (identifier))))
   (single_site
     (address
       (domain_name
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
-      (literal_string))))
+      (path
+        (identifier)
+        (identifier)))))
 
 =================
 Single Site Block
@@ -1568,7 +1328,8 @@ example.com {
           (literal_string)
           (literal_string)))
       (construction
-        (identifier)
+        (directive
+          (identifier))
         (quoted_expression
           (literal_string))))))
 
@@ -1594,7 +1355,8 @@ foobar.com {
           (literal_string)
           (literal_string)))
       (construction
-        (identifier)
+        (directive
+          (identifier))
         (quoted_expression
           (literal_string))))
     (site_block
@@ -1603,7 +1365,8 @@ foobar.com {
           (literal_string)
           (literal_string)))
       (construction
-        (identifier)
+        (directive
+          (identifier))
         (quoted_expression
           (literal_string))))))
 
@@ -1684,14 +1447,18 @@ root * /var/www
 (caddyfile
   (global_block
     (construction
-      (identifier))
+      (directive
+        (identifier)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (literal_string))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (construction
-        (identifier)
+        (directive
+          (identifier))
         (address
           (literal_string)
           (domain_name
@@ -1703,10 +1470,13 @@ root * /var/www
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
-      (literal_string))))
+      (path
+        (identifier)
+        (identifier)))))
 
 ================
 Character Escape
@@ -1727,14 +1497,18 @@ root * /var/www
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (quoted_expression
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
-      (literal_string))))
+      (path
+        (identifier)
+        (identifier)))))
 
 ====================
 Status Code Fallback
@@ -1753,7 +1527,8 @@ try_files {path} {path}/ /index.html =404
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (templated_string
         (substitution
           (placeholder
@@ -1765,10 +1540,9 @@ try_files {path} {path}/ /index.html =404
               (placeholder
                 (identifier)))))
         (path))
-      (literal_string)
-      (address
-        (domain_name
-          (literal_string)))
+      (path
+        (identifier)
+        (identifier))
       (literal_string))))
 
 ==================
@@ -1788,10 +1562,18 @@ root * @longhorn-ui@/share/share/lib/longhorn-ui
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
-      (literal_string))))
+      (address
+        (domain_name
+          (literal_string))
+        (path
+          (identifier)
+          (identifier)
+          (identifier)
+          (identifier))))))
 
 =======================
 Domain with Underscores
@@ -1810,9 +1592,11 @@ reverse_proxy some_other_host:1234
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (literal_string)
+      (directive
+        (identifier))
       (address
+        (domain_name
+          (literal_string))
         (integer)))))
 
 ========================
@@ -1834,12 +1618,14 @@ basic_auth {
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (construction
-        (identifier)
-        (literal_string)
+        (directive
+          (identifier))
         (address
           (domain_name
+            (literal_string)
             (literal_string)
             (literal_string)))))))
 
@@ -1887,5 +1673,6 @@ header ?Content-Type
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (literal_string))))

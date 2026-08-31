@@ -37,6 +37,7 @@ enum TokenType {
 	STR_UPPER,
 	STR_NUM,
 	STR_DECIMAL,
+	STR_HEX_BYTE,
 	STR_IPV4,
 	STR_CEL,
 	STR_CEL_INLINE,
@@ -608,6 +609,11 @@ static bool scan_heredoc(Scanner *s)
 	return false;
 }
 
+static inline bool is_hex(UnicodeChar c)
+{
+	return is_num(c) || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
+}
+
 static void scan_text(Scanner *s)
 {
 	UnicodeChar prefix = previous(s);
@@ -667,6 +673,7 @@ static void scan_text(Scanner *s)
 
 	bool escape = false;
 	bool digits = true;
+	bool hex = true;
 	bool upper = true;
 	bool kw = true;
 	int nperiod = 0;
@@ -764,8 +771,8 @@ static void scan_text(Scanner *s)
 			break;
 		}
 
-		if (upper && !is_upper(c))
-			upper = false;
+		upper = upper && is_upper(c);
+		hex = hex && is_hex(c);
 
 		if (digits && !is_num(c) && c != '.') {
 			mark_end(s);
@@ -828,7 +835,9 @@ static void scan_text(Scanner *s)
 		return;
 	}
 
-	if (upper && is_valid(s, STR_UPPER))
+	if (hex && s->consumed == 2 && is_valid(s, STR_HEX_BYTE))
+		set_result(s, STR_HEX_BYTE);
+	else if (upper && is_valid(s, STR_UPPER))
 		set_result(s, STR_UPPER);
 	else if (digits && is_valid(s, STR_NUM) && nperiod == 0)
 		set_result(s, STR_NUM);

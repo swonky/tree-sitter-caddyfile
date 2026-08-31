@@ -15,10 +15,11 @@ respond 5s
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (duration
+      (directive
+        (identifier))
+      (amount
         (integer)
-        (literal_string)))))
+        (duration)))))
 
 ========
 Decimal Duration
@@ -37,10 +38,8 @@ respond 5.5s
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (decimal)
-      (address
-        (domain_name))
-      (duration
-        (integer)
-        (literal_string)))))
+      (directive
+        (identifier))
+      (amount
+        (decimal)
+        (duration)))))

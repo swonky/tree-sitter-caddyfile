@@ -8,7 +8,7 @@
 (cel_expression) @string.special
 (verb) @string.special
 (integer) @number
-(octal) @number
+(byte) @character
 (decimal) @number.float
 (identifier) @variable
 (snippet_definition
@@ -44,7 +44,8 @@
 )
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
-["&" "$" "*" "@" "<<"] @punctuation.special
+["&" "$"  "@" "<<"] @punctuation.special
+["*"] @character.special
 ["/" "." ":" "#" "?" "%" "|" "-" "://"] @punctuation.delimiter
 ["`"] @punctuation.special
 ["\""] @string
@@ -103,7 +104,7 @@
 )
 
 (ipv6
-	hextet: (_) @number
+	hextet: (_) @character
 )
 
 (comment

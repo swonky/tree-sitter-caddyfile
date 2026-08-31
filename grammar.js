@@ -27,6 +27,7 @@ export default grammar({
 		$._ext_str_upper,
 		$._ext_str_num,
 		$._ext_str_decimal,
+		$._ext_str_hex_byte,
 		$._ext_str_ipv4,
 		$._ext_str_cel,
 		$._ext_str_cel_inline,
@@ -226,6 +227,12 @@ export default grammar({
 			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
 
 		_port: $ => seq($._sym_colon, choice($._primitive, $.range_expression)),
+
+		byte: $ => $._ext_str_hex_byte,
+		mac_address: $ =>
+			prec.right(
+				seq(field('octet', $.byte), repeat1(seq($._sym_colon, field('octet', $.byte)))),
+			),
 
 		range_expression: $ =>
 			seq(
@@ -432,6 +439,7 @@ export default grammar({
 				1,
 				choice(
 					$.add_expression,
+					$.mac_address,
 					$.string,
 					$.integer,
 					$.decimal,
