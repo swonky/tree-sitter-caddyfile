@@ -982,22 +982,68 @@
               "type": "FIELD",
               "name": "port",
               "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_sym_colon"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "_primitive"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "_port"
               }
             }
           ]
         }
       }
+    },
+    "_port": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sym_colon"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_primitive"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "range_expression"
+            }
+          ]
+        }
+      ]
+    },
+    "range_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "left",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_primitive"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_hyphen"
+        },
+        {
+          "type": "FIELD",
+          "name": "right",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_primitive"
+          }
+        }
+      ]
     },
     "address": {
       "type": "PREC_RIGHT",

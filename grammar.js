@@ -223,13 +223,15 @@ export default grammar({
 		protocol: $ => $._key_protocol,
 
 		_host_port: $ =>
-			prec.left(
-				repeat1(
-					choice(
-						field('host', $.host),
-						field('port', seq($._sym_colon, $._primitive)),
-					),
-				),
+			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
+
+		_port: $ => seq($._sym_colon, choice($._primitive, $.range_expression)),
+
+		range_expression: $ =>
+			seq(
+				optional(field('left', $._primitive)),
+				$._sym_hyphen,
+				field('right', $._primitive),
 			),
 
 		address: $ =>
