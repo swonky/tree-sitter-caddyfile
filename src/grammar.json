@@ -1722,7 +1722,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "__keyword_field"
+            "name": "directive"
           },
           {
             "type": "CHOICE",
@@ -1794,13 +1794,67 @@
         ]
       }
     },
-    "__keyword_field": {
-      "type": "FIELD",
-      "name": "keyword",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_bare_identifier"
-      }
+    "namespace_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "module",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_bare_identifier"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_sym_period"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "FIELD",
+                    "name": "member",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_bare_identifier"
+                    }
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "directive": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "namespace_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_bare_identifier"
+        }
+      ]
     },
     "_matcher_field": {
       "type": "FIELD",

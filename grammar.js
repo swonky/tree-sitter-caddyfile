@@ -366,14 +366,20 @@ export default grammar({
 		construction: $ =>
 			prec.right(
 				seq(
-					$.__keyword_field,
+					$.directive,
 					optional(seq(repeat1($._ws), $._matcher_field)),
 					repeat(seq(repeat1($._ws), $._arguments_field)),
 					optional(seq(repeat1($._ws), $._block)),
 				),
 			),
 
-		__keyword_field: $ => field('keyword', $._bare_identifier),
+		// _identifier_shorthand: $ => field('member', $.identifier),
+		namespace_expression: $ =>
+			seq(
+				optional(field('module', $._bare_identifier)),
+				repeat1(seq($._sym_period, optional(field('member', $._bare_identifier)))),
+			),
+		directive: $ => choice($.namespace_expression, $._bare_identifier),
 		_matcher_field: $ => field('matcher', $.matcher),
 		_arguments_field: $ => field('argument', $.argument),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),

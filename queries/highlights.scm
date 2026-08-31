@@ -1,7 +1,6 @@
 (heredoc_tag) @label
 (heredoc_suffix) @label
 
-(comment) @spell @comment
 
 ; (identifier) @constant
 [(string) (literal_string)] @string 
@@ -45,7 +44,7 @@
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 ["&" "$" "*" "@" "<<"] @punctuation.special
-["/" "." ":"] @punctuation.delimiter
+["/" "." ":" "#" "?" "://"] @punctuation.delimiter
 ["`"] @punctuation.special
 ["\""] @string
 
@@ -64,10 +63,12 @@
 )
 
 
-(construction
-	keyword: (_) @function.call
-)
+(directive (identifier)) @function.call
 
+(namespace_expression
+	module: (_) @module
+	member: (_) @function.call
+)
 
 (request_matcher
 	matcher: (_) @type.builtin
@@ -111,5 +112,7 @@
 (site_block (string) @string.special.url ) 
 
 (shortcut) @constant.builtin
+
+(comment) @spell @comment
 
 (ERROR) @error-node
