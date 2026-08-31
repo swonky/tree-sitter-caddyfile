@@ -866,6 +866,11 @@
     }
   },
   {
+    "type": "octal",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "parameter",
     "named": true,
     "fields": {
@@ -897,6 +902,16 @@
     "type": "path",
     "named": true,
     "fields": {
+      "permission": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "octal",
+            "named": true
+          }
+        ]
+      },
       "segment": {
         "multiple": true,
         "required": false,
@@ -1535,6 +1550,10 @@
   },
   {
     "type": "{",
+    "named": false
+  },
+  {
+    "type": "|",
     "named": false
   },
   {

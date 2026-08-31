@@ -83,6 +83,7 @@ export default grammar({
 		$._ext_sym_exclaim,
 		$._ext_sym_question,
 		$._ext_sym_percent,
+		$._ext_sym_bar,
 
 		$._ext_sym_block_start,
 		$._ext_sym_scheme,
@@ -308,6 +309,12 @@ export default grammar({
 				seq(
 					$._sym_solidus,
 					repeat(field('segment', choice($.wildcard, $.identifier, $._sym_solidus))),
+					optional(
+						seq(
+							$._sym_bar,
+							field('permission', optional(alias($.integer, $.octal))),
+						),
+					),
 				),
 			),
 
@@ -495,6 +502,7 @@ export default grammar({
 		_sym_exclaim: $ => alias($._ext_sym_exclaim, '!'),
 		_sym_question: $ => alias($._ext_sym_question, '?'),
 		_sym_percent: $ => alias($._ext_sym_percent, '%'),
+		_sym_bar: $ => alias($._ext_sym_bar, '|'),
 
 		_keyword_import: $ => alias($._key_import, 'import'),
 		_keyword_invoke: $ => alias($._key_invoke, 'invoke'),

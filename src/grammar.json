@@ -1486,6 +1486,44 @@
                 ]
               }
             }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_sym_bar"
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "permission",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "ALIAS",
+                          "content": {
+                            "type": "SYMBOL",
+                            "name": "integer"
+                          },
+                          "named": true,
+                          "value": "octal"
+                        },
+                        {
+                          "type": "BLANK"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
@@ -2558,6 +2596,15 @@
       "named": false,
       "value": "%"
     },
+    "_sym_bar": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_ext_sym_bar"
+      },
+      "named": false,
+      "value": "|"
+    },
     "_keyword_import": {
       "type": "ALIAS",
       "content": {
@@ -3049,6 +3096,10 @@
     {
       "type": "SYMBOL",
       "name": "_ext_sym_percent"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_ext_sym_bar"
     },
     {
       "type": "SYMBOL",

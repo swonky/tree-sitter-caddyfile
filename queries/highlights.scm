@@ -8,6 +8,7 @@
 (cel_expression) @string.special
 (verb) @string.special
 (integer) @number
+(octal) @number
 (decimal) @number.float
 (identifier) @variable
 (snippet_definition
@@ -44,7 +45,7 @@
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 ["&" "$" "*" "@" "<<"] @punctuation.special
-["/" "." ":" "#" "?" "%" "://"] @punctuation.delimiter
+["/" "." ":" "#" "?" "%" "|" "://"] @punctuation.delimiter
 ["`"] @punctuation.special
 ["\""] @string
 
