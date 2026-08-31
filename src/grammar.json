@@ -766,6 +766,39 @@
           }
         },
         {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_sym_percent"
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "FIELD",
+                      "name": "zone",
+                      "content": {
+                        "type": "SYMBOL",
+                        "name": "string"
+                      }
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
           "type": "SYMBOL",
           "name": "_sym_bracket_c"
         }
@@ -2411,6 +2444,15 @@
       "named": false,
       "value": "?"
     },
+    "_sym_percent": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_ext_sym_percent"
+      },
+      "named": false,
+      "value": "%"
+    },
     "_keyword_import": {
       "type": "ALIAS",
       "content": {
@@ -2894,6 +2936,10 @@
     {
       "type": "SYMBOL",
       "name": "_ext_sym_question"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_ext_sym_percent"
     },
     {
       "type": "SYMBOL",

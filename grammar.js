@@ -80,6 +80,7 @@ export default grammar({
 		$._ext_sym_asterisk,
 		$._ext_sym_exclaim,
 		$._ext_sym_question,
+		$._ext_sym_percent,
 
 		$._ext_sym_block_start,
 		$._ext_sym_scheme,
@@ -198,6 +199,7 @@ export default grammar({
 			seq(
 				$._sym_bracket_o,
 				repeat(choice(field('hextet', $._primitive), $._sym_colon)),
+				optional(seq($._sym_percent, optional(field('zone', $.string)))),
 				$._sym_bracket_c,
 			),
 		_path: $ => repeat1(choice(field('segment', $.string), $._sym_solidus)),
@@ -473,6 +475,7 @@ export default grammar({
 		_sym_asterisk: $ => alias($._ext_sym_asterisk, '*'),
 		_sym_exclaim: $ => alias($._ext_sym_exclaim, '!'),
 		_sym_question: $ => alias($._ext_sym_question, '?'),
+		_sym_percent: $ => alias($._ext_sym_percent, '%'),
 
 		_keyword_import: $ => alias($._key_import, 'import'),
 		_keyword_invoke: $ => alias($._key_invoke, 'invoke'),

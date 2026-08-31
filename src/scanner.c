@@ -95,6 +95,7 @@ enum TokenType {
 	SYM_ASTERISK,
 	SYM_EXCLAIM,
 	SYM_QUESTION,
+	SYM_PERCENT,
 
 	SYM_BLOCK_START,
 	SYM_SCHEME,
@@ -147,6 +148,7 @@ static const UnicodeChar sym_map[128] = {
     ['*'] = SYM_ASTERISK,
     ['!'] = SYM_EXCLAIM,
     ['?'] = SYM_QUESTION,
+    ['%'] = SYM_PERCENT,
 };
 
 /**
