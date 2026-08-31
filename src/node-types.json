@@ -796,11 +796,37 @@
     "named": true,
     "fields": {
       "address": {
-        "multiple": false,
+        "multiple": true,
         "required": true,
         "types": [
           {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "host",
+            "named": true
+          },
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
             "type": "path",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "host": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "host",
             "named": true
           }
         ]
@@ -815,6 +841,24 @@
           },
           {
             "type": "protocol",
+            "named": true
+          }
+        ]
+      },
+      "port": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]

@@ -213,19 +213,29 @@ export default grammar({
 		_network: $ => seq($.protocol, optional(seq($._sym_plus, $.protocol))),
 
 		network_address: $ =>
-			seq(field('network', $._network), $._sym_solidus, field('address', $.path)),
+			seq(
+				field('network', $._network),
+				$._sym_solidus,
+				field('address', choice($.path, $._host_port)),
+			),
 
 		protocol: $ => $._key_protocol,
+
+		_host_port: $ =>
+			prec.left(
+				repeat1(
+					choice(
+						field('host', $.host),
+						field('port', seq($._sym_colon, $._primitive)),
+					),
+				),
+			),
 
 		address: $ =>
 			prec.right(
 				seq(
 					repeat1(
-						choice(
-							field('scheme', seq($.string, $._sym_scheme)),
-							field('port', seq($._sym_colon, $._primitive)),
-							field('host', $.host),
-						),
+						choice(field('scheme', seq($.string, $._sym_scheme)), $._host_port),
 					),
 					optional(field('path', $.path)),
 					optional(field('query', $._query)),

@@ -943,8 +943,17 @@
           "type": "FIELD",
           "name": "address",
           "content": {
-            "type": "SYMBOL",
-            "name": "path"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "path"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_host_port"
+              }
+            ]
           }
         }
       ]
@@ -952,6 +961,43 @@
     "protocol": {
       "type": "SYMBOL",
       "name": "_key_protocol"
+    },
+    "_host_port": {
+      "type": "PREC_LEFT",
+      "value": 0,
+      "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "host",
+              "content": {
+                "type": "SYMBOL",
+                "name": "host"
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "port",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_sym_colon"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_primitive"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
     },
     "address": {
       "type": "PREC_RIGHT",
@@ -982,29 +1028,8 @@
                   }
                 },
                 {
-                  "type": "FIELD",
-                  "name": "port",
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "_sym_colon"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "_primitive"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "type": "FIELD",
-                  "name": "host",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "host"
-                  }
+                  "type": "SYMBOL",
+                  "name": "_host_port"
                 }
               ]
             }
