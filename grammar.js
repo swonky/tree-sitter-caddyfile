@@ -57,6 +57,8 @@ export default grammar({
 		$._key_cookie_regexp,
 		$._key_vars_regexp,
 
+		$._key_protocol,
+
 		// symbols
 		$._ext_sym_paren_o,
 		$._ext_sym_paren_c,
@@ -205,11 +207,15 @@ export default grammar({
 		_path: $ => repeat1(choice(field('segment', $.string), $._sym_solidus)),
 		inode: $ => prec.right(repeat1(choice($.string, $._sym_period))),
 
-		// path: $ =>
-		// 	seq($._sym_solidus, repeat1(choice(field('segment', $.inode), $._sym_solidus))),
-
 		_query: $ => prec.right(seq($._sym_question, optional($.string))),
 		_fragment: $ => prec.right(seq($._sym_num, optional($.string))),
+
+		_network: $ => seq($.protocol, optional(seq($._sym_plus, $.protocol))),
+
+		network_address: $ =>
+			seq(field('network', $._network), $._sym_solidus, field('address', $.path)),
+
+		protocol: $ => $._key_protocol,
 
 		address: $ =>
 			prec.right(
@@ -400,15 +406,18 @@ export default grammar({
 
 		ipv4: $ => $._ext_str_ipv4,
 		decimal: $ => $._ext_str_decimal,
+		add_expression: $ => seq($._sym_plus, $.string),
 
 		argument: $ =>
 			prec.left(
 				1,
 				choice(
+					$.add_expression,
 					$.string,
 					$.integer,
 					$.decimal,
 					$.address,
+					$.network_address,
 					$.path,
 					$.quoted_expression,
 					$.embedded_content,

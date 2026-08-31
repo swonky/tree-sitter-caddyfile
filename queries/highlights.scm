@@ -62,6 +62,11 @@
 	["{" "}"] @punctuation.special
 )
 
+(protocol) @constant.builtin
+
+(network_address
+	"+" @punctuation.delimiter
+)
 
 (directive (identifier)) @function.call
 

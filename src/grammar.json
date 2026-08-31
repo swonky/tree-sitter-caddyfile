@@ -894,6 +894,65 @@
         ]
       }
     },
+    "_network": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "protocol"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_sym_plus"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "protocol"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "network_address": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "network",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_network"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_solidus"
+        },
+        {
+          "type": "FIELD",
+          "name": "address",
+          "content": {
+            "type": "SYMBOL",
+            "name": "path"
+          }
+        }
+      ]
+    },
+    "protocol": {
+      "type": "SYMBOL",
+      "name": "_key_protocol"
+    },
     "address": {
       "type": "PREC_RIGHT",
       "value": 0,
@@ -2015,12 +2074,29 @@
       "type": "SYMBOL",
       "name": "_ext_str_decimal"
     },
+    "add_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sym_plus"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        }
+      ]
+    },
     "argument": {
       "type": "PREC_LEFT",
       "value": 1,
       "content": {
         "type": "CHOICE",
         "members": [
+          {
+            "type": "SYMBOL",
+            "name": "add_expression"
+          },
           {
             "type": "SYMBOL",
             "name": "string"
@@ -2036,6 +2112,10 @@
           {
             "type": "SYMBOL",
             "name": "address"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "network_address"
           },
           {
             "type": "SYMBOL",
@@ -2848,6 +2928,10 @@
     {
       "type": "SYMBOL",
       "name": "_key_vars_regexp"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_key_protocol"
     },
     {
       "type": "SYMBOL",

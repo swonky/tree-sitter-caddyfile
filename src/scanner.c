@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
+#define PROTOCOL(text) {text, sizeof(text) - 1}
 #define UNIT(text) KEYWORD(text, STR_DUR_UNIT)
 
 enum {
@@ -69,6 +70,11 @@ enum TokenType {
 	KEY_HEADER_REGEXP,
 	KEY_COOKIE_REGEXP,
 	KEY_VARS_REGEXP,
+
+	/*
+	 * composite
+	 */
+	KEY_PROTOCOL,
 
 	/*
 	 * symbolic operators
@@ -170,6 +176,26 @@ static const Keyword keywords[] = {
     KEYWORD("header_regexp", KEY_HEADER_REGEXP),
     KEYWORD("cookie_regexp", KEY_COOKIE_REGEXP),
     KEYWORD("vars_regexp", KEY_VARS_REGEXP),
+
+};
+
+/**
+ *	string-to-token map for network address protocols.
+ */
+static const Keyword protocols[] = {
+    PROTOCOL("unix"),
+    PROTOCOL("unixgram"),
+    PROTOCOL("unixpacket"),
+    PROTOCOL("tcp"),
+    PROTOCOL("tcp4"),
+    PROTOCOL("tcp6"),
+    PROTOCOL("udp"),
+    PROTOCOL("udp4"),
+    PROTOCOL("udp6"),
+    PROTOCOL("ip"),
+    PROTOCOL("ip4"),
+    PROTOCOL("ip6"),
+    PROTOCOL("h2c"),
 };
 
 static inline enum TokenType get_token(UnicodeChar c)
@@ -335,6 +361,9 @@ static enum TokenType check_keyword(Scanner *s)
 {
 	assert(s != NULL);
 
+	if (s->consumed != s->word_len)
+		return _UNSPECIFIED;
+
 	if (is_valid(s, STR_UNIT_DURATION) &&
 	    is_duration_unit(s->word, s->word_len))
 		return STR_UNIT_DURATION;
@@ -347,6 +376,16 @@ static enum TokenType check_keyword(Scanner *s)
 
 		if (is_valid(s, kw->token) && word_equals(s, kw))
 			return kw->token;
+	}
+
+	if (!is_valid(s, KEY_PROTOCOL))
+		return _UNSPECIFIED;
+
+	for (size_t i = 0; i < sizeof(protocols) / sizeof(protocols[0]); i++) {
+		const Keyword *kw = &protocols[i];
+
+		if (word_equals(s, kw))
+			return KEY_PROTOCOL;
 	}
 
 	return _UNSPECIFIED;
@@ -439,7 +478,7 @@ static inline void advance(Scanner *s)
 		s->word[s->consumed] = s->previous;
 
 		UnicodeChar c = peek(s);
-		if (!is_alpha(c) && c != '_')
+		if (!is_alnum(c) && c != '_')
 			s->word_len = s->consumed + 1;
 	}
 

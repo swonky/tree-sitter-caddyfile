@@ -4,6 +4,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "add_expression",
+        "named": true
+      },
+      {
         "type": "address",
         "named": true
       },
@@ -29,6 +33,10 @@
       },
       {
         "type": "ipv4",
+        "named": true
+      },
+      {
+        "type": "network_address",
         "named": true
       },
       {
@@ -102,6 +110,21 @@
         "named": true
       }
     ]
+  },
+  {
+    "type": "add_expression",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "address",
@@ -769,6 +792,36 @@
     }
   },
   {
+    "type": "network_address",
+    "named": true,
+    "fields": {
+      "address": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      },
+      "network": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "+",
+            "named": false
+          },
+          {
+            "type": "protocol",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "parameter",
     "named": true,
     "fields": {
@@ -879,6 +932,11 @@
         ]
       }
     }
+  },
+  {
+    "type": "protocol",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "quoted_expression",
@@ -1337,6 +1395,10 @@
   },
   {
     "type": "*",
+    "named": false
+  },
+  {
+    "type": "+",
     "named": false
   },
   {
