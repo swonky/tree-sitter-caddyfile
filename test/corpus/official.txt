@@ -111,19 +111,17 @@ reverse_proxy fd/4
     (construction
       (directive
         (identifier))
-      (address
+      (network_address
+        (protocol)
         (domain_name
-          (literal_string))
-        (path
-          (identifier))))
+          (literal_string))))
     (construction
       (directive
         (identifier))
-      (address
+      (network_address
+        (protocol)
         (domain_name
-          (literal_string))
-        (path
-          (identifier))))))
+          (literal_string))))))
 
 ============
 Unix Sockets
@@ -569,21 +567,20 @@ path *.txt *.md *.mdown /site/*
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
-      (matcher
-        (wildcard))
-      (address
-        (domain_name
-          (literal_string)))
+      (directive
+        (identifier))
       (literal_string)
       (address
         (domain_name
+          (literal_string)
           (literal_string)))
-      (literal_string)
       (address
         (domain_name
+          (literal_string)
           (literal_string)))
-      (literal_string))))
+      (path
+        (identifier)
+        (wildcard)))))
 
 ========
 Duration
@@ -651,13 +648,17 @@ root * {$ROOT:/var/www}
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (matcher
         (wildcard))
       (templated_string
         (substitution
           (environment_variable
-            (identifier)))))))
+            (identifier)
+            (path
+              (identifier)
+              (identifier))))))))
 
 ===================
 Single-site Heredoc
@@ -807,8 +808,7 @@ reverse_proxy /path* 127.0.0.1
       (directive
         (identifier))
       argument: (path
-        segment: (identifier)
-        segment: (wildcard))
+        segment: (identifier))
       argument: (ipv4))))
 
 =============
@@ -834,9 +834,9 @@ reverse_proxy @test 127.0.0.1
       name: (identifier)
       (request_matcher
         matcher: (identifier)
-        argument: (literal_string)
         argument: (address
           host: (domain_name
+            segment: (literal_string)
             segment: (literal_string)
             segment: (literal_string)))))
     (construction
@@ -873,9 +873,9 @@ reverse_proxy @test 127.0.0.1
       (request_matcher
         (request_matcher
           matcher: (identifier)
-          argument: (literal_string)
           argument: (address
             host: (domain_name
+              segment: (literal_string)
               segment: (literal_string)
               segment: (literal_string))))))
     (construction
@@ -909,9 +909,9 @@ reverse_proxy @test 127.0.0.1
       name: (identifier)
       (request_matcher
         matcher: (identifier)
-        argument: (literal_string)
         argument: (address
           host: (domain_name
+            segment: (literal_string)
             segment: (literal_string)
             segment: (literal_string)))))
     (construction
@@ -989,25 +989,29 @@ reverse_proxy @private 127.0.0.1
       name: (identifier)
       (request_matcher
         matcher: (identifier)
-        argument: (ipv4)
-        argument: (path)
-        argument: (integer)
-        argument: (ipv4)
-        argument: (path)
-        argument: (integer)
-        argument: (ipv4)
-        argument: (path)
-        argument: (integer)
-        argument: (ipv4)
-        argument: (path)
-        argument: (integer)
-        argument: (literal_string)
         argument: (address
-          port: (literal_string)
-          path: (path))
-        argument: (integer)
+          host: (ipv4)
+          path: (path
+            segment: (identifier)))
         argument: (address
-          port: (literal_string))))
+          host: (ipv4)
+          path: (path
+            segment: (identifier)))
+        argument: (address
+          host: (ipv4)
+          path: (path
+            segment: (identifier)))
+        argument: (address
+          host: (ipv4)
+          path: (path
+            segment: (identifier)))
+        argument: (address
+          host: (domain_name
+            segment: (literal_string))
+          path: (path
+            segment: (identifier)))
+        argument: (address
+          port: (integer))))
     (construction
       (directive
         (identifier))
@@ -1246,13 +1250,13 @@ http://example.com:8080, https://fake.org:8443, fake.co.uk, {$ENV_SITE}, :{$PORT
       (domain_name
         (literal_string)
         (literal_string))
-      (literal_string))
+      (integer))
     (address
       (literal_string)
       (domain_name
         (literal_string)
         (literal_string))
-      (literal_string))
+      (integer))
     (address
       (domain_name
         (literal_string)
@@ -1648,13 +1652,19 @@ exec wakeonlan 78:f4:53:67:7a:a9 {
         (literal_string)
         (literal_string)))
     (construction
-      (identifier)
+      (directive
+        (identifier))
       (literal_string)
-      (integer)
-      (address
-        (literal_string))
+      (mac_address
+        (byte)
+        (byte)
+        (byte)
+        (byte)
+        (byte)
+        (byte))
       (construction
-        (identifier)))))
+        (directive
+          (identifier))))))
 
 ===============
 Complex Headers

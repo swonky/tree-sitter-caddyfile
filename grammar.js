@@ -196,7 +196,15 @@ export default grammar({
 
 		parameter: $ => seq(optional($._keyword_args), $._index),
 		environment_variable: $ =>
-			seq($._sym_dollar, optional(field('reference', $.identifier))),
+			seq(
+				$._sym_dollar,
+				optional(
+					seq(
+						field('reference', $._bare_identifier),
+						optional(seq($._sym_colon, field('default', $.argument))),
+					),
+				),
+			),
 
 		_ipv4_octet: $ => field('octet', $.integer),
 		ipv6: $ =>
@@ -226,7 +234,8 @@ export default grammar({
 		_host_port: $ =>
 			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
 
-		_port: $ => seq($._sym_colon, choice($._primitive, $.range_expression)),
+		_port: $ =>
+			prec.right(seq($._sym_colon, optional(choice($._primitive, $.range_expression)))),
 
 		byte: $ => $._ext_str_hex_byte,
 		mac_address: $ =>
@@ -255,9 +264,7 @@ export default grammar({
 
 		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
 
-		domain_name: $ => $._dot_delimited,
-
-		_dot_delimited: $ =>
+		domain_name: $ =>
 			prec.right(repeat1(choice(field('segment', $.string), $._sym_period))),
 
 		_block: $ =>
@@ -327,7 +334,7 @@ export default grammar({
 				),
 			),
 
-		matcher: $ => choice($.wildcard, $.named_matcher_reference, $.path_matcher),
+		matcher: $ => prec.left(choice($.wildcard, $.named_matcher_reference, $.path_matcher)),
 		wildcard: $ => $._sym_asterisk,
 
 		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
@@ -359,8 +366,7 @@ export default grammar({
 			prec.left(
 				seq(
 					field('matcher', $.identifier),
-					optional($._ws),
-					repeat($._arguments_field),
+					repeat(seq($._ws, $._arguments_field)),
 					optional($._matcher_block),
 				),
 			),
@@ -432,13 +438,11 @@ export default grammar({
 
 		ipv4: $ => $._ext_str_ipv4,
 		decimal: $ => $._ext_str_decimal,
-		add_expression: $ => seq($._sym_plus, $.string),
 
 		argument: $ =>
-			prec.left(
+			prec.right(
 				1,
 				choice(
-					$.add_expression,
 					$.mac_address,
 					$.string,
 					$.integer,

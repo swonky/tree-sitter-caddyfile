@@ -4,10 +4,6 @@
     "named": true,
     "subtypes": [
       {
-        "type": "add_expression",
-        "named": true
-      },
-      {
         "type": "address",
         "named": true
       },
@@ -114,21 +110,6 @@
         "named": true
       }
     ]
-  },
-  {
-    "type": "add_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "string",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "address",
@@ -472,6 +453,16 @@
     "type": "environment_variable",
     "named": true,
     "fields": {
+      "default": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
       "reference": {
         "multiple": false,
         "required": false,

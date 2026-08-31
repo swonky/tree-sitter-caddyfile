@@ -153,7 +153,7 @@ static const UnicodeChar sym_map[128] = {
     ['>'] = SYM_GT,
     ['`'] = SYM_GRAVE,
     ['"'] = SYM_QUOTE,
-    ['*'] = SYM_ASTERISK,
+    // ['*'] = SYM_ASTERISK,
     ['!'] = SYM_EXCLAIM,
     ['?'] = SYM_QUESTION,
     ['%'] = SYM_PERCENT,
@@ -199,6 +199,8 @@ static const Keyword protocols[] = {
     PROTOCOL("ip4"),
     PROTOCOL("ip6"),
     PROTOCOL("h2c"),
+    PROTOCOL("fd"),
+    PROTOCOL("fdgram"),
 };
 
 static inline enum TokenType get_token(UnicodeChar c)
@@ -255,6 +257,7 @@ static inline bool is_delim(UnicodeChar c)
 	case '#':
 	case '/':
 	case '?':
+	case '+':
 		return true;
 	default:
 		return false;
@@ -360,6 +363,11 @@ static inline bool is_unit(const UnicodeChar *kw, uint8_t len)
 	return is_duration_unit(kw, len) || is_size_unit(kw, len);
 }
 
+static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
+static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
+static inline UnicodeChar previous(Scanner *s) { return s->previous; }
+static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
+
 static enum TokenType check_keyword(Scanner *s)
 {
 	assert(s != NULL);
@@ -381,7 +389,8 @@ static enum TokenType check_keyword(Scanner *s)
 			return kw->token;
 	}
 
-	if (!is_valid(s, KEY_PROTOCOL))
+	UnicodeChar c = peek(s);
+	if (!is_valid(s, KEY_PROTOCOL) || (c != '+' && c != '/'))
 		return _UNSPECIFIED;
 
 	for (size_t i = 0; i < sizeof(protocols) / sizeof(protocols[0]); i++) {
@@ -393,11 +402,6 @@ static enum TokenType check_keyword(Scanner *s)
 
 	return _UNSPECIFIED;
 }
-
-static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
-static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
-static inline UnicodeChar previous(Scanner *s) { return s->previous; }
-static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
 
 static inline void set_result(Scanner *s, enum TokenType token)
 {
@@ -652,7 +656,6 @@ static void scan_text(Scanner *s)
 	}
 
 	enum TokenType token = get_token(c);
-
 	if (token != _UNSPECIFIED && is_valid(s, token)) {
 		advance(s);
 		mark_end(s);
@@ -669,6 +672,16 @@ static void scan_text(Scanner *s)
 			}
 		}
 		return;
+	}
+
+	if (c == '*' && is_valid(s, SYM_ASTERISK)) {
+		advance(s);
+		c = peek(s);
+		if (is_ws(c) || is_eol(c) || eof(s)) {
+			mark_end(s);
+			set_result(s, SYM_ASTERISK);
+			return;
+		}
 	}
 
 	bool escape = false;
@@ -835,7 +848,8 @@ static void scan_text(Scanner *s)
 		return;
 	}
 
-	if (hex && s->consumed == 2 && is_valid(s, STR_HEX_BYTE))
+	if (hex && s->consumed == 2 && is_valid(s, STR_HEX_BYTE) &&
+	    (c == ':' || prefix == ':'))
 		set_result(s, STR_HEX_BYTE);
 	else if (upper && is_valid(s, STR_UPPER))
 		set_result(s, STR_UPPER);
