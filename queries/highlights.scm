@@ -25,7 +25,8 @@
 "invoke" @keyword.directive
 "vars" @keyword
 "args" @variable.builtin
-"not" @keyword.operator
+
+(negative) @keyword.modifier
 
 (placeholder
 	module: (_) @module

@@ -349,9 +349,10 @@ export default grammar({
 				$._sym_brace_c,
 			),
 
+		negative: $ => choice($._sym_exclaim, $._keyword_not),
 		request_matcher: $ =>
 			seq(
-				optional(field('modifier', $._keyword_not)),
+				optional(field('modifier', $.negative)),
 				choice(
 					$._regexp_matcher,
 					$._generic_matcher,

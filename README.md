@@ -22,14 +22,22 @@ A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://git
 ### Base syntax
 The grammar supports the following Caddyfile language syntax structures:
 
-- **Primitive value types**: `literal_string`, `integer`, `decimal`, `ipv4`
-- **Compound value types**: `templated_string`, `duration`, `address`, `ipv6`
+- **Primitive value types**: `literal_string`, `integer`, `decimal`, 
+- **Compound value types**: 
+    - Templatable strings
+    - Go-style strings for durations and byte sizes. 
+    - URL and network addresses incl. domains, ipv4, ipv6, mac_address, unix sockets.
+    - Port ranges.
+- **Substitution**: 
+    - `environment_variable` with default values.
+    - `placeholder` with namespacing and module-specific highlighting.
+    - `arguments` with Go-style slice indexing. 
 - **Global block**
 - **Site blocks**
 - **Snippet** definitions and references
 - **Named matchers**
 - **Named routes**
-- **Directives** with arguments and/or subdirective blocks
+- **Directives** with namespacing support, with arguments and/or subdirective blocks
 - **Negations** ("not" keyword)
 - **Comments**
 - **Language injection**
@@ -37,6 +45,11 @@ The grammar supports the following Caddyfile language syntax structures:
     - Grave (`\``) quoted cel expressions[^6]
     - `expression` matcher cel expressions[^6]
     - regular expressions[^9]
+
+### To do
+- [ ] Fold scheme file
+- [ ] More comprehensive tests
+- [ ] Benchmarks
 
 ### Disclaimer
 At the time of writing, I believe that this Caddyfile grammar provides greater and more accurate coverage of the modern Caddyfile syntax than the official release. However, I have taken a slightly unconventional approach to writing it. The parser is highly dependant on the custom scanner, so much so that not a single regular expression is used.
@@ -46,12 +59,6 @@ This was partially due to the nature of project. The Caddyfile language is highl
 (The other reason is that I really hate writing regex.)
 
 The lexer is written in C11 and is still in early stages of testing. I'm reasonably confident that there are no remaining infinite loops or fatal errors, however I urge caution until automated testing and fuzzing is implemented and an official release is posted.
-
-### To do
-- [ ] Fold scheme file
-- [ ] !-prefix
-- [ ] More comprehensive tests
-- [ ] Benchmarks
 
 ### Scheme files 
 The following scheme files[^8] are included in [./queries](queries/) to facilitate editor integrations and syntax highlight.

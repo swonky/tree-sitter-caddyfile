@@ -1759,6 +1759,19 @@
         }
       ]
     },
+    "negative": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sym_exclaim"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_not"
+        }
+      ]
+    },
     "request_matcher": {
       "type": "SEQ",
       "members": [
@@ -1770,7 +1783,7 @@
               "name": "modifier",
               "content": {
                 "type": "SYMBOL",
-                "name": "_keyword_not"
+                "name": "negative"
               }
             },
             {

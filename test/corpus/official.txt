@@ -908,6 +908,7 @@ reverse_proxy @test 127.0.0.1
     (named_matcher_definition
       name: (identifier)
       (request_matcher
+        modifier: (negative)
         matcher: (identifier)
         argument: (address
           host: (domain_name
