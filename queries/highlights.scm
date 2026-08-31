@@ -4,7 +4,7 @@
 (comment) @spell @comment
 
 ; (identifier) @constant
-(string) @string 
+[(string) (literal_string)] @string 
 ; (comment) @comment 
 (cel_expression) @string.special
 (verb) @string.special
@@ -77,16 +77,20 @@
 	name: (_) @type
 )
 
+(named_matcher_reference
+	name: (_) @type
+)
+
 (environment_variable
 	reference: (_) @constant.macro
 )
 
-(duration
+(amount
 	quantity: (integer) @number
 	unit: (_) @number
 )
 
-(duration
+(amount
 	quantity: (decimal) @number.float
 	unit: (_) @number.float
 )
@@ -106,6 +110,6 @@
 
 (site_block (string) @string.special.url ) 
 
-"private_ranges" @constant.builtin
+(shortcut) @constant.builtin
 
 (ERROR) @error-node

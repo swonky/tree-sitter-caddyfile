@@ -8,11 +8,11 @@
         "named": true
       },
       {
-        "type": "decimal",
+        "type": "amount",
         "named": true
       },
       {
-        "type": "duration",
+        "type": "decimal",
         "named": true
       },
       {
@@ -32,11 +32,15 @@
         "named": true
       },
       {
-        "type": "private_ranges",
-        "named": false
+        "type": "path",
+        "named": true
       },
       {
         "type": "quoted_expression",
+        "named": true
+      },
+      {
+        "type": "shortcut",
         "named": true
       },
       {
@@ -179,6 +183,40 @@
           },
           {
             "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "amount",
+    "named": true,
+    "fields": {
+      "quantity": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "decimal",
+            "named": true
+          },
+          {
+            "type": "integer",
+            "named": true
+          }
+        ]
+      },
+      "unit": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "duration",
+            "named": true
+          },
+          {
+            "type": "size",
             "named": true
           }
         ]
@@ -364,32 +402,7 @@
   {
     "type": "duration",
     "named": true,
-    "fields": {
-      "quantity": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "decimal",
-            "named": true
-          },
-          {
-            "type": "integer",
-            "named": true
-          }
-        ]
-      },
-      "unit": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "literal_string",
-            "named": true
-          }
-        ]
-      }
-    }
+    "fields": {}
   },
   {
     "type": "embedded_content",
@@ -751,6 +764,10 @@
             "named": true
           },
           {
+            "type": "string",
+            "named": true
+          },
+          {
             "type": "wildcard",
             "named": true
           }
@@ -1030,6 +1047,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "size",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "snippet_definition",
@@ -1345,8 +1367,8 @@
     "named": false
   },
   {
-    "type": "private_ranges",
-    "named": false
+    "type": "shortcut",
+    "named": true
   },
   {
     "type": "vars",

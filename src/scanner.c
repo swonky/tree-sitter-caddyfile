@@ -40,9 +40,10 @@ enum TokenType {
 	STR_CEL,
 	STR_CEL_INLINE,
 	STR_COMMENT,
-	STR_DUR_INTEGER,
-	STR_DUR_DECIMAL,
-	STR_DUR_UNIT,
+	STR_QTY_INTEGER,
+	STR_QTY_DECIMAL,
+	STR_UNIT_DURATION,
+	STR_UNIT_SIZE,
 
 	/*
 	 * whitespace
@@ -215,7 +216,36 @@ static bool word_equals(Scanner *s, const Keyword *kw)
 	return true;
 }
 
-static bool is_unit(const UnicodeChar *kw, uint8_t len)
+static inline bool is_delim(UnicodeChar c)
+{
+	switch (c) {
+	case '.':
+	case ':':
+	case '#':
+	case '/':
+	case '?':
+		return true;
+	default:
+		return false;
+	}
+}
+
+static inline bool is_bracket(UnicodeChar c)
+{
+	switch (c) {
+	case '(':
+	case ')':
+	case '[':
+	case ']':
+	case '{':
+	case '}':
+		return true;
+	default:
+		return false;
+	}
+}
+
+static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
 {
 	assert(kw != NULL);
 
@@ -245,12 +275,70 @@ static bool is_unit(const UnicodeChar *kw, uint8_t len)
 	}
 }
 
+static inline bool is_size_prefix(const UnicodeChar c)
+{
+	switch (c) {
+	case 'k':
+	case 'K':
+	case 'm':
+	case 'M':
+	case 'g':
+	case 'G':
+	case 't':
+	case 'T':
+	case 'p':
+	case 'P':
+	case 'e':
+	case 'E':
+		return true;
+	default:
+		return false;
+	}
+}
+
+static inline bool is_byte(const UnicodeChar c)
+{
+	switch (c) {
+	case 'b':
+	case 'B':
+		return true;
+	default:
+		return false;
+	}
+}
+
+// https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/bytes.go
+static inline bool is_size_unit(const UnicodeChar *kw, uint8_t len)
+{
+	assert(kw != NULL);
+
+	switch (len) {
+	case 1:
+		return is_byte(kw[0]) || is_size_prefix(kw[0]);
+	case 2:
+		return is_size_prefix(kw[0]) && is_byte(kw[1]);
+	case 3:
+		return is_size_prefix(kw[0]) && kw[1] == 'i' && is_byte(kw[2]);
+	default:
+		return false;
+	}
+}
+
+static inline bool is_unit(const UnicodeChar *kw, uint8_t len)
+{
+	return is_duration_unit(kw, len) || is_size_unit(kw, len);
+}
+
 static enum TokenType check_keyword(Scanner *s)
 {
 	assert(s != NULL);
 
-	if (is_valid(s, STR_DUR_UNIT) && is_unit(s->word, s->word_len))
-		return STR_DUR_UNIT;
+	if (is_valid(s, STR_UNIT_DURATION) &&
+	    is_duration_unit(s->word, s->word_len))
+		return STR_UNIT_DURATION;
+
+	if (is_valid(s, STR_UNIT_SIZE) && is_size_unit(s->word, s->word_len))
+		return STR_UNIT_SIZE;
 
 	for (size_t i = 0; i < sizeof(keywords) / sizeof(keywords[0]); i++) {
 		const Keyword *kw = &keywords[i];
@@ -596,10 +684,10 @@ static void scan_text(Scanner *s)
 
 		if (is_eol(c) || (is_ws(c) && !s->in_quotation)) {
 			if (kw) {
-				enum TokenType token = check_keyword(s);
-				if (token != _UNSPECIFIED) {
+				enum TokenType keyword = check_keyword(s);
+				if (keyword != _UNSPECIFIED) {
 					mark_end(s);
-					set_result(s, token);
+					set_result(s, keyword);
 					return;
 				}
 				kw = false;
@@ -611,19 +699,23 @@ static void scan_text(Scanner *s)
 		nperiod += (c == '.');
 
 		enum TokenType token = get_token(c);
-		if (token != _UNSPECIFIED && is_valid(s, token)) {
+		if ((s->consumed > 0 && is_delim(c)) ||
+		    (token != _UNSPECIFIED && is_valid(s, token))) {
 			if (kw) {
-				enum TokenType token = check_keyword(s);
-				if (token != _UNSPECIFIED) {
-					if (token == SYM_PERIOD && digits &&
-					    (is_valid(s, STR_DECIMAL) ||
-						is_valid(s, STR_IPV4)))
-						break;
+				enum TokenType keyword = check_keyword(s);
+				if (keyword != _UNSPECIFIED) {
 					mark_end(s);
-					set_result(s, token);
+					set_result(s, keyword);
 					return;
 				}
 				kw = false;
+			}
+			if (token == SYM_PERIOD &&
+			    (digits && (is_valid(s, STR_DECIMAL) ||
+					   is_valid(s, STR_QTY_DECIMAL) ||
+					   is_valid(s, STR_IPV4)))) {
+				advance(s);
+				continue;
 			}
 			mark_end(s);
 			break;
@@ -635,42 +727,35 @@ static void scan_text(Scanner *s)
 		if (digits && !is_num(c) && c != '.') {
 			mark_end(s);
 			digits = false;
-			if (s->consumed > 0 && nperiod <= 1 &&
-			    is_valid(s, STR_DUR_INTEGER) &&
-			    is_valid(s, STR_DUR_DECIMAL)) {
+			if (is_alpha(c) && s->consumed > 0 && nperiod <= 1 &&
+			    is_valid(s, STR_QTY_INTEGER) &&
+			    is_valid(s, STR_QTY_DECIMAL)) {
+				UnicodeChar suffix[3] = {c};
 				advance(s);
-
-				UnicodeChar next = peek(s);
-				if (next == c) {
-					continue;
+				c = peek(s);
+				uint8_t len = 1;
+				while (!eof(s) && len < 3) {
+					if (!is_alpha(c))
+						break;
+					suffix[len] = c;
+					len++;
+					advance(s);
+					c = peek(s);
 				}
 
-				UnicodeChar suffix[2] = {c};
-				uint8_t len = 1;
-				if (!(is_ws(next) || is_eol(next))) {
-					suffix[1] = next;
-					len = 2;
+				if (!(is_ws(c) || is_eol(c))) {
+					continue;
 				}
 
 				if (!is_unit(suffix, len))
 					continue;
 
-				if (len == 2) {
-					advance(s);
-					next = peek(s);
-					if (!(is_ws(next) || is_eol(next)))
-						continue;
-				}
-
-				// advance(s);
-				// mark_end(s);
-
 				switch (nperiod) {
 				case 0:
-					set_result(s, STR_DUR_INTEGER);
+					set_result(s, STR_QTY_INTEGER);
 					return;
 				case 1:
-					set_result(s, STR_DUR_DECIMAL);
+					set_result(s, STR_QTY_DECIMAL);
 					return;
 				default:
 					continue;

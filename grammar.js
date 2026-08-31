@@ -31,9 +31,10 @@ export default grammar({
 		$._ext_str_cel,
 		$._ext_str_cel_inline,
 		$._ext_str_comment,
-		$._ext_str_dur_integer,
-		$._ext_str_dur_decimal,
-		$._ext_str_unit,
+		$._ext_str_qty_integer,
+		$._ext_str_qty_decimal,
+		$._ext_str_unit_duration,
+		$._ext_str_unit_size,
 
 		// whitespace
 		$._ext_eol,
@@ -130,6 +131,7 @@ export default grammar({
 		identifier: $ => choice($.templated_identifier, $._ext_str_bare),
 
 		string: $ => choice($.templated_string, $.literal_string),
+		_string: $ => choice($.templated_string, $.literal_string),
 		literal_string: $ => $._ext_str_bare,
 
 		templated_identifier: $ => prec.right(seq(repeat1($._tmpl_identifier_fragment))),
@@ -198,12 +200,12 @@ export default grammar({
 				repeat(choice(field('hextet', $._primitive), $._sym_colon)),
 				$._sym_bracket_c,
 			),
-		_path: $ => repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
-		path: $ =>
-			seq(
-				$._sym_solidus,
-				repeat1(choice(field('segment', $.identifier), $._sym_solidus)),
-			),
+		_path: $ => repeat1(choice(field('segment', $.string), $._sym_solidus)),
+		inode: $ => prec.right(repeat1(choice($.string, $._sym_period))),
+
+		// path: $ =>
+		// 	seq($._sym_solidus, repeat1(choice(field('segment', $.inode), $._sym_solidus))),
+
 		_query: $ => prec.right(seq($._sym_question, optional($.string))),
 		_fragment: $ => prec.right(seq($._sym_num, optional($.string))),
 
@@ -225,7 +227,9 @@ export default grammar({
 
 		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
 
-		domain_name: $ =>
+		domain_name: $ => $._dot_delimited,
+
+		_dot_delimited: $ =>
 			prec.right(repeat1(choice(field('segment', $.string), $._sym_period))),
 
 		_block: $ =>
@@ -291,8 +295,6 @@ export default grammar({
 
 		matcher: $ => choice($.wildcard, $.named_matcher_reference, $.path_matcher),
 		wildcard: $ => $._sym_asterisk,
-
-		construction: $ => seq($._clause, optional($._block)),
 
 		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
 
@@ -361,29 +363,31 @@ export default grammar({
 
 		_implied_cel_expression: $ => alias($._ext_str_cel_inline, $.cel_expression),
 
-		_clause: $ =>
-			prec.left(
+		construction: $ =>
+			prec.right(
 				seq(
 					$.__keyword_field,
-					repeat($._ws),
-					optional(seq($._matcher_field, repeat($._ws))),
-					repeat($._arguments_field),
+					optional(seq(repeat1($._ws), $._matcher_field)),
+					repeat(seq(repeat1($._ws), $._arguments_field)),
+					optional(seq(repeat1($._ws), $._block)),
 				),
 			),
 
 		__keyword_field: $ => field('keyword', $._bare_identifier),
-		_matcher_field: $ => prec.left(seq(field('matcher', $.matcher), repeat($._ws))),
-		_arguments_field: $ => prec.right(seq(field('argument', $.argument), repeat($._ws))),
+		_matcher_field: $ => field('matcher', $.matcher),
+		_arguments_field: $ => field('argument', $.argument),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
 
 		_primitive: $ => prec.right(choice($.string, $.integer)),
 
-		_duration_decimal: $ => alias($._ext_str_dur_decimal, $.decimal),
-		_duration_integer: $ => alias($._ext_str_dur_integer, $.integer),
-		duration: $ =>
+		_amount_decimal: $ => alias($._ext_str_qty_decimal, $.decimal),
+		_amount_integer: $ => alias($._ext_str_qty_integer, $.integer),
+		duration: $ => $._ext_str_unit_duration,
+		size: $ => $._ext_str_unit_size,
+		amount: $ =>
 			seq(
-				field('quantity', choice($._duration_integer, $._duration_decimal)),
-				field('unit', alias($._ext_str_unit, $.literal_string)),
+				field('quantity', choice($._amount_integer, $._amount_decimal)),
+				field('unit', choice($.duration, $.size)),
 			),
 
 		ipv4: $ => $._ext_str_ipv4,
@@ -397,12 +401,13 @@ export default grammar({
 					$.integer,
 					$.decimal,
 					$.address,
+					$.path,
 					$.quoted_expression,
 					$.embedded_content,
 					$.verb,
 					$.heredoc,
 					$._keyword_private_ranges,
-					$.duration,
+					$.amount,
 					$.ipv4,
 				),
 			),
@@ -465,7 +470,7 @@ export default grammar({
 
 		_keyword_import: $ => alias($._key_import, 'import'),
 		_keyword_invoke: $ => alias($._key_invoke, 'invoke'),
-		_keyword_private_ranges: $ => alias($._key_private_ranges, 'private_ranges'),
+		_keyword_private_ranges: $ => alias($._key_private_ranges, $.shortcut),
 		_keyword_vars: $ => alias($._key_vars, 'vars'),
 		_keyword_args: $ => alias($._key_args, 'args'),
 		_keyword_env: $ => alias($._key_env, 'env'),
