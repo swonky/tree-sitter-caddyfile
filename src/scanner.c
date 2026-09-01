@@ -120,13 +120,13 @@ enum TokenType {
 };
 
 /**
- *	unicode character
+ * Type alias for 32-bit unicode character.
  */
 typedef int32_t UnicodeChar;
 
 /**
- *	keyword entry.
- *	use @ref KEYWORD() macro to initialise.
+ * Keyword entry.
+ * Use `KEYWORD` or `CLASS` macro to initialise.
  */
 typedef struct {
 	const char *text;
@@ -135,7 +135,7 @@ typedef struct {
 } Keyword;
 
 /**
- *	character-to-token map for ASCII symbolic operators.
+ * Character-to-token map for Unicode symbolic operators.
  */
 static const UnicodeChar sym_map[128] = {
     ['('] = SYM_PAREN_O,
@@ -165,7 +165,16 @@ static const UnicodeChar sym_map[128] = {
 };
 
 /**
- *	string-to-token map for keywords.
+ * Safely indexes `sym_map` and returns the associated token enum.
+ * Returns `_UNSPECIFIED` if no token exists for that character.
+ */
+static inline enum TokenType get_token(UnicodeChar c)
+{
+	return (c >= 128) ? _UNSPECIFIED : sym_map[c];
+}
+
+/**
+ * String-to-token map for keywords.
  */
 static const Keyword keywords[] = {
     KEYWORD("true", KEY_BOOLEAN),
@@ -184,7 +193,7 @@ static const Keyword keywords[] = {
 };
 
 /**
- *	string array for `CLS_REGEXP`.
+ * String array for `CLS_REGEXP`.
  */
 static const Keyword regex_matchers[] = {
     CLASS("path_regexp"),
@@ -195,7 +204,7 @@ static const Keyword regex_matchers[] = {
 };
 
 /**
- *	string array for `CLS_PROTOCOL`.
+ * String array for `CLS_PROTOCOL`.
  */
 static const Keyword protocols[] = {
     CLASS("unix"),
@@ -215,12 +224,7 @@ static const Keyword protocols[] = {
     CLASS("fdgram"),
 };
 
-static inline enum TokenType get_token(UnicodeChar c)
-{
-	if (c >= 128)
-		return _UNSPECIFIED;
-	return sym_map[c];
-}
+/// === Scanner definition and convenience functions ===
 
 typedef struct {
 	/* persistent fields */
@@ -237,42 +241,111 @@ typedef struct {
 	UnicodeChar word[TAGLEN];
 } Scanner;
 
+/**
+ * Returns the current lexer column position.
+ */
 static inline uint32_t get_column(Scanner *s)
 {
 	assert(s != NULL);
 	return s->lexer->get_column(s->lexer);
 }
 
+/**
+ * Sets the lexer's result symbol.
+ */
 static inline void set_result(Scanner *s, enum TokenType token)
 {
 	assert(s != NULL);
 	s->lexer->result_symbol = token;
 }
 
+/**
+ * Sets the end boundary of the current token to the current lexer position.
+ */
+static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
+
+/**
+ * Returns true if lexer has reached the end of the file.
+ */
+static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
+
+/**
+ * Returns true if `token` is valid in the current context.
+ */
 static inline bool is_valid(Scanner *s, enum TokenType token)
 {
 	assert(s != NULL);
 	return s->vs != NULL && s->vs[token];
 }
 
+/**
+ * Returns current lexer lookahead character.
+ */
+static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
+
+/// === Asserter predicate functions ===
+
+/**
+ * Function type for unicode character predicates.
+ */
 typedef bool (*Asserter)(UnicodeChar);
 
-static inline bool between(UnicodeChar x, UnicodeChar lo, UnicodeChar hi)
+/**
+ * Matches ASCII decimal digits.
+ * Implements `Asserter`.
+ */
+static inline bool is_digit(UnicodeChar c) { return (c >= '0' && c <= '9'); }
+
+/**
+ * Matches ASCII hexadecimal digits.
+ * Implements `Asserter`.
+ */
+static inline bool is_hex(UnicodeChar c)
 {
-	return (x >= lo && x <= hi);
+	return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') ||
+	       (c >= 'a' && c <= 'f');
 }
 
-static inline bool is_num(UnicodeChar c) { return between(c, '0', '9'); }
-static inline bool is_upper(UnicodeChar c) { return between(c, 'A', 'Z'); }
-static inline bool is_lower(UnicodeChar c) { return between(c, 'a', 'z'); }
-static inline bool is_ascii(UnicodeChar c) { return between(c, 0, 0x7e); }
+/**
+ * Matches ASCII uppercase letters.
+ * Implements `Asserter`.
+ */
+static inline bool is_upper(UnicodeChar c) { return (c >= 'A' && c <= 'Z'); }
 
+/**
+ * Matches ASCII lowercase letters.
+ * Implements `Asserter`.
+ */
+static inline bool is_lower(UnicodeChar c) { return (c >= 'a' && c <= 'z'); }
+
+/**
+ * Matches all ASCII characters.
+ * Implements `Asserter`.
+ */
+static inline bool is_ascii(UnicodeChar c) { return (c >= 0 && c <= 0x7e); }
+
+/**
+ * Matches ASCII alphabetic characters..
+ * Implements `Asserter`.
+ */
 static inline bool is_alpha(UnicodeChar c)
 {
 	return is_upper(c) || is_lower(c);
 }
-static inline bool is_alnum(UnicodeChar c) { return is_num(c) || is_alpha(c); }
 
+/**
+ * Matches ASCII alphanumeric characters.
+ * Implements `Asserter`.
+ */
+static inline bool is_alnum(UnicodeChar c)
+{
+	return is_digit(c) || is_alpha(c);
+}
+
+/**
+ * Matches Unicode whitespace characters.
+ * Implements `Asserter`.
+ */
 static inline bool is_ws(UnicodeChar c)
 {
 	switch (c) {
@@ -300,6 +373,10 @@ static inline bool is_ws(UnicodeChar c)
 	}
 }
 
+/**
+ * Matches unicode end-of-line characters.
+ * Implements `Asserter`.
+ */
 static inline bool is_eol(UnicodeChar c)
 {
 	switch (c) {
@@ -316,11 +393,16 @@ static inline bool is_eol(UnicodeChar c)
 	}
 }
 
+/**
+ * Matches all unicode chars except end-of-line characters.
+ * Inverse of `is_eol`.
+ * Implements `Asserter`.
+ */
 INVERT(is_not_eol, is_eol)
 
 /*
  * Matches a subset of address delimiter characters.
- * Implements `Asserter`
+ * Implements `Asserter`.
  */
 static inline bool is_delim(UnicodeChar c)
 {
@@ -339,7 +421,7 @@ static inline bool is_delim(UnicodeChar c)
 
 /*
  * Matches parentheses, braces, and square brackets. But never chevrons.
- * Implements `Asserter`
+ * Implements `Asserter`.
  */
 static inline bool is_bracket(UnicodeChar c)
 {
@@ -356,6 +438,56 @@ static inline bool is_bracket(UnicodeChar c)
 	}
 }
 
+/**
+ * Returns true if `c` is an size-unit prefix.
+ * Valid prefixes are k, m, g, t, p, and e, case-insensitive.
+ * Implements `Asserter`.
+ */
+static inline bool is_size_prefix(UnicodeChar c)
+{
+	if (!is_ascii(c))
+		return false;
+	c |= 0x20;
+	return c == 'k' || c == 'm' || c == 'g' || c == 't' || c == 'p' ||
+	       c == 'e';
+}
+
+/**
+ * Returns true if `c` is byte-size unit.
+ * The valid unit is b, case-insensitive.
+ * Implements `Asserter`.
+ */
+static inline bool is_size_suffix(UnicodeChar c)
+{
+	return c == 'b' || c == 'B';
+}
+
+/*
+ *	=== Sized string matcher functions ===
+ */
+
+/*
+ * Matches valid size unit unicode strings (eg. b, MB, GiB, k).
+ *
+ * [spec](https://caddyserver.com/docs/caddyfile/directives/request_body#syntax)
+ * [go-humanize](https://pkg.go.dev/github.com/dustin/go-humanize#pkg-constants)
+ */
+static inline bool is_size_unit(const UnicodeChar *kw, uint8_t len)
+{
+	assert(kw != NULL);
+	switch (len) {
+	case 1:
+		return is_size_suffix(kw[0]) || is_size_prefix(kw[0]);
+	case 2:
+		return is_size_prefix(kw[0]) && is_size_suffix(kw[1]);
+	case 3:
+		return is_size_prefix(kw[0]) && kw[1] == 'i' &&
+		       is_size_suffix(kw[2]);
+	default:
+		return false;
+	}
+}
+
 /*
  * Matches valid duration unit unicode strings (eg. ms, s, h, µs).
  *
@@ -365,7 +497,6 @@ static inline bool is_bracket(UnicodeChar c)
 static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
 {
 	assert(kw != NULL);
-
 	switch (len) {
 	case 1:
 		switch (kw[0]) {
@@ -393,60 +524,12 @@ static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
 }
 
 /**
- * Returns true if `c` is an size-unit prefix.
- * Valid prefixes are k, m, g, t, p, and e, case-insensitive.
- * Implements `Asserter`.
+ * Returns true if `kw` matches either a duration or unit keyword class.
  */
-static inline bool is_size_prefix(UnicodeChar c)
-{
-	if (!is_ascii(c))
-		return false;
-	c |= 0x20;
-	return c == 'k' || c == 'm' || c == 'g' || c == 't' || c == 'p' ||
-	       c == 'e';
-}
-
-/**
- * Returns true if `c` is byte-size unit.
- * The valid unit is b, case-insensitive.
- * Implements `Asserter`.
- */
-static inline bool is_size_suffix(UnicodeChar c)
-{
-	return is_ascii(c) && (c |= 0x20) == 'b';
-}
-
-/*
- * Matches valid size unit unicode strings (eg. b, MB, GiB, k).
- *
- * [spec](https://caddyserver.com/docs/caddyfile/directives/request_body#syntax)
- * [go-humanize](https://pkg.go.dev/github.com/dustin/go-humanize#pkg-constants)
- */
-static inline bool is_size_unit(const UnicodeChar *kw, uint8_t len)
-{
-	assert(kw != NULL);
-
-	switch (len) {
-	case 1:
-		return is_size_suffix(kw[0]) || is_size_prefix(kw[0]);
-	case 2:
-		return is_size_prefix(kw[0]) && is_size_suffix(kw[1]);
-	case 3:
-		return is_size_prefix(kw[0]) && kw[1] == 'i' &&
-		       is_size_suffix(kw[2]);
-	default:
-		return false;
-	}
-}
-
 static inline bool is_unit(const UnicodeChar *kw, uint8_t len)
 {
 	return is_duration_unit(kw, len) || is_size_unit(kw, len);
 }
-
-static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
-static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
-static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
 
 /*
  * Sized unicode string comparator for `s->word` and `kw`.
@@ -500,7 +583,6 @@ static enum TokenType check_protocol(Scanner *s)
 	UnicodeChar c = peek(s);
 	if (!is_valid(s, CLS_PROTOCOL) || (c != '+' && c != '/'))
 		return _UNSPECIFIED;
-
 	for (size_t i = 0; i < ARRAY_LEN(protocols); i++) {
 		const Keyword *kw = &protocols[i];
 		if (word_equals(s, kw))
@@ -517,7 +599,6 @@ static enum TokenType check_regex_matchers(Scanner *s)
 {
 	if (!is_valid(s, CLS_REGEXP))
 		return _UNSPECIFIED;
-
 	for (size_t i = 0; i < ARRAY_LEN(regex_matchers); i++) {
 		const Keyword *kw = &regex_matchers[i];
 		if (word_equals(s, kw))
@@ -575,34 +656,42 @@ static enum TokenType match(Scanner *s)
 
 	return _UNSPECIFIED;
 }
+
+/// === Navigation convenience functions ===
+
+/**
+ * Consumes the current character and advances the lexer.
+ */
 static inline void advance(Scanner *s)
 {
 	if (eof(s))
 		return;
-
 	s->previous = peek(s);
 	s->lexer->advance(s->lexer, false);
-
 	if (s->word_len == 0 && s->consumed < TAGLEN) {
 		s->word[s->consumed] = s->previous;
-
 		UnicodeChar c = peek(s);
 		if (!is_alnum(c) && c != '_')
 			s->word_len = s->consumed + 1;
 	}
-
 	s->consumed++;
 }
 
+/**
+ * Skips the current character and advances the lexer.
+ */
 static inline void skip(Scanner *s)
 {
 	if (eof(s))
 		return;
-
 	s->previous = peek(s);
 	s->lexer->advance(s->lexer, true);
 }
 
+/**
+ * Skips characters while `fn` accepts the next character.
+ * Stops at EOF or when `fn(peek(s))` returns false.
+ */
 static inline void skip_while(Scanner *s, Asserter fn)
 {
 	while (!eof(s) && fn(peek(s))) {
@@ -610,6 +699,10 @@ static inline void skip_while(Scanner *s, Asserter fn)
 	}
 }
 
+/**
+ * Advances through characters while `fn` accepts the next character.
+ * Stops at EOF or when `fn(peek(s))` returns false.
+ */
 static inline void advance_while(Scanner *s, Asserter fn)
 {
 	while (!eof(s) && fn(peek(s))) {
@@ -625,28 +718,27 @@ static inline void advance_rol(Scanner *s)
 {
 	while (!eof(s) && !is_eol(peek(s)))
 		advance(s);
-
 	if (eof(s))
 		return;
-
 	advance(s);
-
 	if (s->previous == '\r' && !eof(s) && peek(s) == '\n')
 		advance(s);
 }
 
+/// === Scanner control flow ===
+
+/*
+ * Handles lexing the heredoc operator, tag, and content.
+ */
 static bool scan_heredoc(Scanner *s)
 {
 	if (is_valid(s, ERROR_SENTINEL))
 		return false;
-
 	uint8_t n;
-
 	if (is_valid(s, HEREDOC_CONTENT) && s->tag_len != 0) {
 		while (!eof(s)) {
 			advance_while(s, is_ws);
 			mark_end(s);
-
 			for (n = 0; n < TAGLEN && n < s->tag_len; n++) {
 				if (eof(s))
 					break;
@@ -659,10 +751,8 @@ static bool scan_heredoc(Scanner *s)
 				set_result(s, HEREDOC_CONTENT);
 				return true;
 			}
-
 			advance_rol(s);
 		}
-
 		mark_end(s);
 		set_result(s, HEREDOC_CONTENT);
 		return true;
@@ -715,11 +805,9 @@ static bool scan_heredoc(Scanner *s)
 	return false;
 }
 
-static inline bool is_hex(UnicodeChar c)
-{
-	return is_num(c) || (c >= 'A' && c <= 'F') || (c >= 'a' && c <= 'f');
-}
-
+/*
+ * Main scanner control flow.
+ */
 static void scan_text(Scanner *s)
 {
 	UnicodeChar prefix = s->previous;
@@ -892,7 +980,7 @@ static void scan_text(Scanner *s)
 		upper = upper && is_upper(c);
 		hex = hex && is_hex(c);
 
-		if (digits && !is_num(c) && c != '.') {
+		if (digits && !is_digit(c) && c != '.') {
 			mark_end(s);
 			digits = false;
 			if (is_alpha(c) && s->consumed > 0 && nperiod <= 1 &&
@@ -974,6 +1062,8 @@ static void scan_text(Scanner *s)
 	mark_end(s);
 	return;
 }
+
+/// Scanner initialisation logic
 
 /*
  * Initialises persistent field values.
