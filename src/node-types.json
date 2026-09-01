@@ -166,7 +166,7 @@
             "named": true
           },
           {
-            "type": "range_expression",
+            "type": "range",
             "named": true
           },
           {
@@ -176,15 +176,11 @@
         ]
       },
       "query": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "?",
-            "named": false
-          },
-          {
-            "type": "string",
+            "type": "query",
             "named": true
           }
         ]
@@ -644,6 +640,32 @@
     }
   },
   {
+    "type": "mapping",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "matcher",
     "named": true,
     "fields": {},
@@ -845,7 +867,7 @@
             "named": true
           },
           {
-            "type": "range_expression",
+            "type": "range",
             "named": true
           },
           {
@@ -891,7 +913,7 @@
             "named": true
           },
           {
-            "type": "range_expression",
+            "type": "range",
             "named": true
           },
           {
@@ -1035,6 +1057,21 @@
     "fields": {}
   },
   {
+    "type": "query",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "mapping",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "quoted_expression",
     "named": true,
     "fields": {
@@ -1052,32 +1089,6 @@
   },
   {
     "type": "range",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "integer",
-            "named": true
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "integer",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "range_expression",
     "named": true,
     "fields": {
       "left": {
@@ -1561,6 +1572,10 @@
   },
   {
     "type": "<<",
+    "named": false
+  },
+  {
+    "type": "=",
     "named": false
   },
   {

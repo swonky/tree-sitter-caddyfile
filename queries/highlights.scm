@@ -52,6 +52,11 @@
 ["`"] @punctuation.special
 ["\""] @string
 
+(query "&" @punctuation.delimiter )
+(mapping "=" @punctuation.delimiter)
+(mapping key: (_) @variable.member )
+(mapping value: (_) @string )
+
 (path
 	"/" @string.special.path
 )

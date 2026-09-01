@@ -86,6 +86,7 @@ export default grammar({
 		$._ext_sym_question,
 		$._ext_sym_percent,
 		$._ext_sym_bar,
+		$._ext_sym_equal,
 
 		$._ext_sym_block_start,
 		$._ext_sym_scheme,
@@ -218,7 +219,6 @@ export default grammar({
 		_path: $ => repeat1(choice(field('segment', $.string), $._sym_solidus)),
 		inode: $ => prec.right(repeat1(choice($.string, $._sym_period))),
 
-		_query: $ => prec.right(seq($._sym_question, optional($.string))),
 		_fragment: $ => prec.right(seq($._sym_num, optional($.string))),
 
 		_network: $ => seq($.protocol, optional(seq($._sym_plus, $.protocol))),
@@ -235,8 +235,7 @@ export default grammar({
 		_host_port: $ =>
 			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
 
-		_port: $ =>
-			prec.right(seq($._sym_colon, optional(choice($._primitive, $.range_expression)))),
+		_port: $ => prec.right(seq($._sym_colon, optional(choice($._primitive, $.range)))),
 
 		byte: $ => $._ext_str_hex_byte,
 		mac_address: $ =>
@@ -244,13 +243,37 @@ export default grammar({
 				seq(field('octet', $.byte), repeat1(seq($._sym_colon, field('octet', $.byte)))),
 			),
 
-		range_expression: $ =>
+		range: $ =>
 			seq(
 				optional(field('left', $._primitive)),
 				$._sym_hyphen,
 				field('right', $._primitive),
 			),
 
+		mapping: $ =>
+			prec.right(
+				seq(
+					optional(field('key', $._bare_identifier)),
+					repeat1(seq($._sym_equal, optional(field('value', $._bare_identifier)))),
+				),
+			),
+		_query_value: $ => choice($.mapping, $.string),
+		query: $ =>
+			prec.right(
+				seq(
+					$._sym_question,
+					optional($.mapping),
+					repeat(seq($._sym_ampersand, $.mapping)),
+				),
+			),
+		// mapping: $ =>
+		// 	prec.right(
+		// 		seq(
+		// 			optional(field('key', $.string)),
+		// 			optional($._sym_equal),
+		// 			field('value', $.string),
+		// 		),
+		// 	),
 		address: $ =>
 			prec.right(
 				seq(
@@ -258,7 +281,7 @@ export default grammar({
 						choice(field('scheme', seq($.string, $._sym_scheme)), $._host_port),
 					),
 					optional(field('path', $.path)),
-					optional(field('query', $._query)),
+					optional(field('query', $.query)),
 					optional(field('fragment', $._fragment)),
 				),
 			),
@@ -520,6 +543,7 @@ export default grammar({
 		_sym_question: $ => alias($._ext_sym_question, '?'),
 		_sym_percent: $ => alias($._ext_sym_percent, '%'),
 		_sym_bar: $ => alias($._ext_sym_bar, '|'),
+		_sym_equal: $ => alias($._ext_sym_equal, '='),
 
 		_keyword_import: $ => alias($._key_import, 'import'),
 		_keyword_invoke: $ => alias($._key_invoke, 'invoke'),
