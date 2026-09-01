@@ -1943,10 +1943,9 @@
 <use xlink:href="#glyph-0-14" x="284" y="1542.058594"/>
 </g>
 <path fill-rule="nonzero" fill="rgb(14.901961%, 54.509804%, 82.352941%)" fill-opacity="1" d="M 262 1544.953125 L 295 1544.953125 L 295 1545.886719 L 262 1545.886719 Z M 262 1544.953125 "/>
-<g fill="rgb(52.156863%, 60%, 0%)" fill-opacity="1">
+<g fill="rgb(39.607843%, 48.235294%, 51.372549%)" fill-opacity="1">
 <use xlink:href="#glyph-0-23" x="306" y="1542.058594"/>
-</g>
-<g fill="rgb(52.156863%, 60%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-24" x="317" y="1542.058594"/>
 <use xlink:href="#glyph-0-3" x="328" y="1542.058594"/>
 <use xlink:href="#glyph-0-27" x="339" y="1542.058594"/>
 <use xlink:href="#glyph-0-7" x="350" y="1542.058594"/>
@@ -1954,16 +1953,14 @@
 <use xlink:href="#glyph-0-25" x="372" y="1542.058594"/>
 <use xlink:href="#glyph-0-1" x="383" y="1542.058594"/>
 <use xlink:href="#glyph-0-10" x="394" y="1542.058594"/>
-</g>
-<g fill="rgb(52.156863%, 60%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-24" x="405" y="1542.058594"/>
 <use xlink:href="#glyph-0-4" x="416" y="1542.058594"/>
 <use xlink:href="#glyph-0-27" x="427" y="1542.058594"/>
 <use xlink:href="#glyph-0-5" x="438" y="1542.058594"/>
 <use xlink:href="#glyph-0-4" x="449" y="1542.058594"/>
 <use xlink:href="#glyph-0-27" x="460" y="1542.058594"/>
 <use xlink:href="#glyph-0-1" x="471" y="1542.058594"/>
-</g>
-<g fill="rgb(52.156863%, 60%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-24" x="482" y="1542.058594"/>
 <use xlink:href="#glyph-0-13" x="493" y="1542.058594"/>
 <use xlink:href="#glyph-0-7" x="504" y="1542.058594"/>
 <use xlink:href="#glyph-0-2" x="515" y="1542.058594"/>
@@ -1971,8 +1968,6 @@
 <use xlink:href="#glyph-0-1" x="537" y="1542.058594"/>
 <use xlink:href="#glyph-0-27" x="548" y="1542.058594"/>
 <use xlink:href="#glyph-0-15" x="559" y="1542.058594"/>
-</g>
-<g fill="rgb(57.647059%, 63.137255%, 63.137255%)" fill-opacity="1">
 <use xlink:href="#glyph-0-69" x="570" y="1542.058594"/>
 </g>
 <g fill="rgb(14.901961%, 54.509804%, 82.352941%)" fill-opacity="1">
