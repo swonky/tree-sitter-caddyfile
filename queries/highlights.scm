@@ -52,6 +52,7 @@
 ["`"] @punctuation.special
 ["\""] @string
 
+(address "@" @punctuation.delimiter )
 (query "&" @punctuation.delimiter )
 (mapping "=" @punctuation.delimiter)
 (mapping key: (_) @variable.member )

@@ -198,6 +198,16 @@
             "named": true
           }
         ]
+      },
+      "user": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
       }
     }
   },

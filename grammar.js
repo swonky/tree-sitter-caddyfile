@@ -232,16 +232,57 @@ export default grammar({
 
 		protocol: $ => $._key_protocol,
 
-		_host_port: $ =>
-			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
-
-		_port: $ => prec.right(seq($._sym_colon, optional(choice($._primitive, $.range)))),
-
 		byte: $ => $._ext_str_hex_byte,
 		mac_address: $ =>
 			prec.right(
 				seq(field('octet', $.byte), repeat1(seq($._sym_colon, field('octet', $.byte)))),
 			),
+
+		// mapping: $ =>
+		// 	prec.right(
+		// 		seq(
+		// 			optional(field('key', $.string)),
+		// 			optional($._sym_equal),
+		// 			field('value', $.string),
+		// 		),
+		// 	),
+		// address: $ =>
+		// 	prec.right(
+		// 		seq(
+		// 			repeat1(
+		// 				choice(
+		// 					field('scheme', seq($.string, $._sym_scheme)),
+		// 					$.user,
+		// 					$._host_port,
+		// 				),
+		// 			),
+		// 			optional(field('path', $.path)),
+		// 			optional(field('query', $.query)),
+		// 			optional(field('fragment', $._fragment)),
+		// 		),
+		// 	),
+		//
+		address: $ =>
+			prec.right(
+				seq(
+					optional(field('scheme', seq($.string, $._sym_scheme))),
+					optional(seq(field('user', $.string), $._sym_at)),
+					$._host_port,
+					optional(field('path', $.path)),
+					optional(field('query', $.query)),
+					optional(field('fragment', $._fragment)),
+				),
+			),
+		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
+		user: $ => seq(optional(field('user', $.string)), $._sym_at),
+
+		_host_port: $ =>
+			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
+
+		_port: $ => prec.right(seq($._sym_colon, optional(choice($._primitive, $.range)))),
+
+		domain_name: $ =>
+			prec.right(repeat1(choice(field('segment', $.string), $._sym_period))),
 
 		range: $ =>
 			seq(
@@ -266,31 +307,6 @@ export default grammar({
 					repeat(seq($._sym_ampersand, $.mapping)),
 				),
 			),
-		// mapping: $ =>
-		// 	prec.right(
-		// 		seq(
-		// 			optional(field('key', $.string)),
-		// 			optional($._sym_equal),
-		// 			field('value', $.string),
-		// 		),
-		// 	),
-		address: $ =>
-			prec.right(
-				seq(
-					repeat1(
-						choice(field('scheme', seq($.string, $._sym_scheme)), $._host_port),
-					),
-					optional(field('path', $.path)),
-					optional(field('query', $.query)),
-					optional(field('fragment', $._fragment)),
-				),
-			),
-
-		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
-
-		domain_name: $ =>
-			prec.right(repeat1(choice(field('segment', $.string), $._sym_period))),
-
 		_block: $ =>
 			seq($._sym_block_start, repeat1($._eol), optional($._block_body), $._sym_brace_c),
 

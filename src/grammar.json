@@ -955,6 +955,200 @@
       "type": "SYMBOL",
       "name": "_key_protocol"
     },
+    "byte": {
+      "type": "SYMBOL",
+      "name": "_ext_str_hex_byte"
+    },
+    "mac_address": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "octet",
+            "content": {
+              "type": "SYMBOL",
+              "name": "byte"
+            }
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_sym_colon"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "octet",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "byte"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "address": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "scheme",
+                "content": {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "string"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "_sym_scheme"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "FIELD",
+                    "name": "user",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "string"
+                    }
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_sym_at"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_host_port"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "path",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "path"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "query",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "query"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "fragment",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_fragment"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "host": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "ipv6"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ipv4"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "domain_name"
+        }
+      ]
+    },
+    "user": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "user",
+              "content": {
+                "type": "SYMBOL",
+                "name": "string"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_at"
+        }
+      ]
+    },
     "_host_port": {
       "type": "PREC_LEFT",
       "value": 0,
@@ -1017,45 +1211,28 @@
         ]
       }
     },
-    "byte": {
-      "type": "SYMBOL",
-      "name": "_ext_str_hex_byte"
-    },
-    "mac_address": {
+    "domain_name": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "FIELD",
-            "name": "octet",
-            "content": {
+        "type": "REPEAT1",
+        "content": {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "segment",
+              "content": {
+                "type": "SYMBOL",
+                "name": "string"
+              }
+            },
+            {
               "type": "SYMBOL",
-              "name": "byte"
+              "name": "_sym_period"
             }
-          },
-          {
-            "type": "REPEAT1",
-            "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_sym_colon"
-                },
-                {
-                  "type": "FIELD",
-                  "name": "octet",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "byte"
-                  }
-                }
-              ]
-            }
-          }
-        ]
+          ]
+        }
       }
     },
     "mapping": {
@@ -1163,133 +1340,6 @@
             }
           }
         ]
-      }
-    },
-    "address": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "REPEAT1",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "FIELD",
-                  "name": "scheme",
-                  "content": {
-                    "type": "SEQ",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "string"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "_sym_scheme"
-                      }
-                    ]
-                  }
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_host_port"
-                }
-              ]
-            }
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "FIELD",
-                "name": "path",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "path"
-                }
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "FIELD",
-                "name": "query",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "query"
-                }
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "FIELD",
-                "name": "fragment",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_fragment"
-                }
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          }
-        ]
-      }
-    },
-    "host": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "ipv6"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ipv4"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "domain_name"
-        }
-      ]
-    },
-    "domain_name": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "segment",
-              "content": {
-                "type": "SYMBOL",
-                "name": "string"
-              }
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_sym_period"
-            }
-          ]
-        }
       }
     },
     "_block": {

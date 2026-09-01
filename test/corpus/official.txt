@@ -1250,13 +1250,15 @@ http://example.com:8080, https://fake.org:8443, fake.co.uk, {$ENV_SITE}, :{$PORT
       (literal_string)
       (domain_name
         (literal_string)
-        (literal_string))
+        (literal_string)))
+    (address
       (integer))
     (address
       (literal_string)
       (domain_name
         (literal_string)
-        (literal_string))
+        (literal_string)))
+    (address
       (integer))
     (address
       (domain_name
@@ -1279,7 +1281,8 @@ http://example.com:8080, https://fake.org:8443, fake.co.uk, {$ENV_SITE}, :{$PORT
         (templated_string
           (substitution
             (environment_variable
-              (identifier)))))
+              (identifier))))))
+    (address
       (integer))))
 
 =====================================
