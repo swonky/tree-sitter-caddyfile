@@ -125,7 +125,6 @@
 	name: (_) @constant.macro
 )
 
-(site_block (string) @string.special.url ) 
 
 (shortcut) @constant.builtin
 

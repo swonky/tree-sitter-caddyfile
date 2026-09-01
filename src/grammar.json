@@ -109,7 +109,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "site_block"
+          "name": "site_definition"
         },
         {
           "type": "SYMBOL",
@@ -127,9 +127,9 @@
     },
     "global_block": {
       "type": "SYMBOL",
-      "name": "_block"
+      "name": "block"
     },
-    "site_block": {
+    "site_definition": {
       "type": "SEQ",
       "members": [
         {
@@ -138,7 +138,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_block"
+          "name": "block"
         }
       ]
     },
@@ -1279,7 +1279,7 @@
         ]
       }
     },
-    "_block": {
+    "block": {
       "type": "SEQ",
       "members": [
         {
@@ -1423,7 +1423,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_block"
+          "name": "block"
         }
       ]
     },
@@ -1432,7 +1432,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "construction"
+          "name": "statement"
         },
         {
           "type": "SYMBOL",
@@ -1465,7 +1465,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "site_block"
+          "name": "site_definition"
         }
       ]
     },
@@ -1565,7 +1565,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_block"
+          "name": "block"
         }
       ]
     },
@@ -2007,7 +2007,7 @@
       "named": true,
       "value": "cel_expression"
     },
-    "construction": {
+    "statement": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
@@ -2075,7 +2075,7 @@
                   },
                   {
                     "type": "SYMBOL",
-                    "name": "_block"
+                    "name": "block"
                   }
                 ]
               },
@@ -2458,7 +2458,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "_block"
+                "name": "block"
               },
               {
                 "type": "BLANK"

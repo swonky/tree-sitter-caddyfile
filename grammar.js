@@ -105,14 +105,14 @@ export default grammar({
 		multi_site: $ => seq($._content, repeat(choice($._content, $._eol))),
 		_content: $ =>
 			choice(
-				$.site_block,
+				$.site_definition,
 				$.snippet_definition,
 				$.named_route_definition,
 				$.snippet_reference,
 			),
 
-		global_block: $ => $._block,
-		site_block: $ => seq($._site_list, $._block),
+		global_block: $ => $.block,
+		site_definition: $ => seq($._site_list, $.block),
 		_site_list: $ => repeat1(choice($._sd, $._site_field)),
 		_sd: $ => prec.right(seq(repeat1($._d), optional(seq($._eol, repeat($._d))))),
 		_d: $ => choice($._ws, $._sym_comma),
@@ -270,7 +270,7 @@ export default grammar({
 					repeat(seq($._sym_ampersand, $.mapping)),
 				),
 			),
-		_block: $ =>
+		block: $ =>
 			seq($._sym_block_start, repeat1($._eol), optional($._block_body), $._sym_brace_c),
 
 		_block_body: $ =>
@@ -287,11 +287,11 @@ export default grammar({
 		_snippet_name: $ =>
 			seq($._sym_paren_o, optional(field('name', $._bare_identifier)), $._sym_paren_c),
 
-		snippet_definition: $ => seq($._snippet_name, $._block),
+		snippet_definition: $ => seq($._snippet_name, $.block),
 
 		_expression: $ =>
 			choice(
-				$.construction,
+				$.statement,
 				$.named_matcher_definition,
 				$.snippet_reference,
 				$.invoke_statement,
@@ -299,7 +299,7 @@ export default grammar({
 				$._nested_site_block,
 			),
 
-		_nested_site_block: $ => seq($._doc_comment_site_aliased, $.site_block),
+		_nested_site_block: $ => seq($._doc_comment_site_aliased, $.site_definition),
 
 		_named_route_name: $ =>
 			seq(
@@ -318,7 +318,7 @@ export default grammar({
 
 		assignment: $ => seq(field('key', $._bare_identifier), repeat1($._value_field)),
 
-		named_route_definition: $ => seq($._named_route_name, $._block),
+		named_route_definition: $ => seq($._named_route_name, $.block),
 
 		named_matcher_reference: $ => $._matcher_name,
 		path_matcher: $ => prec.left(seq(field('path', $.path), optional($._ws))),
@@ -399,13 +399,13 @@ export default grammar({
 
 		_implied_cel_expression: $ => alias($._ext_str_cel_inline, $.cel_expression),
 
-		construction: $ =>
+		statement: $ =>
 			prec.right(
 				seq(
 					$.directive,
 					optional(seq(repeat1($._ws), $._matcher_field)),
 					repeat(seq(repeat1($._ws), $._arguments_field)),
-					optional(seq(repeat1($._ws), $._block)),
+					optional(seq(repeat1($._ws), $.block)),
 				),
 			),
 
@@ -477,7 +477,7 @@ export default grammar({
 					field('snippet', $._bare_identifier),
 					repeat($._ws),
 					repeat($._arguments_field),
-					optional($._block),
+					optional($.block),
 				),
 			),
 
