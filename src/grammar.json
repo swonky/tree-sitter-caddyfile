@@ -681,52 +681,68 @@
       ]
     },
     "environment_variable": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_sym_dollar"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_env_var_name"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_env_var_name_default"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "_env_var_name": {
+      "type": "FIELD",
+      "name": "name",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_bare_identifier"
+      }
+    },
+    "_env_var_name_default": {
       "type": "SEQ",
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_sym_dollar"
+          "name": "_env_var_name"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_colon"
         },
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "FIELD",
-                  "name": "reference",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_bare_identifier"
-                  }
-                },
-                {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SEQ",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "_sym_colon"
-                        },
-                        {
-                          "type": "FIELD",
-                          "name": "default",
-                          "content": {
-                            "type": "SYMBOL",
-                            "name": "argument"
-                          }
-                        }
-                      ]
-                    },
-                    {
-                      "type": "BLANK"
-                    }
-                  ]
-                }
-              ]
+              "type": "FIELD",
+              "name": "default",
+              "content": {
+                "type": "SYMBOL",
+                "name": "argument"
+              }
             },
             {
               "type": "BLANK"

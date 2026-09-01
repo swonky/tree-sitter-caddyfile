@@ -191,15 +191,13 @@ export default grammar({
 
 		parameter: $ => seq(optional($._keyword_args), $._index),
 		environment_variable: $ =>
-			seq(
-				$._sym_dollar,
-				optional(
-					seq(
-						field('reference', $._bare_identifier),
-						optional(seq($._sym_colon, field('default', $.argument))),
-					),
-				),
+			prec.right(
+				seq($._sym_dollar, optional(choice($._env_var_name, $._env_var_name_default))),
 			),
+
+		_env_var_name: $ => field('name', $._bare_identifier),
+		_env_var_name_default: $ =>
+			seq($._env_var_name, $._sym_colon, optional(field('default', $.argument))),
 
 		ipv6: $ =>
 			seq(

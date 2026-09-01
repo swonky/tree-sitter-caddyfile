@@ -97,9 +97,6 @@
 	name: (_) @type
 )
 
-(environment_variable
-	reference: (_) @constant.macro
-)
 
 (amount
 	quantity: (integer) @number
@@ -122,6 +119,10 @@
 
 (path
 	segment: (_) @string.special.url
+)
+
+(environment_variable
+	name: (_) @constant.macro
 )
 
 (site_block (string) @string.special.url ) 

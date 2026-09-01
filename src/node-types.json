@@ -473,7 +473,7 @@
           }
         ]
       },
-      "reference": {
+      "name": {
         "multiple": false,
         "required": false,
         "types": [
