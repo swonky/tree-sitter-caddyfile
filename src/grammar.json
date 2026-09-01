@@ -3007,7 +3007,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_sym_num"
+            "name": "_ext_sym_comment"
           },
           {
             "type": "CHOICE",
@@ -3048,7 +3048,7 @@
         "members": [
           {
             "type": "SYMBOL",
-            "name": "_sym_num"
+            "name": "_ext_sym_comment"
           },
           {
             "type": "SYMBOL",
@@ -3346,6 +3346,10 @@
     {
       "type": "SYMBOL",
       "name": "_ext_sym_scheme"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_ext_sym_comment"
     },
     {
       "type": "SYMBOL",

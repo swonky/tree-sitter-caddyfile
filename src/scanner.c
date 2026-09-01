@@ -109,6 +109,7 @@ enum TokenType {
 
 	SYM_BLOCK_START,
 	SYM_SCHEME,
+	SYM_COMMENT,
 
 	/*
 	 * indicates that tree-sitter
@@ -645,6 +646,13 @@ static void scan_text(Scanner *s)
 
 	UnicodeChar c = peek(s);
 
+	if (c == '#' && (get_column(s) == 0 || is_ws(s->previous))) {
+		advance(s);
+		mark_end(s);
+		set_result(s, SYM_COMMENT);
+		return;
+	}
+
 	if (is_valid(s, SYM_BLOCK_START) && c == '{') {
 		advance(s);
 		mark_end(s);
@@ -697,7 +705,6 @@ static void scan_text(Scanner *s)
 	int nperiod = 0;
 
 	while (!eof(s)) {
-
 		/* skip logic upon ESCAPE char */
 		if (escape) {
 			advance(s);

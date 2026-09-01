@@ -90,7 +90,7 @@ export default grammar({
 
 		$._ext_sym_block_start,
 		$._ext_sym_scheme,
-		// error recovery indicator
+		$._ext_sym_comment,
 		$._error_sentinel,
 	],
 
@@ -238,30 +238,6 @@ export default grammar({
 				seq(field('octet', $.byte), repeat1(seq($._sym_colon, field('octet', $.byte)))),
 			),
 
-		// mapping: $ =>
-		// 	prec.right(
-		// 		seq(
-		// 			optional(field('key', $.string)),
-		// 			optional($._sym_equal),
-		// 			field('value', $.string),
-		// 		),
-		// 	),
-		// address: $ =>
-		// 	prec.right(
-		// 		seq(
-		// 			repeat1(
-		// 				choice(
-		// 					field('scheme', seq($.string, $._sym_scheme)),
-		// 					$.user,
-		// 					$._host_port,
-		// 				),
-		// 			),
-		// 			optional(field('path', $.path)),
-		// 			optional(field('query', $.query)),
-		// 			optional(field('fragment', $._fragment)),
-		// 		),
-		// 	),
-		//
 		address: $ =>
 			prec.right(
 				seq(
@@ -572,19 +548,12 @@ export default grammar({
 
 		_keyword_expression: $ => alias($._key_expression, $.identifier),
 
-		// _keyword_path_regexp: $ => alias($._key_path_regexp, $.identifier),
-		// _keyword_host_regexp: $ => alias($._key_host_regexp, $.identifier),
-		// _keyword_header_regexp: $ => alias($._key_header_regexp, $.identifier),
-		// _keyword_cookie_regexp: $ => alias($._key_cookie_regexp, $.identifier),
-		// _keyword_vars_regexp: $ => alias($._key_vars_regexp, $.identifier),
-		//
 		_sym_block_start: $ => alias($._ext_sym_block_start, '{'),
 		_sym_scheme: $ => alias($._ext_sym_scheme, '://'),
 
 		_ws: $ => $._ext_ws,
 		_eol: $ => choice($.comment, $._ext_eol),
 
-		// comment: $ => seq($._sym_num, optional($._comment_content), $._ext_eol),
 		_comment_content: $ => field('content', alias($._ext_str_comment, $.comment)),
 		_doc_generic: $ => seq($._sym_at, field('doc', $.identifier)),
 		_doc_site: $ => seq($._sym_at, field('doc', alias($._key_site, $.identifier))),
@@ -592,7 +561,7 @@ export default grammar({
 		comment: $ =>
 			prec.left(
 				seq(
-					$._sym_num,
+					$._ext_sym_comment,
 					optional($._doc_generic),
 					optional($._comment_content),
 					$._ext_eol,
@@ -600,7 +569,9 @@ export default grammar({
 			),
 
 		_doc_comment_site: $ =>
-			prec.left(seq($._sym_num, $._doc_site, optional($._comment_content), $._ext_eol)),
+			prec.left(
+				seq($._ext_sym_comment, $._doc_site, optional($._comment_content), $._ext_eol),
+			),
 
 		_doc_comment_site_aliased: $ => alias($._doc_comment_site, $.comment),
 	},
