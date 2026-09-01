@@ -1,0 +1,1480 @@
+substitution                   	300
+address                        	296
+ipv6                           	168
+templated_string_repeat1       	162
+path                           	96
+range                          	75
+templated_identifier_repeat1   	72
+comment                        	66
+domain_name_repeat1            	58
+_host_port_repeat1             	56
+literal_string                 	55
+string                         	54
+templated_string               	54
+_tmpl_string_fragment          	54
+path_repeat1                   	48
+_port                          	42
+integer                        	40
+mapping_repeat1                	40
+query_repeat1                  	40
+snippet_reference              	36
+query                          	32
+heredoc                        	28
+mapping                        	24
+network_address                	24
+_tmpl_identifier_fragment      	24
+quoted_expression              	24
+identifier                     	24
+mac_address_repeat1            	24
+_nested_identifier             	24
+templated_identifier           	24
+_expression_matcher_repeat1    	24
+embedded_content               	21
+caddyfile_repeat1              	21
+host                           	20
+argument                       	19
+wildcard                       	19
+_bare_identifier               	16
+ipv6_repeat1                   	16
+_fragment                      	16
+ipv4                           	14
+_host_port                     	14
+domain_name                    	14
+snippet_reference_repeat1      	12
+construction                   	12
+amount                         	12
+mac_address                    	12
+_block                         	10
+_regexp_matcher                	10
+caddyfile                      	9
+request_matcher                	9
+_block_body_repeat1            	9
+construction_repeat1           	9
+_block_body                    	8
+_matcher_name                  	8
+invoke_statement               	8
+_placeholder_env               	7
+_placeholder_file              	7
+_site_list                     	7
+byte                           	7
+path_matcher                   	6
+duration                       	6
+size                           	6
+decimal                        	6
+_doc_comment_site              	6
+_sd_repeat1                    	6
+_sd                            	6
+_placeholder_namespaced_repeat1	6
+verb                           	6
+_named_route_name              	5
+variable_declaration           	5
+_matcher_block                 	5
+_path                          	5
+site_block                     	5
+_index                         	5
+_vars_block                    	5
+namespace_expression_repeat1   	5
+_generic_matcher_repeat1       	4
+_snippet_name                  	4
+_arguments_field               	4
+named_matcher_definition       	4
+_vars_block_repeat1            	4
+_matcher_block_repeat1         	4
+environment_variable           	4
+_generic_matcher               	4
+_expression_matcher            	4
+placeholder                    	4
+_doc_generic                   	3
+namespace_expression           	3
+_matcher_field                 	3
+matcher                        	3
+_placeholder_namespaced        	3
+single_site                    	3
+parameter                      	3
+assignment_repeat1             	3
+named_matcher_reference        	3
+regular_expression_repeat1     	3
+_network                       	3
+_site_field                    	2
+assignment                     	2
+_doc_site                      	2
+_value_field                   	2
+protocol                       	2
+multi_site_repeat1             	2
+named_route_definition         	2
+_nested_site_block             	2
+multi_site                     	2
+snippet_definition             	2
+directive                      	2
+cel_expression                 	1
+_keyword_env                   	1
+_keyword_file                  	1
+_comment_content               	1
+_primitive                     	1
+_doc_comment_site_aliased      	1
+_keyword_regex_matcher         	1
+reference                      	1
+regular_expression             	1
+global_block                   	1
+_placeholder_shorthand         	1
+negative                       	1
+_expression                    	0
+_keyword_invoke                	0
+_keyword_private_ranges        	0
+_keyword_vars                  	0
+_keyword_args                  	0
+_sym_brace_c                   	0
+_sym_bracket_o                 	0
+_keyword_not                   	0
+_keyword_expression            	0
+_sym_block_start               	0
+_sym_scheme                    	0
+_ws                            	0
+_eol                           	0
+_sym_bracket_c                 	0
+_sym_colon                     	0
+_sym_solidus                   	0
+_sym_hyphen                    	0
+_sym_at                        	0
+_sym_comma                     	0
+_sym_period                    	0
+_sym_brace_o                   	0
+_amount_decimal                	0
+_amount_integer                	0
+_sym_plus                      	0
+_sym_num                       	0
+_d                             	0
+_sym_dollar                    	0
+_nested_string                 	0
+_sym_grave                     	0
+_content                       	0
+_sym_quote                     	0
+_sym_asterisk                  	0
+_sym_exclaim                   	0
+_implied_cel_expression        	0
+_sym_question                  	0
+_sym_heredoc                   	0
+_sym_percent                   	0
+_sym_paren_c                   	0
+_sym_bar                       	0
+_sym_equal                     	0
+_keyword_import                	0
+_sym_paren_o                   	0
+_sym_ampersand                 	0
+
+state index: 868
+state id: 1102
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 872
+state id: 40
+symbol sequence: _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 878
+state id: 80
+symbol sequence: _content _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 882
+state id: 432
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 885
+state id: 908
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 887
+state id: 958
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 889
+state id: 1023
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 893
+state id: 1147
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 896
+state id: 1265
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 898
+state id: 1787
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 900
+state id: 1887
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 902
+state id: 1979
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 904
+state id: 2077
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 906
+state id: 2197
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o
+
+items:
+ipv6 → _sym_bracket_o • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o • ipv6_repeat1 _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 310
+state id: 724
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 374
+state id: 1635
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 593
+state id: 1487
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 616
+state id: 1399
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 689
+state id: 2342
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 705
+state id: 2400
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 1028
+state id: 158
+symbol sequence: _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1209
+state id: 1711
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1212
+state id: 232
+symbol sequence: _content _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 1243
+state id: 1321
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 1394
+state id: 2530
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1446
+state id: 1576
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 1512
+state id: 2280
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 1636
+state id: 2459
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 1214
+state id: 1400
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1216
+state id: 233
+symbol sequence: _content _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 1219
+state id: 1488
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 1225
+state id: 1577
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 1233
+state id: 1636
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 1238
+state id: 1712
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1244
+state id: 2281
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 1249
+state id: 2343
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1256
+state id: 2401
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 1259
+state id: 160
+symbol sequence: _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1263
+state id: 2460
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 1269
+state id: 2531
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1293
+state id: 1322
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 1315
+state id: 725
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o _sym_percent
+
+items:
+ipv6 → _sym_bracket_o _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 876
+state id: 726
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 881
+state id: 1323
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 883
+state id: 1401
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 886
+state id: 1489
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 888
+state id: 1578
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 890
+state id: 1637
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 894
+state id: 2282
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 897
+state id: 2344
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 899
+state id: 2402
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 901
+state id: 2461
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 903
+state id: 2532
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 910
+state id: 162
+symbol sequence: _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 913
+state id: 234
+symbol sequence: _content _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 916
+state id: 1713
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o ipv6_repeat1
+
+items:
+ipv6_repeat1 → ipv6_repeat1 • ipv6_repeat1	[_ext_str_word, _ext_str_bare, _ext_sym_brace_o, _ext_sym_bracket_c, _ext_sym_colon, _ext_sym_percent]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 • _sym_percent string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2009
+state id: 2014
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 2024
+state id: 2117
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 2025
+state id: 375
+symbol sequence: _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2030
+state id: 513
+symbol sequence: _content _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 2040
+state id: 2152
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 2050
+state id: 2237
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2058
+state id: 2583
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 2066
+state id: 2607
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2076
+state id: 2630
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 2086
+state id: 2653
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 2094
+state id: 2681
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2120
+state id: 1829
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 2147
+state id: 1183
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 2181
+state id: 1921
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 279
+state id: 1184
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 391
+state id: 2153
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 608
+state id: 2015
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 613
+state id: 1922
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 692
+state id: 2608
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 711
+state id: 2631
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 1045
+state id: 379
+symbol sequence: _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1113
+state id: 2238
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1227
+state id: 1830
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 1268
+state id: 514
+symbol sequence: _content _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 1407
+state id: 2682
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1436
+state id: 2118
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 1516
+state id: 2584
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 1590
+state id: 2654
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 281
+state id: 1185
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 392
+state id: 2154
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 577
+state id: 1923
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 609
+state id: 2016
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 693
+state id: 2609
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 712
+state id: 2632
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 1109
+state id: 382
+symbol sequence: _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1114
+state id: 2239
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1228
+state id: 1831
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 1272
+state id: 515
+symbol sequence: _content _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 1411
+state id: 2683
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1457
+state id: 2119
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 1517
+state id: 2585
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 1632
+state id: 2655
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 1215
+state id: 1924
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1220
+state id: 2017
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 1226
+state id: 2120
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 1232
+state id: 383
+symbol sequence: _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1234
+state id: 2155
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 1239
+state id: 2240
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1245
+state id: 2586
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 1251
+state id: 2610
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1258
+state id: 2633
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 1265
+state id: 2656
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 1267
+state id: 1186
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 1270
+state id: 2684
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1286
+state id: 516
+symbol sequence: _content _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 1305
+state id: 1832
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o ipv6_repeat1 _sym_percent
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent • string _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 297
+state id: 1669
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 403
+state id: 2508
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 622
+state id: 2434
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 646
+state id: 2376
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 694
+state id: 2711
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 714
+state id: 2721
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 1096
+state id: 688
+symbol sequence: _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1125
+state id: 2566
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1287
+state id: 2317
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 1294
+state id: 826
+symbol sequence: _content _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 1424
+state id: 2742
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1452
+state id: 2495
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 1519
+state id: 2701
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 1638
+state id: 2731
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 2011
+state id: 2435
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 2017
+state id: 1670
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 2026
+state id: 2496
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 2041
+state id: 2509
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 2052
+state id: 2567
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2060
+state id: 2702
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 2067
+state id: 693
+symbol sequence: _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2068
+state id: 2712
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2078
+state id: 2722
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 2081
+state id: 827
+symbol sequence: _content _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 2088
+state id: 2732
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 2096
+state id: 2743
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 2130
+state id: 2318
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 2187
+state id: 2377
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent string
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string • _sym_bracket_c	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 299
+state id: 1671
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 421
+state id: 2510
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 610
+state id: 2378
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 623
+state id: 2436
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 695
+state id: 2713
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 715
+state id: 2723
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 1097
+state id: 694
+symbol sequence: _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1126
+state id: 2568
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1295
+state id: 828
+symbol sequence: _content _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 1310
+state id: 2319
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 1391
+state id: 2497
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 1428
+state id: 2744
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1460
+state id: 2703
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 1606
+state id: 2733
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+
+state index: 304
+state id: 2165
+symbol sequence: _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 429
+state id: 2671
+symbol sequence: _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_import, _key_private_ranges, _key_protocol, _ext_sym_paren_o, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_ampersand, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment, caddyfile]
+
+state index: 584
+state id: 2620
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 629
+state id: 2643
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_grave, _ext_sym_quote, _ext_sym_question, _ext_sym_comment]
+
+state index: 696
+state id: 2754
+symbol sequence: _site_list caddyfile_repeat1 _keyword_import _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 717
+state id: 2758
+symbol sequence: _site_list caddyfile_repeat1 _keyword_vars _bare_identifier _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_heredoc_operator, _ext_str_word, _ext_str_bare, _ext_str_upper, _ext_str_num, _ext_str_decimal, _ext_str_hex_byte, _ext_str_ipv4, _ext_str_qty_integer, _ext_str_qty_decimal, _ext_eol, _ext_ws, boolean, _key_private_ranges, _key_protocol, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_grave, _ext_sym_quote, _ext_sym_comment]
+
+state index: 1105
+state id: 1121
+symbol sequence: _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1134
+state id: 2695
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1222
+state id: 2597
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_comment]
+
+state index: 1302
+state id: 1231
+symbol sequence: _content _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_comma, _ext_sym_period, _ext_sym_num, _ext_sym_question, _ext_sym_block_start]
+
+state index: 1432
+state id: 2667
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_solidus, _ext_sym_period, _ext_sym_num, _ext_sym_question]
+
+state index: 1439
+state id: 2766
+symbol sequence: _site_list caddyfile_repeat1 _matcher_name identifier _ws _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_block_start, _ext_sym_comment]
+
+state index: 1520
+state id: 2750
+symbol sequence: _site_list caddyfile_repeat1 directive _expression_matcher_repeat1 _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_eol, _ext_ws, _ext_sym_brace_o, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period, _ext_sym_comment]
+
+state index: 1617
+state id: 2762
+symbol sequence: _sym_brace_o _sym_dollar _bare_identifier _sym_colon _network _sym_solidus _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c
+
+items:
+ipv6 → _sym_bracket_o ipv6_repeat1 _sym_percent string _sym_bracket_c •	[_ext_str_word, _ext_str_bare, _ext_str_ipv4, _ext_sym_brace_o, _ext_sym_brace_c, _ext_sym_bracket_o, _ext_sym_colon, _ext_sym_period]
+

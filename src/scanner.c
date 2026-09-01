@@ -7,6 +7,8 @@
 
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
 #define PROTOCOL(text) {text, sizeof(text) - 1}
+#define INVERT(name, fn)                                                       \
+	static inline bool name(UnicodeChar c) { return !(fn)(c); }
 
 enum {
 	U32LEN = sizeof(uint32_t),
@@ -476,6 +478,8 @@ static inline bool is_eol(UnicodeChar c)
 	}
 }
 
+INVERT(is_not_eol, is_eol)
+
 static inline void advance(Scanner *s)
 {
 	if (eof(s))
@@ -712,11 +716,8 @@ static void scan_text(Scanner *s)
 		UnicodeChar c = peek(s);
 
 		if (is_valid(s, STR_COMMENT) && c != '@' && prefix != '@') {
+			advance_while(s, is_not_eol);
 			mark_end(s);
-			if (!is_eol(c)) {
-				advance(s);
-				continue;
-			}
 			set_result(s, STR_COMMENT);
 			return;
 		}
