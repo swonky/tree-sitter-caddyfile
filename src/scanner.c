@@ -771,7 +771,7 @@ static void scan_text(Scanner *s)
 		nperiod += (c == '.');
 
 		enum TokenType token = get_token(c);
-		if ((s->consumed > 0 && is_delim(c)) ||
+		if ((s->consumed > 0 && (is_delim(c) && !s->in_quotation)) ||
 		    (token != _UNSPECIFIED && is_valid(s, token))) {
 			if (kw) {
 				enum TokenType keyword = check_keyword(s);
