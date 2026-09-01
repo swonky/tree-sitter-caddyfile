@@ -26,7 +26,7 @@ The grammar supports the following Caddyfile language syntax structures:
 - **Compound value types**: 
     - Templatable strings
     - Go-style strings for durations and byte sizes. 
-    - URL and network addresses incl. domains, ipv4, ipv6, mac_address, unix sockets.
+    - URL and network addresses incl. domains, ipv4, ipv6, mac addresses, unix sockets.
     - Port ranges.
 - **Substitution**: 
     - `environment_variable` with default values.
@@ -37,8 +37,8 @@ The grammar supports the following Caddyfile language syntax structures:
 - **Snippet** definitions and references
 - **Named matchers**
 - **Named routes**
-- **Directives** with namespacing support, with arguments and/or subdirective blocks
-- **Negations** ("not" keyword)
+- **Directives** with namespace support, with arguments and/or subdirective blocks
+- **Negations** (`not` keyword and `!` operator)
 - **Comments**
 - **Language injection**
     - Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")[^5]
@@ -49,7 +49,6 @@ The grammar supports the following Caddyfile language syntax structures:
 ### To do
 - [ ] Fold scheme file
 - [ ] More comprehensive tests
-- [ ] Benchmarks
 
 ### Disclaimer
 At the time of writing, I believe that this Caddyfile grammar provides greater and more accurate coverage of the modern Caddyfile syntax than the official release. However, I have taken a slightly unconventional approach to writing it. The parser is highly dependant on the custom scanner, so much so that not a single regular expression is used.
