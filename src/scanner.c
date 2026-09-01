@@ -816,17 +816,9 @@ static void scan_text(Scanner *s)
 		advance_while(s, is_ws);
 		set_result(s, WS);
 		mark_end(s);
-		return;
 	}
 
 	skip_while(s, is_ws);
-
-	if (is_eol(peek(s))) {
-		advance(s);
-		set_result(s, EOL);
-		mark_end(s);
-		return;
-	}
 
 	UnicodeChar c = peek(s);
 
@@ -834,6 +826,16 @@ static void scan_text(Scanner *s)
 		advance(s);
 		mark_end(s);
 		set_result(s, SYM_COMMENT);
+		return;
+	}
+
+	if (s->consumed > 0)
+		return;
+
+	if (is_eol(peek(s))) {
+		advance(s);
+		set_result(s, EOL);
+		mark_end(s);
 		return;
 	}
 
