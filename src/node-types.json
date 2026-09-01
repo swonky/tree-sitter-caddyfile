@@ -292,6 +292,10 @@
           "named": true
         },
         {
+          "type": "request_matcher",
+          "named": true
+        },
+        {
           "type": "site_definition",
           "named": true
         },
@@ -465,11 +469,35 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
-      "required": true,
+      "multiple": true,
+      "required": false,
       "types": [
         {
-          "type": "block",
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "invoke_statement",
+          "named": true
+        },
+        {
+          "type": "named_matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_definition",
+          "named": true
+        },
+        {
+          "type": "snippet_reference",
+          "named": true
+        },
+        {
+          "type": "statement",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -1111,11 +1139,11 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
         {
-          "type": "comment",
+          "type": "block",
           "named": true
         },
         {
@@ -1124,10 +1152,6 @@
         },
         {
           "type": "heredoc",
-          "named": true
-        },
-        {
-          "type": "request_matcher",
           "named": true
         }
       ]

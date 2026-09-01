@@ -127,7 +127,7 @@
     },
     "global_block": {
       "type": "SYMBOL",
-      "name": "block"
+      "name": "_block"
     },
     "site_definition": {
       "type": "SEQ",
@@ -1279,7 +1279,7 @@
         ]
       }
     },
-    "block": {
+    "_block": {
       "type": "SEQ",
       "members": [
         {
@@ -1310,6 +1310,10 @@
           "name": "_sym_brace_c"
         }
       ]
+    },
+    "block": {
+      "type": "SYMBOL",
+      "name": "_block"
     },
     "_block_body": {
       "type": "SEQ",
@@ -1839,8 +1843,13 @@
               "name": "heredoc"
             },
             {
-              "type": "SYMBOL",
-              "name": "_matcher_block"
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_matcher_block"
+              },
+              "named": true,
+              "value": "block"
             }
           ]
         }
@@ -1877,16 +1886,21 @@
             }
           },
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_matcher_block"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
+            "type": "ALIAS",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_matcher_block"
+                },
+                {
+                  "type": "BLANK"
+                }
+              ]
+            },
+            "named": true,
+            "value": "block"
           }
         ]
       }

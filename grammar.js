@@ -111,7 +111,7 @@ export default grammar({
 				$.snippet_reference,
 			),
 
-		global_block: $ => $.block,
+		global_block: $ => $._block,
 		site_definition: $ => seq($._site_list, $.block),
 		_site_list: $ => repeat1(choice($._sd, $._site_field)),
 		_sd: $ => prec.right(seq(repeat1($._d), optional(seq($._eol, repeat($._d))))),
@@ -270,8 +270,10 @@ export default grammar({
 					repeat(seq($._sym_ampersand, $.mapping)),
 				),
 			),
-		block: $ =>
+		_block: $ =>
 			seq($._sym_block_start, repeat1($._eol), optional($._block_body), $._sym_brace_c),
+
+		block: $ => $._block,
 
 		_block_body: $ =>
 			seq($._expression, repeat(seq(repeat1($._eol), $._expression)), repeat1($._eol)),
@@ -362,7 +364,7 @@ export default grammar({
 					$._expression_matcher,
 					$.embedded_content,
 					$.heredoc,
-					$._matcher_block,
+					alias($._matcher_block, $.block),
 				),
 			),
 
@@ -371,7 +373,7 @@ export default grammar({
 				seq(
 					field('matcher', $.identifier),
 					repeat(seq($._ws, $._arguments_field)),
-					optional($._matcher_block),
+					alias(optional($._matcher_block), $.block),
 				),
 			),
 
