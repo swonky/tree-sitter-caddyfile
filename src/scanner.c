@@ -7,7 +7,6 @@
 
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
 #define PROTOCOL(text) {text, sizeof(text) - 1}
-#define UNIT(text) KEYWORD(text, STR_DUR_UNIT)
 
 enum {
 	U32LEN = sizeof(uint32_t),
@@ -371,7 +370,6 @@ static inline bool is_unit(const UnicodeChar *kw, uint8_t len)
 
 static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
 static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
-static inline UnicodeChar previous(Scanner *s) { return s->previous; }
 static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
 
 static enum TokenType check_keyword(Scanner *s)
@@ -426,7 +424,6 @@ static inline bool between(UnicodeChar x, UnicodeChar lo, UnicodeChar hi)
 	return (x >= lo && x <= hi);
 }
 static inline bool is_num(UnicodeChar c) { return between(c, '0', '9'); }
-static inline bool is_posnum(UnicodeChar c) { return between(c, '1', '9'); }
 static inline bool is_upper(UnicodeChar c) { return between(c, 'A', 'Z'); }
 static inline bool is_lower(UnicodeChar c) { return between(c, 'a', 'z'); }
 
@@ -534,14 +531,13 @@ static inline void advance_rol(Scanner *s)
 
 	advance(s);
 
-	if (previous(s) == '\r' && !eof(s) && peek(s) == '\n')
+	if (s->previous == '\r' && !eof(s) && peek(s) == '\n')
 		advance(s);
 }
-static inline bool is_error(Scanner *s) { return is_valid(s, ERROR_SENTINEL); }
 
 static bool scan_heredoc(Scanner *s)
 {
-	if (is_error(s))
+	if (is_valid(s, ERROR_SENTINEL))
 		return false;
 
 	uint8_t n;
@@ -626,7 +622,7 @@ static inline bool is_hex(UnicodeChar c)
 
 static void scan_text(Scanner *s)
 {
-	UnicodeChar prefix = previous(s);
+	UnicodeChar prefix = s->previous;
 
 	if (is_valid(s, WS) && is_ws(peek(s))) {
 		advance_while(s, is_ws);

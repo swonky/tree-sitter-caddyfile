@@ -219,24 +219,11 @@
         "name": "address"
       }
     },
-    "_word": {
-      "type": "SYMBOL",
-      "name": "_ext_str_word"
-    },
     "_nested_string": {
       "type": "ALIAS",
       "content": {
         "type": "SYMBOL",
         "name": "_ext_str_word"
-      },
-      "named": true,
-      "value": "literal_string"
-    },
-    "_bare_string": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_ext_str_bare"
       },
       "named": true,
       "value": "literal_string"
@@ -748,14 +735,6 @@
         }
       ]
     },
-    "_ipv4_octet": {
-      "type": "FIELD",
-      "name": "octet",
-      "content": {
-        "type": "SYMBOL",
-        "name": "integer"
-      }
-    },
     "ipv6": {
       "type": "SEQ",
       "members": [
@@ -840,26 +819,6 @@
             "name": "_sym_solidus"
           }
         ]
-      }
-    },
-    "inode": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "string"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_sym_period"
-            }
-          ]
-        }
       }
     },
     "_fragment": {
@@ -1124,31 +1083,6 @@
         }
       ]
     },
-    "user": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "user",
-              "content": {
-                "type": "SYMBOL",
-                "name": "string"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_sym_at"
-        }
-      ]
-    },
     "_host_port": {
       "type": "PREC_LEFT",
       "value": 0,
@@ -1287,19 +1221,6 @@
           }
         ]
       }
-    },
-    "_query_value": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "mapping"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "string"
-        }
-      ]
     },
     "query": {
       "type": "PREC_RIGHT",

@@ -122,10 +122,7 @@ export default grammar({
 
 		_site_field: $ => field('site', $.address),
 
-		_word: $ => $._ext_str_word,
-
 		_nested_string: $ => alias($._ext_str_word, $.literal_string),
-		_bare_string: $ => alias($._ext_str_bare, $.literal_string),
 
 		_nested_identifier: $ => alias($._ext_str_word, $.identifier),
 		_bare_identifier: $ => alias($._ext_str_bare, $.identifier),
@@ -191,7 +188,6 @@ export default grammar({
 		_placeholder_shorthand: $ => field('member', $.identifier),
 		_placeholder_namespaced: $ =>
 			seq(
-				// optional($._sym_period),
 				optional(field('module', $.identifier)),
 				repeat1(seq($._sym_period, optional(field('member', $.identifier)))),
 			),
@@ -208,7 +204,6 @@ export default grammar({
 				),
 			),
 
-		_ipv4_octet: $ => field('octet', $.integer),
 		ipv6: $ =>
 			seq(
 				$._sym_bracket_o,
@@ -217,7 +212,6 @@ export default grammar({
 				$._sym_bracket_c,
 			),
 		_path: $ => repeat1(choice(field('segment', $.string), $._sym_solidus)),
-		inode: $ => prec.right(repeat1(choice($.string, $._sym_period))),
 
 		_fragment: $ => prec.right(seq($._sym_num, optional($.string))),
 
@@ -250,7 +244,6 @@ export default grammar({
 				),
 			),
 		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
-		user: $ => seq(optional(field('user', $.string)), $._sym_at),
 
 		_host_port: $ =>
 			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
@@ -274,7 +267,6 @@ export default grammar({
 					repeat1(seq($._sym_equal, optional(field('value', $._bare_identifier)))),
 				),
 			),
-		_query_value: $ => choice($.mapping, $.string),
 		query: $ =>
 			prec.right(
 				seq(
@@ -430,7 +422,6 @@ export default grammar({
 				),
 			),
 
-		// _identifier_shorthand: $ => field('member', $.identifier),
 		namespace_expression: $ =>
 			seq(
 				optional(field('module', $._bare_identifier)),
@@ -488,7 +479,6 @@ export default grammar({
 					repeat($._ws),
 					optional($._matcher_field),
 					field('route', $._bare_identifier),
-					// repeat($._ws),
 				),
 			),
 
