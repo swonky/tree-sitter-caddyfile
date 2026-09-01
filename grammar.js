@@ -101,7 +101,7 @@ export default grammar({
 				choice($.single_site, $.multi_site),
 			),
 
-		single_site: $ => seq($._site_list, repeat1($._eol), optional($._block_body)),
+		single_site: $ => seq($._site, repeat1($._eol), optional($._block_body)),
 		multi_site: $ => seq($._content, repeat(choice($._content, $._eol))),
 		_content: $ =>
 			choice(
@@ -112,12 +112,26 @@ export default grammar({
 			),
 
 		global_block: $ => $._block,
-		site_definition: $ => seq($._site_list, $.block),
-		_site_list: $ => repeat1(choice($._sd, $._site_field)),
-		_sd: $ => prec.right(seq(repeat1($._d), optional(seq($._eol, repeat($._d))))),
-		_d: $ => choice($._ws, $._sym_comma),
+		site_definition: $ => seq($._site, $.block),
 
 		_site_field: $ => field('site', $.address),
+		_site_list: $ =>
+			seq(optional($._site_field), repeat1(seq($._site_delim, optional($._site_field)))),
+		_site_delim: $ => prec.right(choice($._ws, $._sym_comma, $._site_break)),
+		_site_break: $ => seq($._sym_comma, $._eol),
+		_site: $ => choice($._site_field, $._site_list),
+
+		_placeholder_namespaced: $ =>
+			seq(
+				optional(field('module', $.identifier)),
+				repeat1(seq($._sym_period, optional(field('member', $.identifier)))),
+			),
+
+		list: $ => seq($._site_field),
+
+		// _site_list: $ => repeat1(choice($._sd, $._site_field)),
+		// _sd: $ => prec.right(seq(repeat1($._d), optional(seq($._eol, repeat($._d))))),
+		// _d: $ => choice($._ws, $._sym_comma),
 
 		_nested_string: $ => alias($._ext_str_word, $.literal_string),
 
@@ -216,7 +230,7 @@ export default grammar({
 			seq(
 				field('network', $._network),
 				$._sym_solidus,
-				field('address', choice($.path, $._host_port)),
+				field('address', choice($.path, $.authority)),
 			),
 
 		protocol: $ => $._ext_cls_protocol,
@@ -232,7 +246,7 @@ export default grammar({
 				seq(
 					optional(field('scheme', seq($.string, $._sym_scheme))),
 					optional(seq(field('user', $.string), $._sym_at)),
-					$._host_port,
+					$.authority,
 					optional(field('path', $.path)),
 					optional(field('query', $.query)),
 					optional(field('fragment', $._fragment)),
@@ -240,7 +254,7 @@ export default grammar({
 			),
 		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
 
-		_host_port: $ =>
+		authority: $ =>
 			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
 
 		_port: $ => prec.right(seq($._sym_colon, optional(choice($._primitive, $.range)))),

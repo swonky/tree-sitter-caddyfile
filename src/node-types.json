@@ -133,44 +133,12 @@
           }
         ]
       },
-      "host": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "host",
-            "named": true
-          }
-        ]
-      },
       "path": {
         "multiple": false,
         "required": false,
         "types": [
           {
             "type": "path",
-            "named": true
-          }
-        ]
-      },
-      "port": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ":",
-            "named": false
-          },
-          {
-            "type": "integer",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
             "named": true
           }
         ]
@@ -209,6 +177,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "authority",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -265,6 +243,44 @@
         "types": [
           {
             "type": "argument",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "authority",
+    "named": true,
+    "fields": {
+      "host": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "host",
+            "named": true
+          }
+        ]
+      },
+      "port": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          },
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
+            "type": "range",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -812,41 +828,15 @@
     "named": true,
     "fields": {
       "address": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": ":",
-            "named": false
-          },
-          {
-            "type": "host",
-            "named": true
-          },
-          {
-            "type": "integer",
+            "type": "authority",
             "named": true
           },
           {
             "type": "path",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      },
-      "host": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "host",
             "named": true
           }
         ]
@@ -861,28 +851,6 @@
           },
           {
             "type": "protocol",
-            "named": true
-          }
-        ]
-      },
-      "port": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": ":",
-            "named": false
-          },
-          {
-            "type": "integer",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          },
-          {
-            "type": "string",
             "named": true
           }
         ]

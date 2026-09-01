@@ -19,13 +19,7 @@ reverse_proxy https://my.really.dumb.hostname
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
+      (authority
         (domain_name
           (literal_string)
           (literal_string))))
@@ -33,63 +27,78 @@ reverse_proxy https://my.really.dumb.hostname
       (directive
         (identifier))
       (address
-        (domain_name
-          (literal_string)
-          (literal_string))
-        (integer)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))
+          (integer))))
     (statement
       (directive
         (identifier))
       (address
         (literal_string)
-        (domain_name
-          (literal_string)
-          (literal_string))))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)))))
     (statement
       (directive
         (identifier))
       (address
         (literal_string)
-        (domain_name
-          (literal_string)
-          (literal_string))
-        (integer)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))
+          (integer))))
     (statement
       (directive
         (identifier))
       (address
         (literal_string)
-        (domain_name
-          (literal_string)
-          (literal_string))))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)))))
     (statement
       (directive
         (identifier))
       (address
         (literal_string)
-        (domain_name
-          (literal_string)
-          (literal_string))
-        (integer)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))
+          (integer))))
     (statement
       (directive
         (identifier))
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)
-          (literal_string)
-          (literal_string))))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
     (statement
       (directive
         (identifier))
       (address
         (literal_string)
-        (domain_name
-          (literal_string)
-          (literal_string)
-          (literal_string)
-          (literal_string))))))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)
+            (literal_string)))))))
 
 ================
 File Descriptors
@@ -105,23 +114,26 @@ reverse_proxy fd/4
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
+      (authority
         (domain_name
+          (literal_string)
           (literal_string))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (domain_name
-          (literal_string))))))
+        (authority
+          (domain_name
+            (literal_string)))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (domain_name
+            (literal_string)))))))
 
 ============
 Unix Sockets
@@ -139,9 +151,10 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -200,9 +213,10 @@ reverse_proxy [::1]:8080
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -211,21 +225,24 @@ reverse_proxy [::1]:8080
       (directive
         (identifier))
       (address
-        (ipv4)
-        (integer)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (ipv6
+        (authority
+          (ipv4)
           (integer))))
     (statement
       (directive
         (identifier))
       (address
-        (ipv6
-          (integer))
-        (integer)))))
+        (authority
+          (ipv6
+            (integer)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (ipv6
+            (integer))
+          (integer))))))
 
 =========================
 IP Address with Protocol
@@ -265,177 +282,202 @@ reverse_proxy udp6/[::1]:8080
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv4)))
+        (authority
+          (ipv4))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv4)
-        (integer)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv6
+        (authority
+          (ipv4)
           (integer))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv6
-          (integer))
-        (integer)))
+        (authority
+          (ipv6
+            (integer)))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv4)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv4)
-        (integer)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv6
+        (authority
+          (ipv6
+            (integer))
           (integer))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv6
-          (integer))
-        (integer)))
+        (authority
+          (ipv4))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv4)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv4)
-        (integer)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv6
+        (authority
+          (ipv4)
           (integer))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv6
-          (integer))
-        (integer)))
+        (authority
+          (ipv6
+            (integer)))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv4)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv4)
-        (integer)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv6
+        (authority
+          (ipv6
+            (integer))
           (integer))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv6
-          (integer))
-        (integer)))
+        (authority
+          (ipv4))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv4)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv4)
-        (integer)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv6
+        (authority
+          (ipv4)
           (integer))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv6
-          (integer))
-        (integer)))
+        (authority
+          (ipv6
+            (integer)))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv4)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv4)
-        (integer)))
-    (statement
-      (directive
-        (identifier))
-      (network_address
-        (protocol)
-        (ipv6
+        (authority
+          (ipv6
+            (integer))
           (integer))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (ipv6
-          (integer))
-        (integer)))))
+        (authority
+          (ipv4))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv4)
+          (integer))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv6
+            (integer)))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv6
+            (integer))
+          (integer))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv4))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv4)
+          (integer))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv6
+            (integer)))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv6
+            (integer))
+          (integer))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv4))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv4)
+          (integer))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv6
+            (integer)))))
+    (statement
+      (directive
+        (identifier))
+      (network_address
+        (protocol)
+        (authority
+          (ipv6
+            (integer))
+          (integer))))))
 
 =================
 URL with Fragment
@@ -450,17 +492,19 @@ redir https://example.com/#/about 302
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
       (address
         (literal_string)
-        (domain_name
-          (literal_string)
-          (literal_string))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)))
         (path)
         (literal_string))
       (integer))))
@@ -478,9 +522,10 @@ example.com
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (comment
       (comment))))
 
@@ -506,17 +551,19 @@ foobar.com {
   (multi_site
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (comment
           (comment))))
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (comment
           (comment))))
@@ -540,9 +587,10 @@ root * /var/www/
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -565,21 +613,24 @@ path *.txt *.md *.mdown /site/*
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
       (literal_string)
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (path
         (identifier)
         (wildcard)))))
@@ -597,9 +648,10 @@ respond 5s
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -620,9 +672,10 @@ root * {$ROOT}
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -646,9 +699,10 @@ root * {$ROOT:/var/www}
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -677,9 +731,10 @@ EOF
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string))))
     (statement
       (directive
         (identifier))
@@ -704,9 +759,10 @@ EOF 200
   (multi_site
     (site_definition
       site: (address
-        host: (domain_name
-          segment: (literal_string)
-          segment: (literal_string)))
+        (authority
+          host: (domain_name
+            segment: (literal_string)
+            segment: (literal_string))))
       (block
         (statement
           (directive
@@ -733,9 +789,10 @@ example.com {
   (multi_site
     (site_definition
       site: (address
-        host: (domain_name
-          segment: (literal_string)
-          segment: (literal_string)))
+        (authority
+          host: (domain_name
+            segment: (literal_string)
+            segment: (literal_string))))
       (block
         (statement
           (directive
@@ -759,9 +816,10 @@ reverse_proxy * 127.0.0.1
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string))))
     (statement
       (directive
         (identifier))
@@ -782,9 +840,10 @@ reverse_proxy /path 127.0.0.1
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string))))
     (statement
       (directive
         (identifier))
@@ -805,9 +864,10 @@ reverse_proxy /path* 127.0.0.1
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string))))
     (statement
       (directive
         (identifier))
@@ -830,19 +890,21 @@ reverse_proxy @test 127.0.0.1
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string)
+          segment: (literal_string))))
     (named_matcher_definition
       name: (identifier)
       (request_matcher
         matcher: (identifier)
         argument: (address
-          host: (domain_name
-            segment: (literal_string)
-            segment: (literal_string)
-            segment: (literal_string)))))
+          (authority
+            host: (domain_name
+              segment: (literal_string)
+              segment: (literal_string)
+              segment: (literal_string))))))
     (statement
       (directive
         (identifier))
@@ -868,10 +930,11 @@ reverse_proxy @test 127.0.0.1
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string)
+          segment: (literal_string))))
     (named_matcher_definition
       name: (identifier)
       (request_matcher
@@ -879,10 +942,11 @@ reverse_proxy @test 127.0.0.1
           (request_matcher
             matcher: (identifier)
             argument: (address
-              host: (domain_name
-                segment: (literal_string)
-                segment: (literal_string)
-                segment: (literal_string)))))))
+              (authority
+                host: (domain_name
+                  segment: (literal_string)
+                  segment: (literal_string)
+                  segment: (literal_string))))))))
     (statement
       (directive
         (identifier))
@@ -906,20 +970,22 @@ reverse_proxy @test 127.0.0.1
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string)
+          segment: (literal_string))))
     (named_matcher_definition
       name: (identifier)
       (request_matcher
         modifier: (negative)
         matcher: (identifier)
         argument: (address
-          host: (domain_name
-            segment: (literal_string)
-            segment: (literal_string)
-            segment: (literal_string)))))
+          (authority
+            host: (domain_name
+              segment: (literal_string)
+              segment: (literal_string)
+              segment: (literal_string))))))
     (statement
       (directive
         (identifier))
@@ -945,10 +1011,11 @@ reverse_proxy @test 127.0.0.1
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string)
+          segment: (literal_string))))
     (named_matcher_definition
       name: (identifier)
       (request_matcher
@@ -988,36 +1055,43 @@ reverse_proxy @private 127.0.0.1
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string))))
     (named_matcher_definition
       name: (identifier)
       (request_matcher
         matcher: (identifier)
         argument: (address
-          host: (ipv4)
+          (authority
+            host: (ipv4))
           path: (path
             segment: (identifier)))
         argument: (address
-          host: (ipv4)
+          (authority
+            host: (ipv4))
           path: (path
             segment: (identifier)))
         argument: (address
-          host: (ipv4)
+          (authority
+            host: (ipv4))
           path: (path
             segment: (identifier)))
         argument: (address
-          host: (ipv4)
+          (authority
+            host: (ipv4))
           path: (path
             segment: (identifier)))
         argument: (address
-          host: (domain_name
-            segment: (literal_string))
+          (authority
+            host: (domain_name
+              segment: (literal_string)))
           path: (path
             segment: (identifier)))
         argument: (address
-          port: (integer))))
+          (authority
+            port: (integer)))))
     (statement
       (directive
         (identifier))
@@ -1045,9 +1119,10 @@ file_server
 (caddyfile
   (single_site
     site: (address
-      host: (domain_name
-        segment: (literal_string)
-        segment: (literal_string)))
+      (authority
+        host: (domain_name
+          segment: (literal_string)
+          segment: (literal_string))))
     (named_matcher_definition
       name: (identifier)
       (request_matcher
@@ -1117,9 +1192,10 @@ example.net {
   (multi_site
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (invoke_statement
           (identifier))))
@@ -1130,9 +1206,10 @@ example.net {
           (comment))))
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (invoke_statement
           (identifier))))))
@@ -1150,9 +1227,10 @@ root * {args[0]}
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1176,9 +1254,10 @@ root * {something.args[0]}
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1203,9 +1282,10 @@ dns cloudflare {file.{$CF_API_TOKEN_FILE}}
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1233,9 +1313,10 @@ root * /var/www
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1257,42 +1338,45 @@ http://example.com:8080, https://fake.org:8443, fake.co.uk, {$ENV_SITE}, :{$PORT
   (single_site
     (address
       (literal_string)
-      (domain_name
-        (literal_string)
-        (literal_string)))
-    (address
-      (integer))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))
+        (integer)))
     (address
       (literal_string)
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))
+        (integer)))
     (address
-      (integer))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string)
+          (literal_string))))
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (templated_string
+            (substitution
+              (environment_variable
+                (identifier)))))))
     (address
-      (domain_name
+      (authority
         (templated_string
           (substitution
             (environment_variable
               (identifier))))))
     (address
-      (templated_string
-        (substitution
-          (environment_variable
-            (identifier)))))
-    (address
-      (domain_name
-        (templated_string
-          (substitution
-            (environment_variable
-              (identifier))))))
-    (address
-      (integer))))
+      (authority
+        (domain_name
+          (templated_string
+            (substitution
+              (environment_variable
+                (identifier)))))
+        (integer)))))
 
 =====================================
 Single Site Block with Global Options
@@ -1315,9 +1399,10 @@ root * /var/www
         (identifier))))
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1341,9 +1426,10 @@ example.com {
   (multi_site
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (statement
           (directive
@@ -1369,9 +1455,10 @@ foobar.com {
   (multi_site
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (statement
           (directive
@@ -1380,9 +1467,10 @@ foobar.com {
             (literal_string)))))
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (statement
           (directive
@@ -1430,9 +1518,10 @@ example.net {
   (multi_site
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (snippet_reference
           (identifier))))
@@ -1443,9 +1532,10 @@ example.net {
           (comment))))
     (site_definition
       (address
-        (domain_name
-          (literal_string)
-          (literal_string)))
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
       (block
         (snippet_reference
           (identifier))))))
@@ -1486,14 +1576,16 @@ root * /var/www
             (identifier))
           (address
             (literal_string)
-            (domain_name
-              (literal_string)
-              (literal_string)))))))
+            (authority
+              (domain_name
+                (literal_string)
+                (literal_string))))))))
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1518,9 +1610,10 @@ root * /var/www
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1548,9 +1641,10 @@ try_files {path} {path}/ /index.html =404
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1559,11 +1653,12 @@ try_files {path} {path}/ /index.html =404
           (placeholder
             (identifier))))
       (address
-        (domain_name
-          (templated_string
-            (substitution
-              (placeholder
-                (identifier)))))
+        (authority
+          (domain_name
+            (templated_string
+              (substitution
+                (placeholder
+                  (identifier))))))
         (path))
       (path
         (identifier)
@@ -1583,17 +1678,19 @@ root * @longhorn-ui@/share/share/lib/longhorn-ui
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
       (matcher
         (wildcard))
       (address
-        (domain_name
-          (literal_string))
+        (authority
+          (domain_name
+            (literal_string)))
         (path
           (identifier)
           (identifier)
@@ -1613,16 +1710,18 @@ reverse_proxy some_other_host:1234
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
       (address
-        (domain_name
-          (literal_string))
-        (integer)))))
+        (authority
+          (domain_name
+            (literal_string))
+          (integer))))))
 
 ========================
 Hashed password argument
@@ -1639,9 +1738,10 @@ basic_auth {
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1650,10 +1750,11 @@ basic_auth {
           (directive
             (identifier))
           (address
-            (domain_name
-              (literal_string)
-              (literal_string)
-              (literal_string))))))))
+            (authority
+              (domain_name
+                (literal_string)
+                (literal_string)
+                (literal_string)))))))))
 
 ====================
 MAC address argument
@@ -1670,9 +1771,10 @@ exec wakeonlan 78:f4:53:67:7a:a9 {
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -1702,9 +1804,10 @@ header ?Content-Type
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))

@@ -11,9 +11,10 @@ respond 5s
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -34,9 +35,10 @@ respond 5.5s
 (caddyfile
   (single_site
     (address
-      (domain_name
-        (literal_string)
-        (literal_string)))
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
