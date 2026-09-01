@@ -47,9 +47,6 @@ The grammar supports the following Caddyfile language syntax structures:
     - `expression` matcher cel expressions[^6]
     - regular expressions[^9]
 
-> [!CAUTION]
-> To accommodate Caddyfile's contextual syntax quirks, the parser is highly dependant on a handwritten custom scanner written in C11. The complexity of the scanner increases the chance of fatal errors. While the parser currently tolerates fuzzed inputs, I urge caution before integrating the parser into tooling until automated testing is implemented and an official release is posted.
-
 ### Scheme files 
 The following scheme files[^8] are included in [./queries](queries/) to facilitate editor integrations and syntax highlight.
 
@@ -63,6 +60,9 @@ The following scheme files[^8] are included in [./queries](queries/) to facilita
 Bindings are available under [./bindings](bindings/) for C, Go, Java, JavaScript, Python, Rust, Swift, and Zig.
 
 ## Development
+
+> [!CAUTION]
+> To accommodate Caddyfile's contextual syntax quirks, the parser is highly dependant on a handwritten custom scanner written in C11. The complexity of the scanner increases the chance of fatal errors. While the parser currently tolerates fuzzed inputs, I urge caution before integrating the parser into tooling until automated testing is implemented and an official release is posted.
 
 ### Testing [^4]
 The repository contains a several tests located within [./test/corpus](test/corpus/).
