@@ -5,8 +5,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#define ARRAY_LEN(a) (sizeof(a) / sizeof((a)[0]))
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
-#define PROTOCOL(text) {text, sizeof(text) - 1}
+#define CLASS(text) {text, sizeof(text) - 1}
 #define INVERT(name, fn)                                                       \
 	static inline bool name(UnicodeChar c) { return !(fn)(c); }
 
@@ -45,8 +46,6 @@ enum TokenType {
 	STR_COMMENT,
 	STR_QTY_INTEGER,
 	STR_QTY_DECIMAL,
-	STR_UNIT_DURATION,
-	STR_UNIT_SIZE,
 
 	/*
 	 * whitespace
@@ -68,19 +67,17 @@ enum TokenType {
 	KEY_FILE,
 	KEY_NOT,
 	KEY_SITE,
-	KEY_PATH_REGEXP,
-	KEY_HOST_REGEXP,
-	KEY_HEADER_REGEXP,
-	KEY_COOKIE_REGEXP,
-	KEY_VARS_REGEXP,
 
 	/*
-	 * composite
+	 * keyword classes
 	 */
-	KEY_PROTOCOL,
+	CLS_PROTOCOL,
+	CLS_REGEXP,
+	CLS_UNIT_DURATION,
+	CLS_UNIT_SIZE,
 
 	/*
-	 * symbolic operators
+	 * raw symbolic
 	 */
 	SYM_PAREN_O,
 	SYM_PAREN_C,
@@ -101,13 +98,16 @@ enum TokenType {
 	SYM_GT,
 	SYM_GRAVE,
 	SYM_QUOTE,
-	SYM_ASTERISK,
+	SYM_ASTERISK, // handled separately
 	SYM_EXCLAIM,
 	SYM_QUESTION,
 	SYM_PERCENT,
 	SYM_BAR,
 	SYM_EQUAL,
 
+	/*
+	 * semantic symbolic
+	 */
 	SYM_BLOCK_START,
 	SYM_SCHEME,
 	SYM_COMMENT,
@@ -157,7 +157,6 @@ static const UnicodeChar sym_map[128] = {
     ['>'] = SYM_GT,
     ['`'] = SYM_GRAVE,
     ['"'] = SYM_QUOTE,
-    // ['*'] = SYM_ASTERISK,
     ['!'] = SYM_EXCLAIM,
     ['?'] = SYM_QUESTION,
     ['%'] = SYM_PERCENT,
@@ -181,44 +180,47 @@ static const Keyword keywords[] = {
     KEYWORD("env", KEY_ENV),
     KEYWORD("file", KEY_FILE),
     KEYWORD("site", KEY_SITE),
-    KEYWORD("path_regexp", KEY_PATH_REGEXP),
-    KEYWORD("host_regexp", KEY_HOST_REGEXP),
-    KEYWORD("header_regexp", KEY_HEADER_REGEXP),
-    KEYWORD("cookie_regexp", KEY_COOKIE_REGEXP),
-    KEYWORD("vars_regexp", KEY_VARS_REGEXP),
 
 };
 
 /**
- *	string-to-token map for network address protocols.
+ *	string array for `CLS_REGEXP`.
+ */
+static const Keyword regex_matchers[] = {
+    CLASS("path_regexp"),
+    CLASS("host_regexp"),
+    CLASS("header_regexp"),
+    CLASS("cookie_regexp"),
+    CLASS("vars_regexp"),
+};
+
+/**
+ *	string array for `CLS_PROTOCOL`.
  */
 static const Keyword protocols[] = {
-    PROTOCOL("unix"),
-    PROTOCOL("unixgram"),
-    PROTOCOL("unixpacket"),
-    PROTOCOL("tcp"),
-    PROTOCOL("tcp4"),
-    PROTOCOL("tcp6"),
-    PROTOCOL("udp"),
-    PROTOCOL("udp4"),
-    PROTOCOL("udp6"),
-    PROTOCOL("ip"),
-    PROTOCOL("ip4"),
-    PROTOCOL("ip6"),
-    PROTOCOL("h2c"),
-    PROTOCOL("fd"),
-    PROTOCOL("fdgram"),
+    CLASS("unix"),
+    CLASS("unixgram"),
+    CLASS("unixpacket"),
+    CLASS("tcp"),
+    CLASS("tcp4"),
+    CLASS("tcp6"),
+    CLASS("udp"),
+    CLASS("udp4"),
+    CLASS("udp6"),
+    CLASS("ip"),
+    CLASS("ip4"),
+    CLASS("ip6"),
+    CLASS("h2c"),
+    CLASS("fd"),
+    CLASS("fdgram"),
 };
 
 static inline enum TokenType get_token(UnicodeChar c)
 {
 	if (c >= 128)
 		return _UNSPECIFIED;
-
 	return sym_map[c];
 }
-
-typedef bool (*Asserter)(UnicodeChar);
 
 typedef struct {
 	/* persistent fields */
@@ -235,178 +237,10 @@ typedef struct {
 	UnicodeChar word[TAGLEN];
 } Scanner;
 
-static inline bool is_valid(Scanner *s, enum TokenType token)
+static inline uint32_t get_column(Scanner *s)
 {
 	assert(s != NULL);
-
-	return s->vs != NULL && s->vs[token];
-}
-
-static bool word_equals(Scanner *s, const Keyword *kw)
-{
-	assert(s != NULL);
-
-	if (s->word_len != kw->len)
-		return false;
-
-	for (size_t i = 0; i < s->word_len && i < TAGLEN; i++)
-		if (s->word[i] != (UnicodeChar)kw->text[i])
-			return false;
-
-	return true;
-}
-
-static inline bool is_delim(UnicodeChar c)
-{
-	switch (c) {
-	case '.':
-	case ':':
-	case '#':
-	case '/':
-	case '?':
-	case '+':
-		return true;
-	default:
-		return false;
-	}
-}
-
-static inline bool is_bracket(UnicodeChar c)
-{
-	switch (c) {
-	case '(':
-	case ')':
-	case '[':
-	case ']':
-	case '{':
-	case '}':
-		return true;
-	default:
-		return false;
-	}
-}
-
-static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
-{
-	assert(kw != NULL);
-
-	switch (len) {
-	case 1:
-		switch (kw[0]) {
-		case 's':
-		case 'm':
-		case 'h':
-		case 'd':
-			return true;
-		default:
-			return false;
-		}
-	case 2:
-		switch (kw[0]) {
-		case 'n':
-		case 'u':
-		case 0x00B5:
-		case 'm':
-			return kw[1] == 's';
-		default:
-			return false;
-		}
-	default:
-		return false;
-	}
-}
-
-static inline bool is_size_prefix(const UnicodeChar c)
-{
-	switch (c) {
-	case 'k':
-	case 'K':
-	case 'm':
-	case 'M':
-	case 'g':
-	case 'G':
-	case 't':
-	case 'T':
-	case 'p':
-	case 'P':
-	case 'e':
-	case 'E':
-		return true;
-	default:
-		return false;
-	}
-}
-
-static inline bool is_byte(const UnicodeChar c)
-{
-	switch (c) {
-	case 'b':
-	case 'B':
-		return true;
-	default:
-		return false;
-	}
-}
-
-// https://github.com/dustin/go-humanize/blob/4d1d9082551ec085912e7d2253a33ae547fca000/bytes.go
-static inline bool is_size_unit(const UnicodeChar *kw, uint8_t len)
-{
-	assert(kw != NULL);
-
-	switch (len) {
-	case 1:
-		return is_byte(kw[0]) || is_size_prefix(kw[0]);
-	case 2:
-		return is_size_prefix(kw[0]) && is_byte(kw[1]);
-	case 3:
-		return is_size_prefix(kw[0]) && kw[1] == 'i' && is_byte(kw[2]);
-	default:
-		return false;
-	}
-}
-
-static inline bool is_unit(const UnicodeChar *kw, uint8_t len)
-{
-	return is_duration_unit(kw, len) || is_size_unit(kw, len);
-}
-
-static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
-static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
-static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
-
-static enum TokenType check_keyword(Scanner *s)
-{
-	assert(s != NULL);
-
-	if (s->consumed != s->word_len)
-		return _UNSPECIFIED;
-
-	if (is_valid(s, STR_UNIT_DURATION) &&
-	    is_duration_unit(s->word, s->word_len))
-		return STR_UNIT_DURATION;
-
-	if (is_valid(s, STR_UNIT_SIZE) && is_size_unit(s->word, s->word_len))
-		return STR_UNIT_SIZE;
-
-	for (size_t i = 0; i < sizeof(keywords) / sizeof(keywords[0]); i++) {
-		const Keyword *kw = &keywords[i];
-
-		if (is_valid(s, kw->token) && word_equals(s, kw))
-			return kw->token;
-	}
-
-	UnicodeChar c = peek(s);
-	if (!is_valid(s, KEY_PROTOCOL) || (c != '+' && c != '/'))
-		return _UNSPECIFIED;
-
-	for (size_t i = 0; i < sizeof(protocols) / sizeof(protocols[0]); i++) {
-		const Keyword *kw = &protocols[i];
-
-		if (word_equals(s, kw))
-			return KEY_PROTOCOL;
-	}
-
-	return _UNSPECIFIED;
+	return s->lexer->get_column(s->lexer);
 }
 
 static inline void set_result(Scanner *s, enum TokenType token)
@@ -415,19 +249,23 @@ static inline void set_result(Scanner *s, enum TokenType token)
 	s->lexer->result_symbol = token;
 }
 
-static inline uint32_t get_column(Scanner *s)
+static inline bool is_valid(Scanner *s, enum TokenType token)
 {
 	assert(s != NULL);
-	return s->lexer->get_column(s->lexer);
+	return s->vs != NULL && s->vs[token];
 }
+
+typedef bool (*Asserter)(UnicodeChar);
 
 static inline bool between(UnicodeChar x, UnicodeChar lo, UnicodeChar hi)
 {
 	return (x >= lo && x <= hi);
 }
+
 static inline bool is_num(UnicodeChar c) { return between(c, '0', '9'); }
 static inline bool is_upper(UnicodeChar c) { return between(c, 'A', 'Z'); }
 static inline bool is_lower(UnicodeChar c) { return between(c, 'a', 'z'); }
+static inline bool is_ascii(UnicodeChar c) { return between(c, 0, 0x7e); }
 
 static inline bool is_alpha(UnicodeChar c)
 {
@@ -480,6 +318,263 @@ static inline bool is_eol(UnicodeChar c)
 
 INVERT(is_not_eol, is_eol)
 
+/*
+ * Matches a subset of address delimiter characters.
+ * Implements `Asserter`
+ */
+static inline bool is_delim(UnicodeChar c)
+{
+	switch (c) {
+	case '.':
+	case ':':
+	case '#':
+	case '/':
+	case '?':
+	case '+':
+		return true;
+	default:
+		return false;
+	}
+}
+
+/*
+ * Matches parentheses, braces, and square brackets. But never chevrons.
+ * Implements `Asserter`
+ */
+static inline bool is_bracket(UnicodeChar c)
+{
+	switch (c) {
+	case '(':
+	case ')':
+	case '[':
+	case ']':
+	case '{':
+	case '}':
+		return true;
+	default:
+		return false;
+	}
+}
+
+/*
+ * Matches valid duration unit unicode strings (eg. ms, s, h, µs).
+ *
+ * [spec](https://caddyserver.com/docs/conventions#durations)
+ * [time.ParseDuration](https://golang.org/pkg/time/#ParseDuration)
+ */
+static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
+{
+	assert(kw != NULL);
+
+	switch (len) {
+	case 1:
+		switch (kw[0]) {
+		case 's':
+		case 'm':
+		case 'h':
+		case 'd':
+			return true;
+		default:
+			return false;
+		}
+	case 2:
+		switch (kw[0]) {
+		case 'n':
+		case 'u':
+		case 0x00B5:
+		case 'm':
+			return kw[1] == 's';
+		default:
+			return false;
+		}
+	default:
+		return false;
+	}
+}
+
+/**
+ * Returns true if `c` is an size-unit prefix.
+ * Valid prefixes are k, m, g, t, p, and e, case-insensitive.
+ * Implements `Asserter`.
+ */
+static inline bool is_size_prefix(UnicodeChar c)
+{
+	if (!is_ascii(c))
+		return false;
+	c |= 0x20;
+	return c == 'k' || c == 'm' || c == 'g' || c == 't' || c == 'p' ||
+	       c == 'e';
+}
+
+/**
+ * Returns true if `c` is byte-size unit.
+ * The valid unit is b, case-insensitive.
+ * Implements `Asserter`.
+ */
+static inline bool is_size_suffix(UnicodeChar c)
+{
+	return is_ascii(c) && (c |= 0x20) == 'b';
+}
+
+/*
+ * Matches valid size unit unicode strings (eg. b, MB, GiB, k).
+ *
+ * [spec](https://caddyserver.com/docs/caddyfile/directives/request_body#syntax)
+ * [go-humanize](https://pkg.go.dev/github.com/dustin/go-humanize#pkg-constants)
+ */
+static inline bool is_size_unit(const UnicodeChar *kw, uint8_t len)
+{
+	assert(kw != NULL);
+
+	switch (len) {
+	case 1:
+		return is_size_suffix(kw[0]) || is_size_prefix(kw[0]);
+	case 2:
+		return is_size_prefix(kw[0]) && is_size_suffix(kw[1]);
+	case 3:
+		return is_size_prefix(kw[0]) && kw[1] == 'i' &&
+		       is_size_suffix(kw[2]);
+	default:
+		return false;
+	}
+}
+
+static inline bool is_unit(const UnicodeChar *kw, uint8_t len)
+{
+	return is_duration_unit(kw, len) || is_size_unit(kw, len);
+}
+
+static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
+static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
+static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
+
+/*
+ * Sized unicode string comparator for `s->word` and `kw`.
+ */
+static bool word_equals(Scanner *s, const Keyword *kw)
+{
+	assert(s != NULL);
+	if (s->word_len != kw->len)
+		return false;
+	for (size_t i = 0; i < s->word_len && i < TAGLEN; i++)
+		if (s->word[i] != (UnicodeChar)kw->text[i])
+			return false;
+	return true;
+}
+
+/**
+ * Performs search on `s->token` for CLS_UNIT_DURATION token matches.
+ * Do not call directly without performing token length and null checks.
+ *
+ * [spec](https://caddyserver.com/docs/conventions#durations)
+ */
+static enum TokenType check_unit_duration(Scanner *s)
+{
+	return is_valid(s, CLS_UNIT_DURATION) &&
+		       is_duration_unit(s->word, s->word_len)
+		   ? CLS_UNIT_DURATION
+		   : _UNSPECIFIED;
+}
+
+/**
+ * Performs search on `s->token` for CLS_UNIT_SIZE token matches.
+ * Do not call directly without performing token length and null checks.
+ *
+ * Based on [Go's
+ * time.ParseDuration](https://golang.org/pkg/time/#ParseDuration) syntax
+ * [spec](https://caddyserver.com/docs/conventions#durations)
+ */
+static enum TokenType check_unit_size(Scanner *s)
+{
+	return is_valid(s, CLS_UNIT_SIZE) && is_size_unit(s->word, s->word_len)
+		   ? CLS_UNIT_SIZE
+		   : _UNSPECIFIED;
+}
+
+/**
+ * Performs search on `s->token` for CLS_PROTOCOL token matches.
+ * Do not call directly without performing token length and null checks.
+ */
+static enum TokenType check_protocol(Scanner *s)
+{
+	UnicodeChar c = peek(s);
+	if (!is_valid(s, CLS_PROTOCOL) || (c != '+' && c != '/'))
+		return _UNSPECIFIED;
+
+	for (size_t i = 0; i < ARRAY_LEN(protocols); i++) {
+		const Keyword *kw = &protocols[i];
+		if (word_equals(s, kw))
+			return CLS_PROTOCOL;
+	}
+	return _UNSPECIFIED;
+}
+
+/**
+ * Performs search on `s->token` for CLS_REGEXP token matches.
+ * Do not call directly without performing token length and null checks.
+ */
+static enum TokenType check_regex_matchers(Scanner *s)
+{
+	if (!is_valid(s, CLS_REGEXP))
+		return _UNSPECIFIED;
+
+	for (size_t i = 0; i < ARRAY_LEN(regex_matchers); i++) {
+		const Keyword *kw = &regex_matchers[i];
+		if (word_equals(s, kw))
+			return CLS_REGEXP;
+	}
+	return _UNSPECIFIED;
+}
+
+/**
+ * Performs search on `s->token` for keyword matches
+ * Do not call directly without performing token length and null checks.
+ */
+static enum TokenType check_keyword(Scanner *s)
+{
+	for (size_t i = 0; i < ARRAY_LEN(keywords); i++) {
+		const Keyword *kw = &keywords[i];
+		if (is_valid(s, kw->token) && word_equals(s, kw))
+			return kw->token;
+	}
+	return _UNSPECIFIED;
+}
+
+/**
+ * Matches `s->word` against the scanner's token classes in precedence order.
+ * Returns the first matching token type, or `_UNSPECIFIED` if no match exists.
+ */
+static enum TokenType match(Scanner *s)
+{
+	assert(s != NULL);
+
+	if (s->consumed != s->word_len)
+		return _UNSPECIFIED;
+
+	enum TokenType token;
+
+	token = check_unit_duration(s);
+	if (token != _UNSPECIFIED)
+		return token;
+
+	token = check_unit_size(s);
+	if (token != _UNSPECIFIED)
+		return token;
+
+	token = check_protocol(s);
+	if (token != _UNSPECIFIED)
+		return token;
+
+	token = check_regex_matchers(s);
+	if (token != _UNSPECIFIED)
+		return token;
+
+	token = check_keyword(s);
+	if (token != _UNSPECIFIED)
+		return token;
+
+	return _UNSPECIFIED;
+}
 static inline void advance(Scanner *s)
 {
 	if (eof(s))
@@ -523,7 +618,8 @@ static inline void advance_while(Scanner *s, Asserter fn)
 }
 
 /*
- * Consume the rest of the current line, including terminating EOL characters.
+ * Consume the rest of the current line, including terminating
+ * EOL characters.
  */
 static inline void advance_rol(Scanner *s)
 {
@@ -756,7 +852,7 @@ static void scan_text(Scanner *s)
 
 		if (is_eol(c) || (is_ws(c) && !s->in_quotation)) {
 			if (kw) {
-				enum TokenType keyword = check_keyword(s);
+				enum TokenType keyword = match(s);
 				if (keyword != _UNSPECIFIED) {
 					mark_end(s);
 					set_result(s, keyword);
@@ -774,7 +870,7 @@ static void scan_text(Scanner *s)
 		if ((s->consumed > 0 && (is_delim(c) && !s->in_quotation)) ||
 		    (token != _UNSPECIFIED && is_valid(s, token))) {
 			if (kw) {
-				enum TokenType keyword = check_keyword(s);
+				enum TokenType keyword = match(s);
 				if (keyword != _UNSPECIFIED) {
 					mark_end(s);
 					set_result(s, keyword);
@@ -881,7 +977,8 @@ static void scan_text(Scanner *s)
 
 /*
  * Initialises persistent field values.
- * Modifications to these values persist across scanner instances.
+ * Modifications to these values persist across scanner
+ * instances.
  */
 static inline void init_persistent_fields(Scanner *s)
 {

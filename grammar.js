@@ -34,8 +34,6 @@ export default grammar({
 		$._ext_str_comment,
 		$._ext_str_qty_integer,
 		$._ext_str_qty_decimal,
-		$._ext_str_unit_duration,
-		$._ext_str_unit_size,
 
 		// whitespace
 		$._ext_eol,
@@ -53,13 +51,12 @@ export default grammar({
 		$._key_file,
 		$._key_not,
 		$._key_site,
-		$._key_path_regexp,
-		$._key_host_regexp,
-		$._key_header_regexp,
-		$._key_cookie_regexp,
-		$._key_vars_regexp,
 
-		$._key_protocol,
+		// classes
+		$._ext_cls_protocol,
+		$._ext_cls_regexp,
+		$._ext_str_unit_duration,
+		$._ext_str_unit_size,
 
 		// symbols
 		$._ext_sym_paren_o,
@@ -224,7 +221,7 @@ export default grammar({
 				field('address', choice($.path, $._host_port)),
 			),
 
-		protocol: $ => $._key_protocol,
+		protocol: $ => $._ext_cls_protocol,
 
 		byte: $ => $._ext_str_hex_byte,
 		mac_address: $ =>
@@ -387,18 +384,10 @@ export default grammar({
 				field('argument', choice($._implied_cel_expression, $.embedded_content)),
 			),
 
-		_keyword_regex_matcher: $ =>
-			choice(
-				$._key_path_regexp,
-				$._key_host_regexp,
-				$._key_header_regexp,
-				$._key_cookie_regexp,
-				$._key_vars_regexp,
-			),
 		regular_expression: $ => repeat1($._ext_str_bare),
 		_regexp_matcher: $ =>
 			seq(
-				field('matcher', alias($._keyword_regex_matcher, $.identifier)),
+				field('matcher', alias($._ext_cls_regexp, $.identifier)),
 				repeat($._ws),
 				choice(
 					seq(
