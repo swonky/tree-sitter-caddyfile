@@ -19,6 +19,7 @@ A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://git
 - [References](#references)
 
 ## Features
+
 ### Base syntax
 The grammar supports the following Caddyfile language syntax structures:
 
@@ -46,13 +47,8 @@ The grammar supports the following Caddyfile language syntax structures:
     - `expression` matcher cel expressions[^6]
     - regular expressions[^9]
 
-### To do
-- [ ] More comprehensive tests
-
-### Disclaimer
-To accommodate Caddyfile's highly contextual semantics, the parser is highly dependant on a handwritten custom scanner written in C11.
-
-The complexity of the scanner increases the chance of fatal errors. While the parser currently tolerates fuzzed inputs, I urge caution until automated testing is implemented and an official release is posted.
+> [!CAUTION]
+> To accommodate Caddyfile's contextual syntax quirks, the parser is highly dependant on a handwritten custom scanner written in C11. The complexity of the scanner increases the chance of fatal errors. While the parser currently tolerates fuzzed inputs, I urge caution before integrating the parser into tooling until automated testing is implemented and an official release is posted.
 
 ### Scheme files 
 The following scheme files[^8] are included in [./queries](queries/) to facilitate editor integrations and syntax highlight.
