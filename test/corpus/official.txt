@@ -22,14 +22,14 @@ reverse_proxy https://my.really.dumb.hostname
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
         (domain_name
           (literal_string)
           (literal_string))))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
@@ -37,7 +37,7 @@ reverse_proxy https://my.really.dumb.hostname
           (literal_string)
           (literal_string))
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
@@ -45,24 +45,7 @@ reverse_proxy https://my.really.dumb.hostname
         (domain_name
           (literal_string)
           (literal_string))))
-    (construction
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (domain_name
-          (literal_string)
-          (literal_string))
-        (integer)))
-    (construction
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (domain_name
-          (literal_string)
-          (literal_string))))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
@@ -71,7 +54,24 @@ reverse_proxy https://my.really.dumb.hostname
           (literal_string)
           (literal_string))
         (integer)))
-    (construction
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (domain_name
+          (literal_string)
+          (literal_string))
+        (integer)))
+    (statement
       (directive
         (identifier))
       (address
@@ -80,7 +80,7 @@ reverse_proxy https://my.really.dumb.hostname
           (literal_string)
           (literal_string)
           (literal_string))))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
@@ -108,14 +108,14 @@ reverse_proxy fd/4
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (domain_name
           (literal_string))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -142,7 +142,7 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -152,7 +152,7 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
           (identifier)
           (identifier)
           (identifier))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -163,7 +163,7 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
           (identifier)
           (identifier)
           (identifier))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -173,7 +173,7 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
           (identifier)
           (identifier)
           (identifier))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -203,23 +203,23 @@ reverse_proxy [::1]:8080
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (ipv4))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
         (ipv4)
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
         (ipv6
           (integer))))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
@@ -268,27 +268,27 @@ reverse_proxy udp6/[::1]:8080
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv6
           (integer))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -296,27 +296,27 @@ reverse_proxy udp6/[::1]:8080
         (ipv6
           (integer))
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv6
           (integer))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -324,27 +324,27 @@ reverse_proxy udp6/[::1]:8080
         (ipv6
           (integer))
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv6
           (integer))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -352,27 +352,27 @@ reverse_proxy udp6/[::1]:8080
         (ipv6
           (integer))
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv6
           (integer))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -380,27 +380,27 @@ reverse_proxy udp6/[::1]:8080
         (ipv6
           (integer))
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv6
           (integer))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -408,27 +408,27 @@ reverse_proxy udp6/[::1]:8080
         (ipv6
           (integer))
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv4)
         (integer)))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (ipv6
           (integer))))
-    (construction
+    (statement
       (directive
         (identifier))
       (network_address
@@ -453,7 +453,7 @@ redir https://example.com/#/about 302
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
@@ -504,20 +504,22 @@ foobar.com {
 
 (caddyfile
   (multi_site
-    (site_block
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (comment
-        (comment)))
-    (site_block
+      (block
+        (comment
+          (comment))))
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (comment
-        (comment)))
+      (block
+        (comment
+          (comment))))
     (comment
       (comment))
     (comment
@@ -541,7 +543,7 @@ root * /var/www/
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -566,7 +568,7 @@ path *.txt *.md *.mdown /site/*
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (literal_string)
@@ -598,7 +600,7 @@ respond 5s
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (amount
@@ -621,7 +623,7 @@ root * {$ROOT}
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -647,7 +649,7 @@ root * {$ROOT:/var/www}
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -678,7 +680,7 @@ EOF
       host: (domain_name
         segment: (literal_string)
         segment: (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       argument: (heredoc
@@ -700,19 +702,20 @@ EOF 200
 
 (caddyfile
   (multi_site
-    (site_block
+    (site_definition
       site: (address
         host: (domain_name
           segment: (literal_string)
           segment: (literal_string)))
-      (construction
-        (directive
-          (identifier))
-        argument: (heredoc
-          (heredoc_tag)
-          (heredoc_content)
-          (heredoc_suffix))
-        argument: (integer)))))
+      (block
+        (statement
+          (directive
+            (identifier))
+          argument: (heredoc
+            (heredoc_tag)
+            (heredoc_content)
+            (heredoc_suffix))
+          argument: (integer))))))
 
 ==============================
 Heredoc in Site-block Indented
@@ -728,19 +731,20 @@ example.com {
 
 (caddyfile
   (multi_site
-    (site_block
+    (site_definition
       site: (address
         host: (domain_name
           segment: (literal_string)
           segment: (literal_string)))
-      (construction
-        (directive
-          (identifier))
-        argument: (heredoc
-          (heredoc_tag)
-          (heredoc_content)
-          (heredoc_suffix))
-        argument: (integer)))))
+      (block
+        (statement
+          (directive
+            (identifier))
+          argument: (heredoc
+            (heredoc_tag)
+            (heredoc_content)
+            (heredoc_suffix))
+          argument: (integer))))))
 
 ================
 Wildcard Matcher
@@ -758,7 +762,7 @@ reverse_proxy * 127.0.0.1
       host: (domain_name
         segment: (literal_string)
         segment: (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       matcher: (matcher
@@ -781,7 +785,7 @@ reverse_proxy /path 127.0.0.1
       host: (domain_name
         segment: (literal_string)
         segment: (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       argument: (path
@@ -804,7 +808,7 @@ reverse_proxy /path* 127.0.0.1
       host: (domain_name
         segment: (literal_string)
         segment: (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       argument: (path
@@ -839,7 +843,7 @@ reverse_proxy @test 127.0.0.1
             segment: (literal_string)
             segment: (literal_string)
             segment: (literal_string)))))
-    (construction
+    (statement
       (directive
         (identifier))
       matcher: (matcher
@@ -871,14 +875,15 @@ reverse_proxy @test 127.0.0.1
     (named_matcher_definition
       name: (identifier)
       (request_matcher
-        (request_matcher
-          matcher: (identifier)
-          argument: (address
-            host: (domain_name
-              segment: (literal_string)
-              segment: (literal_string)
-              segment: (literal_string))))))
-    (construction
+        (block
+          (request_matcher
+            matcher: (identifier)
+            argument: (address
+              host: (domain_name
+                segment: (literal_string)
+                segment: (literal_string)
+                segment: (literal_string)))))))
+    (statement
       (directive
         (identifier))
       matcher: (matcher
@@ -915,7 +920,7 @@ reverse_proxy @test 127.0.0.1
             segment: (literal_string)
             segment: (literal_string)
             segment: (literal_string)))))
-    (construction
+    (statement
       (directive
         (identifier))
       matcher: (matcher
@@ -960,7 +965,7 @@ reverse_proxy @test 127.0.0.1
       (request_matcher
         matcher: (identifier)
         argument: (cel_expression)))
-    (construction
+    (statement
       (directive
         (identifier))
       matcher: (matcher
@@ -1013,7 +1018,7 @@ reverse_proxy @private 127.0.0.1
             segment: (identifier)))
         argument: (address
           port: (integer))))
-    (construction
+    (statement
       (directive
         (identifier))
       matcher: (matcher
@@ -1068,7 +1073,7 @@ file_server
       (request_matcher
         (embedded_content
           (cel_expression))))
-    (construction
+    (statement
       (directive
         (identifier)))))
 
@@ -1086,8 +1091,9 @@ Named Route
   (multi_site
     (named_route_definition
       (identifier)
-      (comment
-        (comment)))))
+      (block
+        (comment
+          (comment))))))
 
 ===============================
 Named Route between Site blocks
@@ -1109,24 +1115,27 @@ example.net {
 
 (caddyfile
   (multi_site
-    (site_block
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (invoke_statement
-        (identifier)))
+      (block
+        (invoke_statement
+          (identifier))))
     (named_route_definition
       (identifier)
-      (comment
-        (comment)))
-    (site_block
+      (block
+        (comment
+          (comment))))
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (invoke_statement
-        (identifier)))))
+      (block
+        (invoke_statement
+          (identifier))))))
 
 =================
 Array Placeholder
@@ -1144,7 +1153,7 @@ root * {args[0]}
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -1170,7 +1179,7 @@ root * {something.args[0]}
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -1197,7 +1206,7 @@ dns cloudflare {file.{$CF_API_TOKEN_FILE}}
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (literal_string)
@@ -1227,7 +1236,7 @@ root * /var/www
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -1301,7 +1310,7 @@ root * /var/www
 
 (caddyfile
   (global_block
-    (construction
+    (statement
       (directive
         (identifier))))
   (single_site
@@ -1309,7 +1318,7 @@ root * /var/www
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -1330,16 +1339,17 @@ example.com {
 
 (caddyfile
   (multi_site
-    (site_block
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (construction
-        (directive
-          (identifier))
-        (quoted_expression
-          (literal_string))))))
+      (block
+        (statement
+          (directive
+            (identifier))
+          (quoted_expression
+            (literal_string)))))))
 
 ====================
 Multiple Site Blocks
@@ -1357,26 +1367,28 @@ foobar.com {
 
 (caddyfile
   (multi_site
-    (site_block
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (construction
-        (directive
-          (identifier))
-        (quoted_expression
-          (literal_string))))
-    (site_block
+      (block
+        (statement
+          (directive
+            (identifier))
+          (quoted_expression
+            (literal_string)))))
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (construction
-        (directive
-          (identifier))
-        (quoted_expression
-          (literal_string))))))
+      (block
+        (statement
+          (directive
+            (identifier))
+          (quoted_expression
+            (literal_string)))))))
 
 =======
 Snippet
@@ -1392,8 +1404,9 @@ Snippet
   (multi_site
     (snippet_definition
       (identifier)
-      (comment
-        (comment)))))
+      (block
+        (comment
+          (comment))))))
 
 ===========================
 Snippet between Site blocks
@@ -1415,24 +1428,27 @@ example.net {
 
 (caddyfile
   (multi_site
-    (site_block
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (snippet_reference
-        (identifier)))
+      (block
+        (snippet_reference
+          (identifier))))
     (snippet_definition
       (identifier)
-      (comment
-        (comment)))
-    (site_block
+      (block
+        (comment
+          (comment))))
+    (site_definition
       (address
         (domain_name
           (literal_string)
           (literal_string)))
-      (snippet_reference
-        (identifier)))))
+      (block
+        (snippet_reference
+          (identifier))))))
 
 =====================
 Nested Global Options
@@ -1454,30 +1470,31 @@ root * /var/www
 
 (caddyfile
   (global_block
-    (construction
+    (statement
       (directive
         (identifier)))
-    (construction
+    (statement
       (directive
         (identifier))
       (literal_string))
-    (construction
+    (statement
       (directive
         (identifier))
-      (construction
-        (directive
-          (identifier))
-        (address
-          (literal_string)
-          (domain_name
+      (block
+        (statement
+          (directive
+            (identifier))
+          (address
             (literal_string)
-            (literal_string))))))
+            (domain_name
+              (literal_string)
+              (literal_string)))))))
   (single_site
     (address
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -1504,12 +1521,12 @@ root * /var/www
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (quoted_expression
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -1534,7 +1551,7 @@ try_files {path} {path}/ /index.html =404
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (templated_string
@@ -1569,7 +1586,7 @@ root * @longhorn-ui@/share/share/lib/longhorn-ui
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (matcher
@@ -1599,7 +1616,7 @@ reverse_proxy some_other_host:1234
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (address
@@ -1625,17 +1642,18 @@ basic_auth {
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
-      (construction
-        (directive
-          (identifier))
-        (address
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))))))
+      (block
+        (statement
+          (directive
+            (identifier))
+          (address
+            (domain_name
+              (literal_string)
+              (literal_string)
+              (literal_string))))))))
 
 ====================
 MAC address argument
@@ -1655,7 +1673,7 @@ exec wakeonlan 78:f4:53:67:7a:a9 {
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (literal_string)
@@ -1666,9 +1684,10 @@ exec wakeonlan 78:f4:53:67:7a:a9 {
         (byte)
         (byte)
         (byte))
-      (construction
-        (directive
-          (identifier))))))
+      (block
+        (statement
+          (directive
+            (identifier)))))))
 
 ===============
 Complex Headers
@@ -1686,7 +1705,7 @@ header ?Content-Type
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (literal_string))))

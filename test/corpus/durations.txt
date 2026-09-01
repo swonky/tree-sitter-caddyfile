@@ -14,7 +14,7 @@ respond 5s
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (amount
@@ -37,7 +37,7 @@ respond 5.5s
       (domain_name
         (literal_string)
         (literal_string)))
-    (construction
+    (statement
       (directive
         (identifier))
       (amount
