@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Read tree-sitter version
+        id: tree-sitter-version
+        run: |
+          test -s .tree-sitter-version
+          echo "version=$(cat .tree-sitter-version)" >> "$GITHUB_OUTPUT"
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
+        with:
+          tree-sitter-ref: v${{ steps.tree-sitter-version.outputs.version }}
+      - name: Tree-sitter parser tests
+        uses: tree-sitter/parser-test-action@v3
+        with:
+          generate: true
+          test-parser: true
+          test-rust: true
+          test-node: true
+          test-python: true
+          test-go: true
+          test-swift: true
+          # test-zig: true
+      - name: Check scanner
+        run: |
+          clang \
+            -std=c11 \
+            -Wall -Wextra -Wpedantic \
+            -Wconversion -Wsign-conversion \
+            -Wshadow -Wundef \
+            -Werror \
+            -fsyntax-only \
+            src/scanner.c
+
+      - name: Install Clang static analyzer
+        run: sudo apt-get update && sudo apt-get install -y clang-tools
+
+      - name: Static analysis
+        run: |
+          scan-build clang \
+            -std=c11 \
+            -Wall -Wextra \
+            -c src/scanner.c
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file CHANGELOG.md

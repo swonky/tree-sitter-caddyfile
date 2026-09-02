@@ -7,7 +7,7 @@
 
 #define ARRAY_LEN(a) (sizeof(a) / sizeof((a)[0]))
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
-#define CLASS(text) {text, sizeof(text) - 1}
+#define CLASS(text) {text, sizeof(text) - 1, _UNSPECIFIED}
 #define INVERT(name, fn)                                                       \
 	static inline bool name(UnicodeChar c) { return !(fn)(c); }
 
@@ -413,25 +413,6 @@ static inline bool is_delim(UnicodeChar c)
 	case '/':
 	case '?':
 	case '+':
-		return true;
-	default:
-		return false;
-	}
-}
-
-/*
- * Matches parentheses, braces, and square brackets. But never chevrons.
- * Implements `Asserter`.
- */
-static inline bool is_bracket(UnicodeChar c)
-{
-	switch (c) {
-	case '(':
-	case ')':
-	case '[':
-	case ']':
-	case '{':
-	case '}':
 		return true;
 	default:
 		return false;
@@ -948,7 +929,6 @@ static void scan_text(Scanner *s)
 					set_result(s, keyword);
 					return;
 				}
-				kw = false;
 			}
 			s->in_quotation = false;
 			break;
