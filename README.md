@@ -1,6 +1,8 @@
 # tree-sitter-caddyfile
 
-A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://github.com/tree-sitter/tree-sitter) parser generator.
+An alternative [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://github.com/tree-sitter/tree-sitter) parser generator.
+
+The grammar places greater emphasis on identifying syntactic boundaries and preserving the smaller nested elements that make up the language. The aim is to provide a more permissive parser with deterministic boundaries and a granular syntax tree, with the hope that this approach will be better suited to editor integrations and language tooling.
 
 > [!NOTE]
 > This project is an unofficial alternative grammar and is not affiliated with or endorsed by the maintainers of caddy server.
