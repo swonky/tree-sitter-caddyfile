@@ -107,6 +107,8 @@ app.example.com {
 	invoke app-proxy
 	import snippet app
 }
+```
+
 ## Concrete syntax tree
 ```
 0:0   - 98:0    caddyfile
