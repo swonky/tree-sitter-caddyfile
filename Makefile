@@ -1,6 +1,6 @@
 LANGUAGE_NAME := tree-sitter-caddyfile
 HOMEPAGE_URL := https://github.com/swonky/tree-sitter-caddyfile
-VERSION := 0.1.0
+VERSION := 0.2.0
 DESCRIPTION := A grammar for Caddyfile
 
 # repository

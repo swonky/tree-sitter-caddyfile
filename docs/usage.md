@@ -12,7 +12,7 @@ This grammar can be used directly with Tree-sitter or through language-specific 
 ### Go
 Add the package using `go get`:
 ```sh
-go get "github.com/swonky/tree-sitter-caddyfile@v0.1.0"
+go get "github.com/swonky/tree-sitter-caddyfile@v0.2.0"
 ```
 
 And in your code:
@@ -24,7 +24,7 @@ import tsparser "github.com/swonky/tree-sitter-caddyfile"
 Add the repository to your project's `Cargo.toml` dependencies:
 ```toml
 [dependencies]
-tree-sitter-caddyfile = { git = "https://github.com/swonky/tree-sitter-caddyfile", tag = "v0.1.0" }
+tree-sitter-caddyfile = { git = "https://github.com/swonky/tree-sitter-caddyfile", tag = "v0.2.0" }
 ```
 
 And in your code:
