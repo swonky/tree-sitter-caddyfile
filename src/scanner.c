@@ -136,8 +136,9 @@ typedef struct {
 
 /**
  * Character-to-token map for Unicode symbolic operators.
+ * Don't access directly. Use `get_token`.
  */
-static const UnicodeChar sym_map[128] = {
+static const enum TokenType sym_map[128] = {
     ['('] = SYM_PAREN_O,
     [')'] = SYM_PAREN_C,
     ['{'] = SYM_BRACE_O,
@@ -171,7 +172,7 @@ static const UnicodeChar sym_map[128] = {
 static inline enum TokenType get_token(UnicodeChar c)
 {
 	unsigned int uc = (unsigned int)c;
-	return (c >= 128) ? _UNSPECIFIED : sym_map[uc];
+	return (uc >= 128) ? _UNSPECIFIED : sym_map[uc];
 }
 
 /**
