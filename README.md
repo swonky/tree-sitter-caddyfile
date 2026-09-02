@@ -11,7 +11,7 @@ The grammar places greater emphasis on identifying syntactic boundaries and pres
 
 ## Links
 - [Documentation](./docs/usage.md)
-- [Concrete syntax tree](./docs/cst.md)
+- [Playground](https://swonky.github.com/tree-sitter-caddyfile)
 - [Third party notices](./NOTICE.md)
 
 ## Features
