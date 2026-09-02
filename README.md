@@ -8,7 +8,7 @@ A [Caddyfile](https://caddyserver.com) grammar for the [Tree-sitter](https://git
 > Please see [caddyserver/tree-sitter-caddyfile](https://github.com/caddyserver/tree-sitter-caddyfile) if you are searching for the official grammar maintained by caddy.
 
 ## Links
-- [Usage & Development](./docs/usage.md)
+- [Documentation](./docs/usage.md)
 - [Concrete syntax tree](./docs/cst.md)
 - [Third party notices](./NOTICE.md)
 
