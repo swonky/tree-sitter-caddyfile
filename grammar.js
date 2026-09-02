@@ -10,7 +10,15 @@
 export default grammar({
 	name: 'caddyfile',
 
-	supertypes: $ => [$.argument, $.string, $.host, $.definition, $.placeholder, $.reference],
+	supertypes: $ => [
+		$.argument,
+		$.string,
+		$.host,
+		$.definition,
+		$.global_placeholder,
+		$.placeholder,
+		$.reference,
+	],
 
 	externals: $ => [
 		$._ext_unspecified,
@@ -49,6 +57,9 @@ export default grammar({
 		$._key_args,
 		$._key_env,
 		$._key_file,
+		$._key_system,
+		$._key_time,
+		$._key_now,
 		$._key_not,
 		$._key_site,
 
@@ -163,12 +174,36 @@ export default grammar({
 				repeat1(seq($._sym_period, optional(field('member', $._bare_identifier)))),
 			),
 
-		placeholder: $ =>
-			choice($.environment_placeholder, $.file_placeholder, $.generic_placeholder),
+		placeholder: $ => choice($.generic_placeholder, $.global_placeholder),
 
 		generic_placeholder: $ => seq(choice($.identifier, $.namespace_expression)),
 
-		environment_placeholder: $ =>
+		global_placeholder: $ =>
+			choice(
+				$.system_placeholder,
+				$.time_placeholder,
+				$.env_placeholder,
+				$.file_placeholder,
+			),
+
+		system_placeholder: $ =>
+			seq(
+				optional($._sym_period),
+				$._keyword_system,
+				$._sym_period,
+				optional(field('name', $.identifier)),
+			),
+
+		time_placeholder: $ =>
+			seq(
+				optional($._sym_period),
+				$._keyword_time,
+				$._sym_period,
+				optional(seq($._keyword_now, $._sym_period)),
+				optional(field('name', $.identifier)),
+			),
+
+		env_placeholder: $ =>
 			seq(
 				optional($._sym_period),
 				$._keyword_env,
@@ -513,6 +548,9 @@ export default grammar({
 		_keyword_args: $ => alias($._key_args, 'args'),
 		_keyword_env: $ => alias($._key_env, 'env'),
 		_keyword_file: $ => alias($._key_file, 'file'),
+		_keyword_system: $ => alias($._key_system, 'system'),
+		_keyword_time: $ => alias($._key_time, 'time'),
+		_keyword_now: $ => alias($._key_now, 'now'),
 		_keyword_not: $ => alias($._key_not, 'not'),
 
 		_keyword_expression: $ => alias($._key_expression, $.identifier),

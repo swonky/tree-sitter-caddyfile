@@ -84,6 +84,28 @@
     ]
   },
   {
+    "type": "global_placeholder",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "env_placeholder",
+        "named": true
+      },
+      {
+        "type": "file_placeholder",
+        "named": true
+      },
+      {
+        "type": "system_placeholder",
+        "named": true
+      },
+      {
+        "type": "time_placeholder",
+        "named": true
+      }
+    ]
+  },
+  {
     "type": "host",
     "named": true,
     "subtypes": [
@@ -106,15 +128,11 @@
     "named": true,
     "subtypes": [
       {
-        "type": "environment_placeholder",
-        "named": true
-      },
-      {
-        "type": "file_placeholder",
-        "named": true
-      },
-      {
         "type": "generic_placeholder",
+        "named": true
+      },
+      {
+        "type": "global_placeholder",
         "named": true
       }
     ]
@@ -488,7 +506,7 @@
     }
   },
   {
-    "type": "environment_placeholder",
+    "type": "env_placeholder",
     "named": true,
     "fields": {
       "name": {
@@ -1364,6 +1382,22 @@
     }
   },
   {
+    "type": "system_placeholder",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "templated_identifier",
     "named": true,
     "fields": {
@@ -1397,6 +1431,22 @@
           },
           {
             "type": "substitution",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "time_placeholder",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
             "named": true
           }
         ]
@@ -1576,8 +1626,20 @@
     "named": false
   },
   {
+    "type": "now",
+    "named": false
+  },
+  {
     "type": "shortcut",
     "named": true
+  },
+  {
+    "type": "system",
+    "named": false
+  },
+  {
+    "type": "time",
+    "named": false
   },
   {
     "type": "vars",

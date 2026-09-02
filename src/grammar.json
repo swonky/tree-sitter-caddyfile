@@ -566,15 +566,11 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "environment_placeholder"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "file_placeholder"
-        },
-        {
-          "type": "SYMBOL",
           "name": "generic_placeholder"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "global_placeholder"
         }
       ]
     },
@@ -596,7 +592,131 @@
         }
       ]
     },
-    "environment_placeholder": {
+    "global_placeholder": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "system_placeholder"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "time_placeholder"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "env_placeholder"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "file_placeholder"
+        }
+      ]
+    },
+    "system_placeholder": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_sym_period"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_system"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_period"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "time_placeholder": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_sym_period"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_keyword_time"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_period"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_keyword_now"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_sym_period"
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "SYMBOL",
+                "name": "identifier"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "env_placeholder": {
       "type": "SEQ",
       "members": [
         {
@@ -2790,6 +2910,33 @@
       "named": false,
       "value": "file"
     },
+    "_keyword_system": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_key_system"
+      },
+      "named": false,
+      "value": "system"
+    },
+    "_keyword_time": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_key_time"
+      },
+      "named": false,
+      "value": "time"
+    },
+    "_keyword_now": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_key_now"
+      },
+      "named": false,
+      "value": "now"
+    },
     "_keyword_not": {
       "type": "ALIAS",
       "content": {
@@ -3097,6 +3244,18 @@
     },
     {
       "type": "SYMBOL",
+      "name": "_key_system"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_key_time"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_key_now"
+    },
+    {
+      "type": "SYMBOL",
       "name": "_key_not"
     },
     {
@@ -3242,6 +3401,7 @@
     "string",
     "host",
     "definition",
+    "global_placeholder",
     "placeholder",
     "reference"
   ],

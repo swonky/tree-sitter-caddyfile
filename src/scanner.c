@@ -65,6 +65,9 @@ enum TokenType {
 	KEY_ARGS,
 	KEY_ENV,
 	KEY_FILE,
+	KEY_SYSTEM,
+	KEY_TIME,
+	KEY_NOW,
 	KEY_NOT,
 	KEY_SITE,
 
@@ -187,11 +190,13 @@ static const Keyword keywords[] = {
     KEYWORD("expression", KEY_EXPRESSION),
     KEYWORD("vars", KEY_VARS),
     KEYWORD("args", KEY_ARGS),
-    KEYWORD("not", KEY_NOT),
     KEYWORD("env", KEY_ENV),
     KEYWORD("file", KEY_FILE),
+    KEYWORD("system", KEY_SYSTEM),
+    KEYWORD("time", KEY_TIME),
     KEYWORD("site", KEY_SITE),
-
+    KEYWORD("now", KEY_NOW),
+    KEYWORD("not", KEY_NOT),
 };
 
 /**

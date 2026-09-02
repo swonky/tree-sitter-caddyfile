@@ -18,20 +18,22 @@
 
 ; Definitions
 (snippet_definition
-	name: (_) @constant.macro
-)
+	name: (_) @constant.macro)
 
 (named_route_definition
-	name: (_) @constant.macro
-)
+	name: (_) @constant.macro)
 
 ; Keywords
 "import" @keyword.directive
 "invoke" @keyword.directive
 "vars" @keyword
 "args" @variable.builtin
+
 "env" @keyword
 "file" @keyword
+"system" @keyword
+"time" @keyword
+"now" @keyword
 
 (negative) @keyword.operator
 
@@ -42,18 +44,21 @@
 ["`"] @punctuation.special
 ["\""] @string
 
-; Substitution
+; Substitutions
 (substitution ["{" "}"] @punctuation.special)
+(generic_placeholder (identifier) @variable.member)
 
+(system_placeholder 
+	name: (_) @keyword.coroutine)
+(time_placeholder 
+	name: (_) @keyword.coroutine)
 
 (namespace_expression
 	module: (_) @module
-	member: (_) @function.call
-)
+	member: (_) @function.call)
 
 (assignment
-	key: (_) @variable
-)
+	key: (_) @variable)
 
 ; Address
 
@@ -64,8 +69,7 @@
 (mapping value: (_) @string )
 
 (path
-	segment: (_) @string.special.path
-)
+	segment: (_) @string.special.path)
 
 
 (protocol) @constant.builtin
