@@ -170,7 +170,8 @@ static const UnicodeChar sym_map[128] = {
  */
 static inline enum TokenType get_token(UnicodeChar c)
 {
-	return (c >= 128) ? _UNSPECIFIED : sym_map[c];
+	unsigned int uc = (unsigned int)c;
+	return (c >= 128) ? _UNSPECIFIED : sym_map[uc];
 }
 
 /**
@@ -256,7 +257,7 @@ static inline uint32_t get_column(Scanner *s)
 static inline void set_result(Scanner *s, enum TokenType token)
 {
 	assert(s != NULL);
-	s->lexer->result_symbol = token;
+	s->lexer->result_symbol = (TSSymbol)token;
 }
 
 /**
@@ -652,8 +653,8 @@ static inline void advance(Scanner *s)
 	if (s->word_len == 0 && s->consumed < TAGLEN) {
 		s->word[s->consumed] = s->previous;
 		UnicodeChar c = peek(s);
-		if (!is_alnum(c) && c != '_')
-			s->word_len = s->consumed + 1;
+		if (!is_alnum(c) && c != '_' && s->consumed < UINT8_MAX - 1)
+			s->word_len = (uint8_t)s->consumed + 1;
 	}
 	s->consumed++;
 }
@@ -880,7 +881,7 @@ static void scan_text(Scanner *s)
 			continue;
 		}
 
-		UnicodeChar c = peek(s);
+		c = peek(s);
 
 		if (is_valid(s, STR_COMMENT) && c != '@' && prefix != '@') {
 			advance_while(s, is_not_eol);
@@ -936,7 +937,7 @@ static void scan_text(Scanner *s)
 
 		nperiod += (c == '.');
 
-		enum TokenType token = get_token(c);
+		token = get_token(c);
 		if ((s->consumed > 0 && (is_delim(c) && !s->in_quotation)) ||
 		    (token != _UNSPECIFIED && is_valid(s, token))) {
 			if (kw) {
@@ -1138,7 +1139,7 @@ void tree_sitter_caddyfile_external_scanner_deserialize(
 	unsigned available = (length - HDRLEN) / U32LEN;
 
 	if (s->tag_len > available)
-		s->tag_len = available;
+		s->tag_len = (uint8_t)available;
 
 	for (unsigned i = 0; i < s->tag_len; i++) {
 		s->tag[i] =
