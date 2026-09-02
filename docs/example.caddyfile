@@ -1,0 +1,98 @@
+{
+	email you@yours.com
+	servers {
+		trusted_proxies static private_ranges
+	}
+	admin caddy:2019 {
+		origins 172.16.2.2:2019
+	}
+}
+
+(snippet) {
+	# this is a reusable snippet
+	log {
+		output file /var/log/access_{args[0]}.log
+	}
+}
+
+# an example named route
+&(app-proxy) {
+	reverse_proxy {$UPSTREAMS:localhost:9000}
+}
+
+http://localhost:3000,
+http://192.168.1.1:3000,
+http://[2001:db8::1%eth0]:3000 {
+	file_server /static
+}
+
+*.example.com {
+	tls {
+		dns myregistrar {
+			api_key {file./run/secrets/{$SECRET_FILE}}
+			user me
+			api_endpoint https://api.myregistrar.com/v1/api
+		}
+		resolvers argument dns1.myregistrar.com dns2.myregistrar.com
+	}
+}
+
+{$FOO:foo}.example.com {
+	header Content-Type text/html
+
+	respond <<HTML
+		<html>
+			<head><title>Foo</title></head>
+			<body>Bar..?</body>
+		</html>
+		HTML 200
+}
+bar.example.com {
+	@post { 
+		!method POST
+		not path_regexp \.([a-f0-9]{6})\.(css|js)$
+	}
+	reverse_proxy @post {env.SRV0}:9001 {env.SRV1}:9002-9010 {
+		lb_policy first
+	}
+
+	reverse_proxy * unix+h2c//path/to/my.socket
+
+	handle /srv {
+		root /srv # this is an inline comment!
+		file_server
+	}
+
+	respond "Hello, World!"
+}
+
+wol.example.com {
+        reverse_proxy 192.168.0.100:8096
+
+        handle_errors {
+                @502 expression {err.status_code} == 502
+                handle @502 {
+                        wake_on_lan 00:11:22:33:44:55
+                        reverse_proxy 192.168.0.100:8096 {
+                                lb_try_duration 120s
+                        }
+                }
+        }
+}
+
+test1.example.com test2.example.com {
+	vars {
+		abc true
+		def {time.now.unix}
+		ghi 2.3
+	}
+	redir https://www.example.com{uri}/path?key=value&key=value#fragment
+	import snippet :3000
+}
+
+app.example.com {
+	@denied `client_ip('12.23.34.45', '23.34.45.56')`
+	abort @denied
+	invoke app-proxy
+	import snippet app
+}
