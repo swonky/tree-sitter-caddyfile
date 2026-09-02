@@ -3,9 +3,9 @@
 This document provides an example concrete syntax tree structure for a caddyfile sample.
 
 > [!NOTE]
-> The following sample is note highlighted using this parser, but rather the official tree-sitter-caddyfile parser.
+> The following sample is not highlighted using this parser, but rather the official tree-sitter-caddyfile parser.
 >
-> See [example.svg](docs/example.svg) for a more accurate showcase of syntax highlighting.
+> See [example.svg](example.svg) for a more accurate showcase of syntax highlighting.
 
 ## Source code
 ```caddyfile
