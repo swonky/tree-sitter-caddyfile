@@ -30,8 +30,10 @@
 "invoke" @keyword.directive
 "vars" @keyword
 "args" @variable.builtin
+"env" @keyword
+"file" @keyword
 
-(negative) @keyword.modifier
+(negative) @keyword.operator
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 ["&" "$"  "@" "<<"] @punctuation.special
@@ -43,23 +45,17 @@
 ; Substitution
 (substitution ["{" "}"] @punctuation.special)
 
-(placeholder
+
+(namespace_expression
 	module: (_) @module
-)
-
-(placeholder
-	member: (identifier) @variable.member
-)
-
-(placeholder
-	reference: (identifier) @constant
+	member: (_) @function.call
 )
 
 (assignment
 	key: (_) @variable
 )
 
-
+; Address
 
 (address "@" @punctuation.delimiter )
 (query "&" @punctuation.delimiter )
@@ -78,11 +74,6 @@
 	"+" @punctuation.delimiter
 )
 
-
-; (namespace_expression
-; 	module: (_) @module
-; 	member: (_) @function.call
-; )
 
 (request_matcher
 	matcher: (_) @type.builtin

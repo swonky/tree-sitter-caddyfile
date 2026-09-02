@@ -255,15 +255,6 @@
         }
       ]
     },
-    "list": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_site_field"
-        }
-      ]
-    },
     "_nested_string": {
       "type": "ALIAS",
       "content": {
@@ -321,6 +312,23 @@
         {
           "type": "SYMBOL",
           "name": "_sym_brace_c"
+        }
+      ]
+    },
+    "reference": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "environment_variable"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "placeholder"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parameter"
         }
       ]
     },
@@ -432,23 +440,6 @@
           }
         ]
       }
-    },
-    "reference": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "environment_variable"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "placeholder"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "parameter"
-        }
-      ]
     },
     "_index": {
       "type": "FIELD",
@@ -575,72 +566,37 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_placeholder_shorthand"
+          "name": "environment_placeholder"
         },
         {
           "type": "SYMBOL",
-          "name": "_placeholder_env"
+          "name": "file_placeholder"
         },
         {
           "type": "SYMBOL",
-          "name": "_placeholder_file"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_placeholder_namespaced"
+          "name": "generic_placeholder"
         }
       ]
     },
-    "_placeholder_namespaced": {
+    "generic_placeholder": {
       "type": "SEQ",
       "members": [
         {
           "type": "CHOICE",
           "members": [
             {
-              "type": "FIELD",
-              "name": "module",
-              "content": {
-                "type": "SYMBOL",
-                "name": "identifier"
-              }
+              "type": "SYMBOL",
+              "name": "identifier"
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "namespace_expression"
             }
           ]
-        },
-        {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_sym_period"
-              },
-              {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "FIELD",
-                    "name": "member",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "identifier"
-                    }
-                  },
-                  {
-                    "type": "BLANK"
-                  }
-                ]
-              }
-            ]
-          }
         }
       ]
     },
-    "_placeholder_env": {
+    "environment_placeholder": {
       "type": "SEQ",
       "members": [
         {
@@ -656,17 +612,8 @@
           ]
         },
         {
-          "type": "FIELD",
-          "name": "module",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_keyword_env"
-            },
-            "named": true,
-            "value": "identifier"
-          }
+          "type": "SYMBOL",
+          "name": "_keyword_env"
         },
         {
           "type": "SYMBOL",
@@ -677,7 +624,7 @@
           "members": [
             {
               "type": "FIELD",
-              "name": "reference",
+              "name": "name",
               "content": {
                 "type": "SYMBOL",
                 "name": "identifier"
@@ -690,7 +637,7 @@
         }
       ]
     },
-    "_placeholder_file": {
+    "file_placeholder": {
       "type": "SEQ",
       "members": [
         {
@@ -706,17 +653,8 @@
           ]
         },
         {
-          "type": "FIELD",
-          "name": "module",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_keyword_file"
-            },
-            "named": true,
-            "value": "identifier"
-          }
+          "type": "SYMBOL",
+          "name": "_keyword_file"
         },
         {
           "type": "SYMBOL",
@@ -744,14 +682,6 @@
           ]
         }
       ]
-    },
-    "_placeholder_shorthand": {
-      "type": "FIELD",
-      "name": "member",
-      "content": {
-        "type": "SYMBOL",
-        "name": "identifier"
-      }
     },
     "parameter": {
       "type": "SEQ",
@@ -3308,11 +3238,12 @@
   ],
   "inline": [],
   "supertypes": [
-    "reference",
     "argument",
     "string",
     "host",
-    "definition"
+    "definition",
+    "placeholder",
+    "reference"
   ],
   "reserved": {}
 }

@@ -1265,9 +1265,10 @@ root * {something.args[0]}
         (wildcard))
       (templated_string
         (substitution
-          (placeholder
-            (identifier)
-            (identifier)))))))
+          (generic_placeholder
+            (namespace_expression
+              (identifier)
+              (identifier))))))))
 
 =====================================================
 Field Placeholder with nested Environment Placeholder
@@ -1292,8 +1293,7 @@ dns cloudflare {file.{$CF_API_TOKEN_FILE}}
       (literal_string)
       (templated_string
         (substitution
-          (placeholder
-            (identifier)
+          (file_placeholder
             (path
               (templated_string
                 (substitution
@@ -1393,7 +1393,7 @@ root * /var/www
 ---
 
 (caddyfile
-  (global_block
+  (global_options
     (statement
       (directive
         (identifier))))
@@ -1559,7 +1559,7 @@ root * /var/www
 ---
 
 (caddyfile
-  (global_block
+  (global_options
     (statement
       (directive
         (identifier)))
@@ -1650,14 +1650,14 @@ try_files {path} {path}/ /index.html =404
         (identifier))
       (templated_string
         (substitution
-          (placeholder
+          (generic_placeholder
             (identifier))))
       (address
         (authority
           (domain_name
             (templated_string
               (substitution
-                (placeholder
+                (generic_placeholder
                   (identifier))))))
         (path))
       (path

@@ -10,7 +10,7 @@
 export default grammar({
 	name: 'caddyfile',
 
-	supertypes: $ => [$.reference, $.argument, $.string, $.host, $.definition],
+	supertypes: $ => [$.argument, $.string, $.host, $.definition, $.placeholder, $.reference],
 
 	externals: $ => [
 		$._ext_unspecified,
@@ -119,12 +119,6 @@ export default grammar({
 		_site_break: $ => seq($._sym_comma, $._eol),
 		_site: $ => choice($._site_field, $._site_list),
 
-		list: $ => seq($._site_field),
-
-		// _site_list: $ => repeat1(choice($._sd, $._site_field)),
-		// _sd: $ => prec.right(seq(repeat1($._d), optional(seq($._eol, repeat($._d))))),
-		// _d: $ => choice($._ws, $._sym_comma),
-
 		_nested_string: $ => alias($._ext_str_word, $.literal_string),
 
 		_nested_identifier: $ => alias($._ext_str_word, $.identifier),
@@ -134,7 +128,7 @@ export default grammar({
 		integer: $ => $._ext_str_num,
 
 		substitution: $ => seq($._sym_brace_o, optional($.reference), $._sym_brace_c),
-
+		reference: $ => choice($.environment_variable, $.placeholder, $.parameter),
 		identifier: $ => choice($.templated_identifier, $._ext_str_bare),
 
 		string: $ => choice($.templated_string, $.literal_string),
@@ -147,8 +141,6 @@ export default grammar({
 		_tmpl_string_fragment: $ => field('fragment', choice($._nested_string, $.substitution)),
 		_tmpl_identifier_fragment: $ =>
 			field('fragment', choice($._nested_identifier, $.substitution)),
-
-		reference: $ => choice($.environment_variable, $.placeholder, $.parameter),
 
 		_index: $ =>
 			field(
@@ -170,41 +162,26 @@ export default grammar({
 				optional(field('module', $._bare_identifier)),
 				repeat1(seq($._sym_period, optional(field('member', $._bare_identifier)))),
 			),
+
 		placeholder: $ =>
-			choice(
-				$._placeholder_shorthand,
-				$._placeholder_env,
-				$._placeholder_file,
-				$._placeholder_namespaced,
-			),
+			choice($.environment_placeholder, $.file_placeholder, $.generic_placeholder),
 
-		_placeholder_namespaced: $ =>
-			seq(
-				optional(field('module', $.identifier)),
-				repeat1(seq($._sym_period, optional(field('member', $.identifier)))),
-			),
+		generic_placeholder: $ => seq(choice($.identifier, $.namespace_expression)),
 
-		_placeholder_env: $ =>
+		environment_placeholder: $ =>
 			seq(
 				optional($._sym_period),
-				field('module', alias($._keyword_env, $.identifier)),
+				$._keyword_env,
 				$._sym_period,
-				optional(field('reference', $.identifier)),
+				optional(field('name', $.identifier)),
 			),
 
-		_placeholder_file: $ =>
+		file_placeholder: $ =>
 			seq(
 				optional($._sym_period),
-				field('module', alias($._keyword_file, $.identifier)),
+				$._keyword_file,
 				$._sym_period,
 				optional(field('member', alias($._path, $.path))),
-			),
-
-		_placeholder_shorthand: $ => field('member', $.identifier),
-		_placeholder_namespaced: $ =>
-			seq(
-				optional(field('module', $.identifier)),
-				repeat1(seq($._sym_period, optional(field('member', $.identifier)))),
 			),
 
 		parameter: $ => seq(optional($._keyword_args), $._index),
