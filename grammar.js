@@ -98,7 +98,7 @@ export default grammar({
 			seq(
 				repeat($._eol),
 				optional(seq($.global_block, repeat($._eol))),
-				choice($.single_site, $.multi_site),
+				optional(choice($.single_site, $.multi_site)),
 			),
 
 		single_site: $ => seq($._site, repeat1($._eol), optional($._block_body)),

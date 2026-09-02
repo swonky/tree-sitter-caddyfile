@@ -40,12 +40,20 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "single_site"
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "single_site"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "multi_site"
+                }
+              ]
             },
             {
-              "type": "SYMBOL",
-              "name": "multi_site"
+              "type": "BLANK"
             }
           ]
         }
