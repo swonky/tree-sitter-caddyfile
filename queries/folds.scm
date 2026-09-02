@@ -1,4 +1,4 @@
 [
 	(block)
-	(global_block)
+	(global_options)
 ] @fold

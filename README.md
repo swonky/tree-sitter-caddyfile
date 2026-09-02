@@ -34,7 +34,6 @@ The grammar supports the following Caddyfile language syntax structures:
 - **Snippet** definitions and references
 - **Named matchers**
 - **Named routes**
-- **Directives** with namespace support, with arguments and/or subdirective blocks
 - **Negations** (`not` keyword and `!` operator)
 - **Comments**
 - **Language injection**

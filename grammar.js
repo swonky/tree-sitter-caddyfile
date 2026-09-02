@@ -10,7 +10,7 @@
 export default grammar({
 	name: 'caddyfile',
 
-	supertypes: $ => [$.reference, $.argument, $.string, $.host],
+	supertypes: $ => [$.reference, $.argument, $.string, $.host, $.definition],
 
 	externals: $ => [
 		$._ext_unspecified,
@@ -97,21 +97,19 @@ export default grammar({
 		caddyfile: $ =>
 			seq(
 				repeat($._eol),
-				optional(seq($.global_block, repeat($._eol))),
+				optional(seq($.global_options, repeat($._eol))),
 				optional(choice($.single_site, $.multi_site)),
 			),
 
 		single_site: $ => seq($._site, repeat1($._eol), optional($._block_body)),
 		multi_site: $ => seq($._content, repeat(choice($._content, $._eol))),
-		_content: $ =>
-			choice(
-				$.site_definition,
-				$.snippet_definition,
-				$.named_route_definition,
-				$.snippet_reference,
-			),
 
-		global_block: $ => $._block,
+		definition: $ =>
+			choice($.site_definition, $.snippet_definition, $.named_route_definition),
+
+		_content: $ => choice($.definition, $.snippet_reference),
+
+		global_options: $ => $._block,
 		site_definition: $ => seq($._site, $.block),
 
 		_site_field: $ => field('site', $.address),
@@ -120,12 +118,6 @@ export default grammar({
 		_site_delim: $ => prec.right(choice($._ws, $._sym_comma, $._site_break)),
 		_site_break: $ => seq($._sym_comma, $._eol),
 		_site: $ => choice($._site_field, $._site_list),
-
-		_placeholder_namespaced: $ =>
-			seq(
-				optional(field('module', $.identifier)),
-				repeat1(seq($._sym_period, optional(field('member', $.identifier)))),
-			),
 
 		list: $ => seq($._site_field),
 
@@ -172,12 +164,24 @@ export default grammar({
 					optional(field('right', $.integer)),
 				),
 			),
+
+		namespace_expression: $ =>
+			seq(
+				optional(field('module', $._bare_identifier)),
+				repeat1(seq($._sym_period, optional(field('member', $._bare_identifier)))),
+			),
 		placeholder: $ =>
 			choice(
 				$._placeholder_shorthand,
 				$._placeholder_env,
 				$._placeholder_file,
 				$._placeholder_namespaced,
+			),
+
+		_placeholder_namespaced: $ =>
+			seq(
+				optional(field('module', $.identifier)),
+				repeat1(seq($._sym_period, optional(field('member', $.identifier)))),
 			),
 
 		_placeholder_env: $ =>
@@ -425,12 +429,7 @@ export default grammar({
 				),
 			),
 
-		namespace_expression: $ =>
-			seq(
-				optional(field('module', $._bare_identifier)),
-				repeat1(seq($._sym_period, optional(field('member', $._bare_identifier)))),
-			),
-		directive: $ => choice($.namespace_expression, $._bare_identifier),
+		directive: $ => field('name', $._bare_identifier),
 		_matcher_field: $ => field('matcher', $.matcher),
 		_arguments_field: $ => field('argument', $.argument),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),

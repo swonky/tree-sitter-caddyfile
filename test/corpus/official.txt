@@ -737,7 +737,7 @@ EOF
           segment: (literal_string))))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       argument: (heredoc
         (heredoc_tag)
         (heredoc_content)
@@ -766,7 +766,7 @@ EOF 200
       (block
         (statement
           (directive
-            (identifier))
+            name: (identifier))
           argument: (heredoc
             (heredoc_tag)
             (heredoc_content)
@@ -796,7 +796,7 @@ example.com {
       (block
         (statement
           (directive
-            (identifier))
+            name: (identifier))
           argument: (heredoc
             (heredoc_tag)
             (heredoc_content)
@@ -822,7 +822,7 @@ reverse_proxy * 127.0.0.1
           segment: (literal_string))))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       matcher: (matcher
         (wildcard))
       argument: (ipv4))))
@@ -846,7 +846,7 @@ reverse_proxy /path 127.0.0.1
           segment: (literal_string))))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       argument: (path
         segment: (identifier))
       argument: (ipv4))))
@@ -870,7 +870,7 @@ reverse_proxy /path* 127.0.0.1
           segment: (literal_string))))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       argument: (path
         segment: (identifier))
       argument: (ipv4))))
@@ -907,7 +907,7 @@ reverse_proxy @test 127.0.0.1
               segment: (literal_string))))))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
@@ -949,7 +949,7 @@ reverse_proxy @test 127.0.0.1
                   segment: (literal_string))))))))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
@@ -988,7 +988,7 @@ reverse_proxy @test 127.0.0.1
               segment: (literal_string))))))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
@@ -1034,7 +1034,7 @@ reverse_proxy @test 127.0.0.1
         argument: (cel_expression)))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
@@ -1094,7 +1094,7 @@ reverse_proxy @private 127.0.0.1
             port: (integer)))))
     (statement
       (directive
-        (identifier))
+        name: (identifier))
       matcher: (matcher
         (named_matcher_reference
           name: (identifier)))
@@ -1150,7 +1150,7 @@ file_server
           (cel_expression))))
     (statement
       (directive
-        (identifier)))))
+        name: (identifier)))))
 
 ===========
 Named Route
