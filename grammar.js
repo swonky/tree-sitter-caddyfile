@@ -421,7 +421,15 @@ export default grammar({
 				seq($._sym_solidus, repeat(choice($._sym_solidus, field('segment', $.string)))),
 			),
 		_windows_path: $ =>
-			prec.right(repeat1(seq($._sym_bsolidus, field('segment', $.string)))),
+			prec.right(
+				seq(
+					$._sym_bsolidus,
+					repeat(choice($._sym_bsolidus, field('segment', $.string))),
+				),
+			),
+
+		// _windows_path: $ =>
+		// 	prec.right(repeat1(seq($._sym_bsolidus, field('segment', $.string)))),
 
 		path: $ => $._posix_path,
 

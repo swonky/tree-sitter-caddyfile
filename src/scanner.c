@@ -978,7 +978,8 @@ static void scan_text(Scanner *s)
 				escape = true;
 				continue;
 			}
-			break;
+			if (is_valid(s, SYM_BSLASH))
+				break;
 		}
 
 		if (is_valid(s, STR_CEL) && prefix == '`') {

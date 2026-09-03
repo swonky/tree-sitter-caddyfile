@@ -201,7 +201,7 @@
       },
       "segment": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "string",
@@ -1246,7 +1246,7 @@
     "fields": {
       "segment": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "string",
