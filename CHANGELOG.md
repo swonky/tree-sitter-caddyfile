@@ -1,14 +1,17 @@
-## [0.1.0] - 2026-09-02
+## [v0.3.0]
 
 ### Features
 
-- Added global placeholders (system & time).
-- Improved placeholder nesting.
-- Improved highlight groups.
-
-### Fixes
-- Removed namespaced directives (not in specification) 
+- Improved path parsing.
+    - Distinct structural nodes for URL paths and pathnames.
+    - Support for Windows and POSIX style pathnames.
+    - Distinct nodes for relative and absolute pathnames.
+    - Symbolic tokens for current `.` and parent `..` directories.
+- Network addresses now use pathnames instead of url paths
+- Import directive with pathnames.
+- More predictable backslash escaping behaviour.
+- Improved highlight categories.
 
 ### Documentation
 
-- Updated with CST markdown generator
+- Added playground
