@@ -18,6 +18,8 @@ export default grammar({
 		$.global_placeholder,
 		$.placeholder,
 		$.reference,
+		$.posix_pathname,
+		$.windows_pathname,
 	],
 
 	externals: $ => [
@@ -146,7 +148,7 @@ export default grammar({
 		reference: $ => choice($.environment_variable, $.placeholder, $.parameter),
 		identifier: $ => choice($.templated_identifier, $._ext_str_bare),
 
-		string: $ => choice($.templated_string, $.literal_string),
+		string: $ => prec.right(choice($.templated_string, $.literal_string)),
 		_string: $ => choice($.templated_string, $.literal_string),
 		literal_string: $ => $._ext_str_bare,
 
@@ -220,7 +222,7 @@ export default grammar({
 				optional($._sym_period),
 				$._keyword_file,
 				$._sym_period,
-				optional(field('member', alias($._path, $.path))),
+				optional(field('member', prec.right(choice($.string, $.pathname)))),
 			),
 
 		parameter: $ => seq(optional($._keyword_args), $._index),
@@ -366,12 +368,12 @@ export default grammar({
 		pathname: $ =>
 			seq(choice($.posix_pathname, $.windows_pathname), optional($.permission)),
 
-		posix_pathname: $ => choice($.absolute_posix_pathname, $.relative_posix_pathname),
-		windows_pathname: $ => choice($.absolute_windows_pathname, $.relative_windows_pathname),
+		posix_pathname: $ => choice($.posix_absolute_pathname, $.posix_relative_pathname),
+		windows_pathname: $ => choice($.windows_absolute_pathname, $.windows_relative_pathname),
 
-		absolute_posix_pathname: $ => prec(-1, $._posix_path),
+		posix_absolute_pathname: $ => prec(-1, $._posix_path),
 
-		absolute_windows_pathname: $ =>
+		windows_absolute_pathname: $ =>
 			prec.right(
 				seq(
 					optional(field('drive', $.string)),
@@ -380,7 +382,7 @@ export default grammar({
 				),
 			),
 
-		relative_posix_pathname: $ =>
+		posix_relative_pathname: $ =>
 			prec(
 				-1,
 				seq(
@@ -394,7 +396,7 @@ export default grammar({
 					$._posix_path,
 				),
 			),
-		relative_windows_pathname: $ =>
+		windows_relative_pathname: $ =>
 			prec(
 				-1,
 				seq(
@@ -563,7 +565,10 @@ export default grammar({
 				seq(
 					$._keyword_import,
 					repeat($._ws),
-					field('snippet', $._bare_identifier),
+					field(
+						'pattern',
+						prec.right(choice(alias($.literal_string, $.identifier), $.pathname)),
+					),
 					repeat($._ws),
 					repeat($._arguments_field),
 					optional($.block),

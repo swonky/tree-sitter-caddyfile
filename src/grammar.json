@@ -346,17 +346,21 @@
       ]
     },
     "string": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "templated_string"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "literal_string"
-        }
-      ]
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "templated_string"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "literal_string"
+          }
+        ]
+      }
     },
     "_string": {
       "type": "CHOICE",
@@ -787,13 +791,21 @@
               "type": "FIELD",
               "name": "member",
               "content": {
-                "type": "ALIAS",
+                "type": "PREC_RIGHT",
+                "value": 0,
                 "content": {
-                  "type": "SYMBOL",
-                  "name": "_path"
-                },
-                "named": true,
-                "value": "path"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "string"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "pathname"
+                    }
+                  ]
+                }
               }
             },
             {
@@ -1769,11 +1781,11 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "absolute_posix_pathname"
+          "name": "posix_absolute_pathname"
         },
         {
           "type": "SYMBOL",
-          "name": "relative_posix_pathname"
+          "name": "posix_relative_pathname"
         }
       ]
     },
@@ -1782,15 +1794,15 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "absolute_windows_pathname"
+          "name": "windows_absolute_pathname"
         },
         {
           "type": "SYMBOL",
-          "name": "relative_windows_pathname"
+          "name": "windows_relative_pathname"
         }
       ]
     },
-    "absolute_posix_pathname": {
+    "posix_absolute_pathname": {
       "type": "PREC",
       "value": -1,
       "content": {
@@ -1798,7 +1810,7 @@
         "name": "_posix_path"
       }
     },
-    "absolute_windows_pathname": {
+    "windows_absolute_pathname": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {
@@ -1831,7 +1843,7 @@
         ]
       }
     },
-    "relative_posix_pathname": {
+    "posix_relative_pathname": {
       "type": "PREC",
       "value": -1,
       "content": {
@@ -1878,7 +1890,7 @@
         ]
       }
     },
-    "relative_windows_pathname": {
+    "windows_relative_pathname": {
       "type": "PREC",
       "value": -1,
       "content": {
@@ -2759,10 +2771,28 @@
           },
           {
             "type": "FIELD",
-            "name": "snippet",
+            "name": "pattern",
             "content": {
-              "type": "SYMBOL",
-              "name": "_bare_identifier"
+              "type": "PREC_RIGHT",
+              "value": 0,
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "literal_string"
+                    },
+                    "named": true,
+                    "value": "identifier"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "pathname"
+                  }
+                ]
+              }
             }
           },
           {
@@ -3650,7 +3680,9 @@
     "definition",
     "global_placeholder",
     "placeholder",
-    "reference"
+    "reference",
+    "posix_pathname",
+    "windows_pathname"
   ],
   "reserved": {}
 }

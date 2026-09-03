@@ -160,42 +160,46 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
         (identifier))
       (network_address
         (protocol)
-        (path
-          (literal_string)
-          (literal_string)
-          (literal_string)
-          (literal_string))))
+        (pathname
+          (posix_absolute_pathname
+            (literal_string)
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (protocol)
-        (path
-          (literal_string)
-          (literal_string)
-          (literal_string)
-          (literal_string))))
+        (pathname
+          (posix_absolute_pathname
+            (literal_string)
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (path
-          (literal_string)
-          (literal_string)
-          (literal_string)
-          (literal_string))))
+        (pathname
+          (posix_absolute_pathname
+            (literal_string)
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
-        (path
-          (literal_string)
-          (literal_string)
-          (literal_string)
-          (literal_string))))))
+        (pathname
+          (posix_absolute_pathname
+            (literal_string)
+            (literal_string)
+            (literal_string)
+            (literal_string)))))))
 
 =================
 Bare IP Addresses
@@ -598,10 +602,9 @@ root * /var/www/
         (matcher
           (wildcard)))
       (pathname
-        (posix_pathname
-          (absolute_posix_pathname
-            (literal_string)
-            (literal_string)))))))
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string))))))
 
 ===========================================
 Single-site with Multiple Wildcard Matchers
@@ -639,10 +642,9 @@ path *.txt *.md *.mdown /site/*
             (literal_string)
             (literal_string))))
       (pathname
-        (posix_pathname
-          (absolute_posix_pathname
-            (literal_string)
-            (literal_string)))))))
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string))))))
 
 ========
 Duration
@@ -724,10 +726,9 @@ root * {$ROOT:/var/www}
           (environment_variable
             (identifier)
             (pathname
-              (posix_pathname
-                (absolute_posix_pathname
-                  (literal_string)
-                  (literal_string))))))))))
+              (posix_absolute_pathname
+                (literal_string)
+                (literal_string)))))))))
 
 ===================
 Single-site Heredoc
@@ -1319,11 +1320,10 @@ dns cloudflare {file.{$CF_API_TOKEN_FILE}}
       (templated_string
         (substitution
           (file_placeholder
-            (path
-              (templated_string
-                (substitution
-                  (environment_variable
-                    (identifier)))))))))))
+            (templated_string
+              (substitution
+                (environment_variable
+                  (identifier))))))))))
 
 ==================================
 Single Site Block with one address
@@ -1349,10 +1349,9 @@ root * /var/www
         (matcher
           (wildcard)))
       (pathname
-        (posix_pathname
-          (absolute_posix_pathname
-            (literal_string)
-            (literal_string)))))))
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string))))))
 
 =========================================
 Single Site Block with multiple addresses
@@ -1438,10 +1437,9 @@ root * /var/www
         (matcher
           (wildcard)))
       (pathname
-        (posix_pathname
-          (absolute_posix_pathname
-            (literal_string)
-            (literal_string)))))))
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string))))))
 
 =================
 Single Site Block
@@ -1624,10 +1622,9 @@ root * /var/www
         (matcher
           (wildcard)))
       (pathname
-        (posix_pathname
-          (absolute_posix_pathname
-            (literal_string)
-            (literal_string)))))))
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string))))))
 
 ================
 Character Escape
@@ -1660,10 +1657,9 @@ root * /var/www
         (matcher
           (wildcard)))
       (pathname
-        (posix_pathname
-          (absolute_posix_pathname
-            (literal_string)
-            (literal_string)))))))
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string))))))
 
 ====================
 Status Code Fallback
@@ -1698,10 +1694,9 @@ try_files {path} {path}/ /index.html =404
                   (identifier))))))
         (path))
       (pathname
-        (posix_pathname
-          (absolute_posix_pathname
-            (literal_string)
-            (literal_string))))
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string)))
       (literal_string))))
 
 ==================

@@ -138,6 +138,20 @@
     ]
   },
   {
+    "type": "posix_pathname",
+    "named": true,
+    "subtypes": [
+      {
+        "type": "posix_absolute_pathname",
+        "named": true
+      },
+      {
+        "type": "posix_relative_pathname",
+        "named": true
+      }
+    ]
+  },
+  {
     "type": "reference",
     "named": true,
     "subtypes": [
@@ -170,46 +184,18 @@
     ]
   },
   {
-    "type": "absolute_posix_pathname",
+    "type": "windows_pathname",
     "named": true,
-    "fields": {
-      "segment": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "absolute_windows_pathname",
-    "named": true,
-    "fields": {
-      "drive": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
+    "subtypes": [
+      {
+        "type": "windows_absolute_pathname",
+        "named": true
       },
-      "segment": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
+      {
+        "type": "windows_relative_pathname",
+        "named": true
       }
-    }
+    ]
   },
   {
     "type": "address",
@@ -629,7 +615,11 @@
         "required": false,
         "types": [
           {
-            "type": "path",
+            "type": "pathname",
+            "named": true
+          },
+          {
+            "type": "string",
             "named": true
           }
         ]
@@ -1117,19 +1107,46 @@
     }
   },
   {
-    "type": "posix_pathname",
+    "type": "posix_absolute_pathname",
     "named": true,
-    "fields": {},
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "posix_relative_pathname",
+    "named": true,
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "absolute_posix_pathname",
+          "type": "current_directory",
           "named": true
         },
         {
-          "type": "relative_posix_pathname",
+          "type": "parent_directory",
           "named": true
         }
       ]
@@ -1209,66 +1226,6 @@
     "type": "regular_expression",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "relative_posix_pathname",
-    "named": true,
-    "fields": {
-      "segment": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "current_directory",
-          "named": true
-        },
-        {
-          "type": "parent_directory",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "relative_windows_pathname",
-    "named": true,
-    "fields": {
-      "segment": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "string",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "current_directory",
-          "named": true
-        },
-        {
-          "type": "parent_directory",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "request_matcher",
@@ -1461,12 +1418,16 @@
           }
         ]
       },
-      "snippet": {
+      "pattern": {
         "multiple": false,
         "required": true,
         "types": [
           {
             "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "pathname",
             "named": true
           }
         ]
@@ -1645,19 +1606,56 @@
     "fields": {}
   },
   {
-    "type": "windows_pathname",
+    "type": "windows_absolute_pathname",
     "named": true,
-    "fields": {},
+    "fields": {
+      "drive": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "segment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "windows_relative_pathname",
+    "named": true,
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
-          "type": "absolute_windows_pathname",
+          "type": "current_directory",
           "named": true
         },
         {
-          "type": "relative_windows_pathname",
+          "type": "parent_directory",
           "named": true
         }
       ]

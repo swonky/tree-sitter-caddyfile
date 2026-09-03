@@ -13,6 +13,7 @@
 (integer) @number
 (boolean) @boolean
 (byte) @character
+(octal) @character
 (decimal) @number.float
 (ipv4) @number.float
 
@@ -22,6 +23,8 @@
 
 (named_route_definition
 	name: (_) @constant.macro)
+
+(regular_expression) @string.special.regex
 
 ; Keywords
 "import" @keyword.directive
@@ -43,6 +46,9 @@
 ["/" "." ":" "#" "?" "%" "|" "-" "://" "\\"] @punctuation.delimiter
 ["`"] @punctuation.special
 ["\""] @string
+
+(current_directory) @string.special.symbol
+(parent_directory) @string.special.symbol
 
 ; Substitutions
 (substitution ["{" "}"] @punctuation.special)
@@ -71,11 +77,13 @@
 (path
 	segment: (_) @string.special.path)
 
+(path
+	segment: (_) @string.special.path)
 
 (protocol) @constant.builtin
 
 (network_address
-	"+" @punctuation.delimiter
+	"+" @punctuation.operator
 )
 
 
@@ -112,8 +120,15 @@
 ) @comment.documentation
 
 (path
-	segment: (_) @string.special.url
-)
+	segment: (_) @string.special.url)
+(windows_relative_pathname
+	segment: (_) @string.special.path)
+(windows_absolute_pathname
+	segment: (_) @string.special.path)
+(posix_relative_pathname
+	segment: (_) @string.special.path)
+(posix_absolute_pathname
+	segment: (_) @string.special.path)
 
 (environment_variable
 	name: (_) @constant.macro
@@ -128,8 +143,15 @@
 	(block (statement (directive name: (_) @function.builtin))))
 (named_route_definition
 	(block (statement (directive name: (_) @function.builtin))))
+(site_definition
+	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
+(snippet_definition
+	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
+(named_route_definition
+	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
 
 (statement (block (statement (directive name: (_) @function.method))))
+(statement (block (statement (conditional_directive (directive name: (_) @function.method)))))
 
 (shortcut) @constant.builtin
 
