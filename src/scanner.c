@@ -89,7 +89,8 @@ enum TokenType {
 	SYM_BRACKET_O,
 	SYM_BRACKET_C,
 	SYM_COLON,
-	SYM_SOLIDUS,
+	SYM_SLASH,
+	SYM_BSLASH,
 	SYM_HYPHEN,
 	SYM_AT,
 	SYM_COMMA,
@@ -114,6 +115,9 @@ enum TokenType {
 	SYM_BLOCK_START,
 	SYM_SCHEME,
 	SYM_COMMENT,
+	SYM_DOT_PATH,
+	SYM_DOT_DOT_PATH,
+	SYM_COLON_DRIVE,
 
 	/*
 	 * indicates that tree-sitter
@@ -149,7 +153,7 @@ static const enum TokenType sym_map[128] = {
     ['['] = SYM_BRACKET_O,
     [']'] = SYM_BRACKET_C,
     [':'] = SYM_COLON,
-    ['/'] = SYM_SOLIDUS,
+    ['/'] = SYM_SLASH,
     ['-'] = SYM_HYPHEN,
     ['@'] = SYM_AT,
     [','] = SYM_COMMA,
@@ -407,6 +411,23 @@ static inline bool is_eol(UnicodeChar c)
  */
 INVERT(is_not_eol, is_eol)
 
+/**
+ * Matches characters that can be escaped with a preceding backslash.
+ * Implements `Asserter`.
+ */
+static inline bool is_escapable(UnicodeChar c)
+{
+	switch (c) {
+	case '\\':
+	case '"':
+	case '{':
+	case '}':
+	case '<':
+		return true;
+	default:
+		return false;
+	}
+}
 /*
  * Matches a subset of address delimiter characters.
  * Implements `Asserter`.
@@ -842,41 +863,92 @@ static void scan_text(Scanner *s)
 		}
 	}
 
-	enum TokenType token = get_token(c);
-	if (token != _UNSPECIFIED && is_valid(s, token)) {
-		advance(s);
-		mark_end(s);
-		set_result(s, token);
-		if (token == SYM_QUOTE)
-			s->in_quotation = !s->in_quotation;
-		if (token == SYM_COLON && is_valid(s, SYM_SCHEME) &&
-		    peek(s) == '/') {
-			advance(s);
-			if (peek(s) == '/') {
-				advance(s);
-				mark_end(s);
-				set_result(s, SYM_SCHEME);
-			}
-		}
-		return;
-	}
-
-	if (c == '*' && is_valid(s, SYM_ASTERISK)) {
-		advance(s);
-		c = peek(s);
-		if (is_ws(c) || is_eol(c) || eof(s)) {
-			mark_end(s);
-			set_result(s, SYM_ASTERISK);
-			return;
-		}
-	}
-
 	bool escape = false;
 	bool digits = true;
 	bool hex = true;
 	bool upper = true;
 	bool kw = true;
 	int nperiod = 0;
+
+	if (c == '.') {
+		advance(s);
+		mark_end(s);
+
+		nperiod += 1;
+		upper = false;
+
+		UnicodeChar x = peek(s);
+		if (is_valid(s, SYM_DOT_PATH) && (x == '/' || x == '\\')) {
+			set_result(s, SYM_DOT_PATH);
+			return;
+		}
+		if (is_valid(s, SYM_DOT_DOT_PATH) && x == '.') {
+			advance(s);
+			x = peek(s);
+			if ((x == '/' || x == '\\')) {
+				mark_end(s);
+				set_result(s, SYM_DOT_DOT_PATH);
+				return;
+			}
+		}
+		if (is_valid(s, SYM_PERIOD)) {
+			set_result(s, SYM_PERIOD);
+			return;
+		}
+	}
+
+	enum TokenType token = get_token(c);
+
+	if (token != _UNSPECIFIED && is_valid(s, token)) {
+		advance(s);
+		mark_end(s);
+		set_result(s, token);
+
+		if (token == SYM_QUOTE) {
+			s->in_quotation = !s->in_quotation;
+			return;
+		}
+
+		if (token == SYM_COLON) {
+			if (is_valid(s, SYM_COLON_DRIVE) && peek(s) == '\\') {
+				set_result(s, SYM_COLON_DRIVE);
+				return;
+			}
+			if (is_valid(s, SYM_SCHEME) && peek(s) == '/') {
+				advance(s);
+				if (peek(s) == '/') {
+					advance(s);
+					mark_end(s);
+					set_result(s, SYM_SCHEME);
+				}
+			}
+		}
+		return;
+	}
+
+	switch (c) {
+	case '\\':
+		if (!is_valid(s, SYM_BSLASH))
+			break;
+		advance(s);
+		mark_end(s);
+		c = peek(s);
+		escape = is_escapable(c);
+		if (escape)
+			break;
+		set_result(s, SYM_BSLASH);
+		return;
+	case '*':
+		if (!is_valid(s, SYM_ASTERISK))
+			break;
+		advance(s);
+		c = peek(s);
+		if (!(is_ws(c) || is_eol(c) || eof(s)))
+			break;
+		mark_end(s);
+		set_result(s, SYM_ASTERISK);
+		return;
+	}
 
 	while (!eof(s)) {
 		/* skip logic upon ESCAPE char */
@@ -889,17 +961,24 @@ static void scan_text(Scanner *s)
 
 		c = peek(s);
 
-		if (is_valid(s, STR_COMMENT) && c != '@' && prefix != '@') {
+		if (!is_valid(s, ERROR_SENTINEL) && is_valid(s, STR_COMMENT) &&
+		    c != '@' && prefix != '@') {
 			advance_while(s, is_not_eol);
 			mark_end(s);
 			set_result(s, STR_COMMENT);
 			return;
 		}
 
-		if (c == '\\') {
+		if (!is_valid(s, ERROR_SENTINEL) && c == '\\') {
+			if (s->consumed > 1) {
+				mark_end(s);
+			}
 			advance(s);
-			escape = true;
-			continue;
+			if (is_escapable(peek(s))) {
+				escape = true;
+				continue;
+			}
+			break;
 		}
 
 		if (is_valid(s, STR_CEL) && prefix == '`') {
@@ -1030,6 +1109,8 @@ static void scan_text(Scanner *s)
 		return;
 	}
 
+	upper = upper && (is_ws(c) || is_eol(c) || eof(s));
+
 	if (hex && s->consumed == 2 && is_valid(s, STR_HEX_BYTE) &&
 	    (c == ':' || prefix == ':'))
 		set_result(s, STR_HEX_BYTE);
@@ -1048,7 +1129,7 @@ static void scan_text(Scanner *s)
 	else
 		set_result(s, STR_WORD);
 
-	mark_end(s);
+	// mark_end(s);
 	return;
 }
 

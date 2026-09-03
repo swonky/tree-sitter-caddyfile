@@ -78,6 +78,7 @@ export default grammar({
 		$._ext_sym_bracket_c,
 		$._ext_sym_colon,
 		$._ext_sym_solidus,
+		$._ext_sym_bsolidus,
 		$._ext_sym_hyphen,
 		$._ext_sym_at,
 		$._ext_sym_comma,
@@ -99,6 +100,9 @@ export default grammar({
 		$._ext_sym_block_start,
 		$._ext_sym_scheme,
 		$._ext_sym_comment,
+		$._ext_sym_dot_slash,
+		$._ext_sym_dot_dot_slash,
+		$._ext_sym_colon_backslash,
 		$._error_sentinel,
 	],
 
@@ -271,12 +275,17 @@ export default grammar({
 		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
 
 		authority: $ =>
-			prec.left(repeat1(choice(field('host', $.host), field('port', $._port)))),
+			prec.right(repeat1(choice(field('host', $.host), field('port', $._port)))),
 
 		_port: $ => prec.right(seq($._sym_colon, optional(choice($._primitive, $.range)))),
 
 		domain_name: $ =>
-			prec.right(repeat1(choice(field('segment', $.string), $._sym_period))),
+			prec.right(
+				seq(
+					field('segment', $.string),
+					repeat(choice(field('segment', $.string), $._sym_period)),
+				),
+			),
 
 		range: $ =>
 			seq(
@@ -353,23 +362,70 @@ export default grammar({
 		named_route_definition: $ => seq($._named_route_name, $.block),
 
 		named_matcher_reference: $ => $._matcher_name,
-		path_matcher: $ => prec.left(seq(field('path', $.path), optional($._ws))),
 
-		path: $ =>
+		pathname: $ =>
+			seq(choice($.posix_pathname, $.windows_pathname), optional($.permission)),
+
+		posix_pathname: $ => choice($.absolute_posix_pathname, $.relative_posix_pathname),
+		windows_pathname: $ => choice($.absolute_windows_pathname, $.relative_windows_pathname),
+
+		absolute_posix_pathname: $ => prec(-1, $._posix_path),
+
+		absolute_windows_pathname: $ =>
 			prec.right(
 				seq(
-					$._sym_solidus,
-					repeat(field('segment', choice($.wildcard, $.identifier, $._sym_solidus))),
-					optional(
-						seq(
-							$._sym_bar,
-							field('permission', optional(alias($.integer, $.octal))),
-						),
-					),
+					optional(field('drive', $.string)),
+					$._drive_letter_delimiter,
+					$._windows_path,
 				),
 			),
 
-		matcher: $ => prec.left(choice($.wildcard, $.named_matcher_reference, $.path_matcher)),
+		relative_posix_pathname: $ =>
+			prec(
+				-1,
+				seq(
+					choice(
+						$.current_directory,
+						seq(
+							$.parent_directory,
+							repeat(seq($._sym_solidus, $.parent_directory)),
+						),
+					),
+					$._posix_path,
+				),
+			),
+		relative_windows_pathname: $ =>
+			prec(
+				-1,
+				seq(
+					choice(
+						$.current_directory,
+						seq(
+							$.parent_directory,
+							repeat(seq($._sym_bsolidus, $.parent_directory)),
+						),
+					),
+					$._windows_path,
+				),
+			),
+
+		_drive_letter_delimiter: $ => alias($._ext_sym_colon_backslash, ':'),
+
+		current_directory: $ => $._ext_sym_dot_slash,
+		parent_directory: $ => $._ext_sym_dot_dot_slash,
+
+		permission: $ => prec.right(seq($._sym_bar, optional(alias($.integer, $.octal)))),
+
+		_posix_path: $ =>
+			prec.right(
+				seq($._sym_solidus, repeat(choice($._sym_solidus, field('segment', $.string)))),
+			),
+		_windows_path: $ =>
+			prec.right(repeat1(seq($._sym_bsolidus, field('segment', $.string)))),
+
+		path: $ => $._posix_path,
+
+		matcher: $ => prec.right(choice($.wildcard, $.named_matcher_reference, $.path)),
 		wildcard: $ => $._sym_asterisk,
 
 		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
@@ -399,7 +455,7 @@ export default grammar({
 			),
 
 		_generic_matcher: $ =>
-			prec.left(
+			prec.right(
 				seq(
 					field('matcher', $.identifier),
 					repeat(seq($._ws, $._arguments_field)),
@@ -431,17 +487,17 @@ export default grammar({
 
 		_implied_cel_expression: $ => alias($._ext_str_cel_inline, $.cel_expression),
 
+		directive: $ => field('name', $._bare_identifier),
+		conditional_directive: $ => seq($.directive, repeat1($._ws), $._matcher_field),
 		statement: $ =>
-			prec.right(
+			prec.left(
 				seq(
-					$.directive,
-					optional(seq(repeat1($._ws), $._matcher_field)),
+					choice($.directive, $.conditional_directive),
 					repeat(seq(repeat1($._ws), $._arguments_field)),
 					optional(seq(repeat1($._ws), $.block)),
 				),
 			),
 
-		directive: $ => field('name', $._bare_identifier),
 		_matcher_field: $ => field('matcher', $.matcher),
 		_arguments_field: $ => field('argument', $.argument),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
@@ -472,7 +528,7 @@ export default grammar({
 					$.boolean,
 					$.address,
 					$.network_address,
-					$.path,
+					$.pathname,
 					$.quoted_expression,
 					$.embedded_content,
 					$.verb,
@@ -523,6 +579,7 @@ export default grammar({
 		_sym_bracket_c: $ => alias($._ext_sym_bracket_c, ']'),
 		_sym_colon: $ => alias($._ext_sym_colon, ':'),
 		_sym_solidus: $ => alias($._ext_sym_solidus, '/'),
+		_sym_bsolidus: $ => alias($._ext_sym_bsolidus, '\\'),
 		_sym_hyphen: $ => alias($._ext_sym_hyphen, '-'),
 		_sym_at: $ => alias($._ext_sym_at, '@'),
 		_sym_comma: $ => alias($._ext_sym_comma, ','),

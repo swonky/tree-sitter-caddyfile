@@ -161,10 +161,10 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
       (network_address
         (protocol)
         (path
-          (identifier)
-          (identifier)
-          (identifier)
-          (identifier))))
+          (literal_string)
+          (literal_string)
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -172,30 +172,30 @@ reverse_proxy unixpacket//run/grafana/grafana.sock
         (protocol)
         (protocol)
         (path
-          (identifier)
-          (identifier)
-          (identifier)
-          (identifier))))
+          (literal_string)
+          (literal_string)
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (path
-          (identifier)
-          (identifier)
-          (identifier)
-          (identifier))))
+          (literal_string)
+          (literal_string)
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
       (network_address
         (protocol)
         (path
-          (identifier)
-          (identifier)
-          (identifier)
-          (identifier))))))
+          (literal_string)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
 
 =================
 Bare IP Addresses
@@ -592,13 +592,16 @@ root * /var/www/
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
-      (path
-        (identifier)
-        (identifier)))))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
+      (pathname
+        (posix_pathname
+          (absolute_posix_pathname
+            (literal_string)
+            (literal_string)))))))
 
 ===========================================
 Single-site with Multiple Wildcard Matchers
@@ -620,7 +623,6 @@ path *.txt *.md *.mdown /site/*
     (statement
       (directive
         (identifier))
-      (literal_string)
       (address
         (authority
           (domain_name
@@ -631,9 +633,16 @@ path *.txt *.md *.mdown /site/*
           (domain_name
             (literal_string)
             (literal_string))))
-      (path
-        (identifier)
-        (wildcard)))))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string))))
+      (pathname
+        (posix_pathname
+          (absolute_posix_pathname
+            (literal_string)
+            (literal_string)))))))
 
 ========
 Duration
@@ -677,10 +686,11 @@ root * {$ROOT}
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
       (templated_string
         (substitution
           (environment_variable
@@ -704,17 +714,20 @@ root * {$ROOT:/var/www}
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
       (templated_string
         (substitution
           (environment_variable
             (identifier)
-            (path
-              (identifier)
-              (identifier))))))))
+            (pathname
+              (posix_pathname
+                (absolute_posix_pathname
+                  (literal_string)
+                  (literal_string))))))))))
 
 ===================
 Single-site Heredoc
@@ -821,10 +834,11 @@ reverse_proxy * 127.0.0.1
           segment: (literal_string)
           segment: (literal_string))))
     (statement
-      (directive
-        name: (identifier))
-      matcher: (matcher
-        (wildcard))
+      (conditional_directive
+        (directive
+          name: (identifier))
+        matcher: (matcher
+          (wildcard)))
       argument: (ipv4))))
 
 ============
@@ -845,10 +859,12 @@ reverse_proxy /path 127.0.0.1
           segment: (literal_string)
           segment: (literal_string))))
     (statement
-      (directive
-        name: (identifier))
-      argument: (path
-        segment: (identifier))
+      (conditional_directive
+        (directive
+          name: (identifier))
+        matcher: (matcher
+          (path
+            segment: (literal_string))))
       argument: (ipv4))))
 
 =====================
@@ -869,10 +885,12 @@ reverse_proxy /path* 127.0.0.1
           segment: (literal_string)
           segment: (literal_string))))
     (statement
-      (directive
-        name: (identifier))
-      argument: (path
-        segment: (identifier))
+      (conditional_directive
+        (directive
+          name: (identifier))
+        matcher: (matcher
+          (path
+            segment: (literal_string))))
       argument: (ipv4))))
 
 =============
@@ -906,11 +924,12 @@ reverse_proxy @test 127.0.0.1
               segment: (literal_string)
               segment: (literal_string))))))
     (statement
-      (directive
-        name: (identifier))
-      matcher: (matcher
-        (named_matcher_reference
-          name: (identifier)))
+      (conditional_directive
+        (directive
+          name: (identifier))
+        matcher: (matcher
+          (named_matcher_reference
+            name: (identifier))))
       argument: (ipv4))))
 
 ===================
@@ -948,11 +967,12 @@ reverse_proxy @test 127.0.0.1
                   segment: (literal_string)
                   segment: (literal_string))))))))
     (statement
-      (directive
-        name: (identifier))
-      matcher: (matcher
-        (named_matcher_reference
-          name: (identifier)))
+      (conditional_directive
+        (directive
+          name: (identifier))
+        matcher: (matcher
+          (named_matcher_reference
+            name: (identifier))))
       argument: (ipv4))))
 
 ===========
@@ -987,11 +1007,12 @@ reverse_proxy @test 127.0.0.1
               segment: (literal_string)
               segment: (literal_string))))))
     (statement
-      (directive
-        name: (identifier))
-      matcher: (matcher
-        (named_matcher_reference
-          name: (identifier)))
+      (conditional_directive
+        (directive
+          name: (identifier))
+        matcher: (matcher
+          (named_matcher_reference
+            name: (identifier))))
       argument: (ipv4))))
 
 ===========
@@ -1033,11 +1054,12 @@ reverse_proxy @test 127.0.0.1
         matcher: (identifier)
         argument: (cel_expression)))
     (statement
-      (directive
-        name: (identifier))
-      matcher: (matcher
-        (named_matcher_reference
-          name: (identifier)))
+      (conditional_directive
+        (directive
+          name: (identifier))
+        matcher: (matcher
+          (named_matcher_reference
+            name: (identifier))))
       argument: (ipv4))))
 
 =========================================
@@ -1067,37 +1089,38 @@ reverse_proxy @private 127.0.0.1
           (authority
             host: (ipv4))
           path: (path
-            segment: (identifier)))
+            segment: (literal_string)))
         argument: (address
           (authority
             host: (ipv4))
           path: (path
-            segment: (identifier)))
+            segment: (literal_string)))
         argument: (address
           (authority
             host: (ipv4))
           path: (path
-            segment: (identifier)))
+            segment: (literal_string)))
         argument: (address
           (authority
             host: (ipv4))
           path: (path
-            segment: (identifier)))
+            segment: (literal_string)))
         argument: (address
           (authority
             host: (domain_name
               segment: (literal_string)))
           path: (path
-            segment: (identifier)))
+            segment: (literal_string)))
         argument: (address
           (authority
             port: (integer)))))
     (statement
-      (directive
-        name: (identifier))
-      matcher: (matcher
-        (named_matcher_reference
-          name: (identifier)))
+      (conditional_directive
+        (directive
+          name: (identifier))
+        matcher: (matcher
+          (named_matcher_reference
+            name: (identifier))))
       argument: (ipv4))))
 
 ========================
@@ -1232,10 +1255,11 @@ root * {args[0]}
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
       (templated_string
         (substitution
           (parameter
@@ -1259,10 +1283,11 @@ root * {something.args[0]}
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
       (templated_string
         (substitution
           (generic_placeholder
@@ -1318,13 +1343,16 @@ root * /var/www
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
-      (path
-        (identifier)
-        (identifier)))))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
+      (pathname
+        (posix_pathname
+          (absolute_posix_pathname
+            (literal_string)
+            (literal_string)))))))
 
 =========================================
 Single Site Block with multiple addresses
@@ -1404,13 +1432,16 @@ root * /var/www
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
-      (path
-        (identifier)
-        (identifier)))))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
+      (pathname
+        (posix_pathname
+          (absolute_posix_pathname
+            (literal_string)
+            (literal_string)))))))
 
 =================
 Single Site Block
@@ -1587,13 +1618,16 @@ root * /var/www
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
-      (path
-        (identifier)
-        (identifier)))))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
+      (pathname
+        (posix_pathname
+          (absolute_posix_pathname
+            (literal_string)
+            (literal_string)))))))
 
 ================
 Character Escape
@@ -1620,13 +1654,16 @@ root * /var/www
       (quoted_expression
         (literal_string)))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
-      (path
-        (identifier)
-        (identifier)))))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
+      (pathname
+        (posix_pathname
+          (absolute_posix_pathname
+            (literal_string)
+            (literal_string)))))))
 
 ====================
 Status Code Fallback
@@ -1660,9 +1697,11 @@ try_files {path} {path}/ /index.html =404
                 (generic_placeholder
                   (identifier))))))
         (path))
-      (path
-        (identifier)
-        (identifier))
+      (pathname
+        (posix_pathname
+          (absolute_posix_pathname
+            (literal_string)
+            (literal_string))))
       (literal_string))))
 
 ==================
@@ -1683,19 +1722,20 @@ root * @longhorn-ui@/share/share/lib/longhorn-ui
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (matcher
-        (wildcard))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (wildcard)))
       (address
         (authority
           (domain_name
             (literal_string)))
         (path
-          (identifier)
-          (identifier)
-          (identifier)
-          (identifier))))))
+          (literal_string)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
 
 =======================
 Domain with Underscores

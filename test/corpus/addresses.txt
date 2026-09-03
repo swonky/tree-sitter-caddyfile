@@ -82,33 +82,41 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
           (literal_string)
           (literal_string))))
     (statement
-      (directive
-        (identifier))
-      (path
-        (identifier)
-        (identifier)))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (path
+            (literal_string)
+            (literal_string)))))
     (statement
-      (directive
-        (identifier))
-      (path
-        (identifier)
-        (identifier)
-        (identifier)))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (path
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
     (statement
-      (directive
-        (identifier))
-      (path
-        (identifier)
-        (identifier)
-        (identifier)))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (path
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
     (statement
-      (directive
-        (identifier))
-      (path
-        (identifier)
-        (identifier)
-        (identifier)
-        (identifier)))
+      (conditional_directive
+        (directive
+          (identifier))
+        (matcher
+          (path
+            (literal_string)
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
     (statement
       (directive
         (identifier))
@@ -141,8 +149,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string)))
         (path
-          (identifier)
-          (identifier))))
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -154,8 +162,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string)))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (literal_string)))
     (statement
       (directive
@@ -168,8 +176,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string)))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (query
           (mapping
             (identifier)
@@ -188,8 +196,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string)))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (query
           (mapping
             (identifier)
@@ -233,237 +241,7 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string))
           (literal_string))
         (path
-          (identifier)
-          (identifier))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (path
-          (identifier)
-          (identifier))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (path
-          (identifier)
-          (identifier))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (path
-          (identifier)
-          (identifier))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (path
-          (identifier)
-          (identifier))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (path
-          (identifier)
-          (identifier))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (path
-          (identifier)
-          (identifier))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (path
-          (identifier)
-          (identifier))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
+          (literal_string)
           (literal_string))))
     (statement
       (directive
@@ -476,6 +254,9 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string))
           (literal_string))
+        (path
+          (literal_string)
+          (literal_string))
         (literal_string)))
     (statement
       (directive
@@ -489,37 +270,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string))
           (literal_string))
         (path
-          (identifier)
-          (identifier))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
+          (literal_string)
           (literal_string))
-        (path
-          (identifier)
-          (identifier))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (path
-          (identifier)
-          (identifier))
         (query
           (mapping
             (identifier)
@@ -539,8 +291,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string))
           (literal_string))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (query
           (mapping
             (identifier)
@@ -608,246 +360,6 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
         (identifier))
       (address
         (literal_string)
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (path
-          (identifier)
-          (identifier))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (path
-          (identifier)
-          (identifier))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (path
-          (identifier)
-          (identifier))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (path
-          (identifier)
-          (identifier))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (path
-          (identifier)
-          (identifier))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (path
-          (identifier)
-          (identifier))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (path
-          (identifier)
-          (identifier))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (path
-          (identifier)
-          (identifier))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string))
-          (literal_string))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))
-        (literal_string)))
-    (statement
-      (directive
-        (identifier))
-      (address
-        (authority
-          (domain_name
-            (literal_string)
-            (literal_string)
-            (literal_string)))
-        (query
-          (mapping
-            (identifier)
-            (identifier))
-          (mapping
-            (identifier)
-            (identifier)))))
-    (statement
-      (directive
-        (identifier))
-      (address
         (authority
           (domain_name
             (literal_string)
@@ -893,8 +405,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string)))
         (path
-          (identifier)
-          (identifier))))
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -906,8 +418,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string)))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (literal_string)))
     (statement
       (directive
@@ -920,8 +432,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string)))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (query
           (mapping
             (identifier)
@@ -940,8 +452,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string)
             (literal_string)))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (query
           (mapping
             (identifier)
@@ -985,8 +497,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string))
           (literal_string))
         (path
-          (identifier)
-          (identifier))))
+          (literal_string)
+          (literal_string))))
     (statement
       (directive
         (identifier))
@@ -999,8 +511,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string))
           (literal_string))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (literal_string)))
     (statement
       (directive
@@ -1014,8 +526,8 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string))
           (literal_string))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
         (query
           (mapping
             (identifier)
@@ -1035,8 +547,504 @@ reverse_proxy user@subdomain.domain.tld?key=value&foo=bar#fragment
             (literal_string))
           (literal_string))
         (path
-          (identifier)
-          (identifier))
+          (literal_string)
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (path
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (path
+          (literal_string)
+          (literal_string))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (path
+          (literal_string)
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (path
+          (literal_string)
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (path
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (path
+          (literal_string)
+          (literal_string))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (path
+          (literal_string)
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (path
+          (literal_string)
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (path
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (path
+          (literal_string)
+          (literal_string))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (path
+          (literal_string)
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string)))
+        (path
+          (literal_string)
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (path
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (path
+          (literal_string)
+          (literal_string))
+        (literal_string)))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (path
+          (literal_string)
+          (literal_string))
+        (query
+          (mapping
+            (identifier)
+            (identifier))
+          (mapping
+            (identifier)
+            (identifier)))))
+    (statement
+      (directive
+        (identifier))
+      (address
+        (literal_string)
+        (authority
+          (domain_name
+            (literal_string)
+            (literal_string)
+            (literal_string))
+          (literal_string))
+        (path
+          (literal_string)
+          (literal_string))
         (query
           (mapping
             (identifier)

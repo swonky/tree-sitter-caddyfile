@@ -44,7 +44,7 @@
         "named": true
       },
       {
-        "type": "path",
+        "type": "pathname",
         "named": true
       },
       {
@@ -168,6 +168,48 @@
         "named": true
       }
     ]
+  },
+  {
+    "type": "absolute_posix_pathname",
+    "named": true,
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "absolute_windows_pathname",
+    "named": true,
+    "fields": {
+      "drive": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "segment": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "address",
@@ -449,6 +491,37 @@
     }
   },
   {
+    "type": "conditional_directive",
+    "named": true,
+    "fields": {
+      "matcher": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "matcher",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "directive",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "current_directory",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "decimal",
     "named": true,
     "fields": {}
@@ -475,7 +548,7 @@
     "fields": {
       "segment": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "string",
@@ -785,7 +858,7 @@
           "named": true
         },
         {
-          "type": "path_matcher",
+          "type": "path",
           "named": true
         },
         {
@@ -985,37 +1058,20 @@
     }
   },
   {
+    "type": "parent_directory",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "path",
     "named": true,
     "fields": {
-      "permission": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "octal",
-            "named": true
-          }
-        ]
-      },
       "segment": {
         "multiple": true,
         "required": false,
         "types": [
           {
-            "type": "/",
-            "named": false
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
             "type": "string",
-            "named": true
-          },
-          {
-            "type": "wildcard",
             "named": true
           }
         ]
@@ -1023,19 +1079,60 @@
     }
   },
   {
-    "type": "path_matcher",
+    "type": "pathname",
     "named": true,
-    "fields": {
-      "path": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "path",
-            "named": true
-          }
-        ]
-      }
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "permission",
+          "named": true
+        },
+        {
+          "type": "posix_pathname",
+          "named": true
+        },
+        {
+          "type": "windows_pathname",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "permission",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "octal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "posix_pathname",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "absolute_posix_pathname",
+          "named": true
+        },
+        {
+          "type": "relative_posix_pathname",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1112,6 +1209,66 @@
     "type": "regular_expression",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "relative_posix_pathname",
+    "named": true,
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "current_directory",
+          "named": true
+        },
+        {
+          "type": "parent_directory",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "relative_windows_pathname",
+    "named": true,
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "current_directory",
+          "named": true
+        },
+        {
+          "type": "parent_directory",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "request_matcher",
@@ -1339,16 +1496,6 @@
             "named": true
           }
         ]
-      },
-      "matcher": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "matcher",
-            "named": true
-          }
-        ]
       }
     },
     "children": {
@@ -1357,6 +1504,10 @@
       "types": [
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "conditional_directive",
           "named": true
         },
         {
@@ -1494,6 +1645,25 @@
     "fields": {}
   },
   {
+    "type": "windows_pathname",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "absolute_windows_pathname",
+          "named": true
+        },
+        {
+          "type": "relative_windows_pathname",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "!",
     "named": false
   },
@@ -1575,6 +1745,10 @@
   },
   {
     "type": "[",
+    "named": false
+  },
+  {
+    "type": "\\",
     "named": false
   },
   {
