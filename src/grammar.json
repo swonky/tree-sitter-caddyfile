@@ -1059,7 +1059,7 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "path"
+                "name": "pathname"
               },
               {
                 "type": "SYMBOL",

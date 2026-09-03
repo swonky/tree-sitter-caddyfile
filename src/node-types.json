@@ -1003,7 +1003,7 @@
             "named": true
           },
           {
-            "type": "path",
+            "type": "pathname",
             "named": true
           }
         ]

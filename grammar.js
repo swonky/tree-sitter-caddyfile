@@ -250,7 +250,7 @@ export default grammar({
 			seq(
 				field('network', $._network),
 				$._sym_solidus,
-				field('address', choice($.path, $.authority)),
+				field('address', choice($.pathname, $.authority)),
 			),
 
 		protocol: $ => $._ext_cls_protocol,
@@ -420,6 +420,7 @@ export default grammar({
 			prec.right(
 				seq($._sym_solidus, repeat(choice($._sym_solidus, field('segment', $.string)))),
 			),
+
 		_windows_path: $ =>
 			prec.right(
 				seq(
@@ -427,9 +428,6 @@ export default grammar({
 					repeat(choice($._sym_bsolidus, field('segment', $.string))),
 				),
 			),
-
-		// _windows_path: $ =>
-		// 	prec.right(repeat1(seq($._sym_bsolidus, field('segment', $.string)))),
 
 		path: $ => $._posix_path,
 
