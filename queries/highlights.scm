@@ -47,6 +47,8 @@
 ["`"] @punctuation.special
 ["\""] @string
 
+(unary_expression (["?" "!" "+" "-" "<" ">"] @operator))
+
 (current_directory) @string.special.symbol
 (parent_directory) @string.special.symbol
 
