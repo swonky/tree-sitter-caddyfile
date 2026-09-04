@@ -2137,21 +2137,30 @@
       "type": "SYMBOL",
       "name": "_sym_asterisk"
     },
+    "_matcher_handle": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sym_at"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_ext_str_bare"
+        }
+      ]
+    },
     "_matcher_name": {
       "type": "FIELD",
       "name": "name",
       "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "_sym_at"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "identifier"
-          }
-        ]
+        "type": "ALIAS",
+        "content": {
+          "type": "SYMBOL",
+          "name": "_matcher_handle"
+        },
+        "named": true,
+        "value": "identifier"
       }
     },
     "named_matcher_definition": {

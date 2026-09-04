@@ -449,8 +449,8 @@ export default grammar({
 
 		matcher: $ => prec.right(choice($.wildcard, $.named_matcher_reference, $.path)),
 		wildcard: $ => $._sym_asterisk,
-
-		_matcher_name: $ => field('name', seq($._sym_at, $.identifier)),
+		_matcher_handle: $ => seq($._sym_at, $._ext_str_bare),
+		_matcher_name: $ => field('name', alias($._matcher_handle, $.identifier)),
 
 		named_matcher_definition: $ => seq($._matcher_name, optional($._ws), $.request_matcher),
 
