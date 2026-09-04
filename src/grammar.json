@@ -2138,21 +2138,21 @@
       "name": "_sym_asterisk"
     },
     "_matcher_name": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_sym_at"
-        },
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
+      "type": "FIELD",
+      "name": "name",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_sym_at"
+          },
+          {
             "type": "SYMBOL",
             "name": "identifier"
           }
-        }
-      ]
+        ]
+      }
     },
     "named_matcher_definition": {
       "type": "SEQ",
