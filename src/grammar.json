@@ -1269,21 +1269,25 @@
       }
     },
     "host": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "ipv6"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ipv4"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "domain_name"
-        }
-      ]
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "ipv6"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "ipv4"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "domain_name"
+          }
+        ]
+      }
     },
     "authority": {
       "type": "PREC_RIGHT",
@@ -1327,17 +1331,8 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "_primitive"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "range"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "_primitive"
               },
               {
                 "type": "BLANK"
@@ -2314,8 +2309,11 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "SYMBOL",
-                  "name": "_ws"
+                  "type": "REPEAT1",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_ws"
+                  }
                 },
                 {
                   "type": "SYMBOL",
@@ -2696,9 +2694,85 @@
       "type": "SYMBOL",
       "name": "_ext_str_ipv4"
     },
+    "cidr": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "ipv4"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "ipv6"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_solidus"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "integer"
+        }
+      ]
+    },
     "decimal": {
       "type": "SYMBOL",
       "name": "_ext_str_decimal"
+    },
+    "_modifier": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_sym_exclaim"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_question"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_hyphen"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_plus"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_chevron_o"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_sym_chevron_c"
+        }
+      ]
+    },
+    "unary_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "operator",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_modifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "operand",
+          "content": {
+            "type": "SYMBOL",
+            "name": "literal_string"
+          }
+        }
+      ]
     },
     "argument": {
       "type": "PREC_RIGHT",
@@ -2713,6 +2787,10 @@
           {
             "type": "SYMBOL",
             "name": "string"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unary_expression"
           },
           {
             "type": "SYMBOL",
@@ -2765,6 +2843,10 @@
           {
             "type": "SYMBOL",
             "name": "ipv4"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "cidr"
           }
         ]
       }
@@ -3015,6 +3097,24 @@
       "named": false,
       "value": "]"
     },
+    "_sym_chevron_o": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_ext_sym_chevron_o"
+      },
+      "named": false,
+      "value": "<"
+    },
+    "_sym_chevron_c": {
+      "type": "ALIAS",
+      "content": {
+        "type": "SYMBOL",
+        "name": "_ext_sym_chevron_c"
+      },
+      "named": false,
+      "value": ">"
+    },
     "_sym_colon": {
       "type": "ALIAS",
       "content": {
@@ -3113,15 +3213,6 @@
       },
       "named": false,
       "value": "$"
-    },
-    "_sym_gt": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_ext_sym_gt"
-      },
-      "named": false,
-      "value": ">"
     },
     "_sym_grave": {
       "type": "ALIAS",
@@ -3630,6 +3721,14 @@
     },
     {
       "type": "SYMBOL",
+      "name": "_ext_sym_chevron_o"
+    },
+    {
+      "type": "SYMBOL",
+      "name": "_ext_sym_chevron_c"
+    },
+    {
+      "type": "SYMBOL",
       "name": "_ext_sym_colon"
     },
     {
@@ -3671,10 +3770,6 @@
     {
       "type": "SYMBOL",
       "name": "_ext_sym_dollar"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "_ext_sym_gt"
     },
     {
       "type": "SYMBOL",

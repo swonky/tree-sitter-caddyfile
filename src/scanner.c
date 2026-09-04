@@ -87,6 +87,8 @@ enum TokenType {
 	SYM_BRACE_C,
 	SYM_BRACKET_O,
 	SYM_BRACKET_C,
+	SYM_CHEVRON_O,
+	SYM_CHEVRON_C,
 	SYM_COLON,
 	SYM_SLASH,
 	SYM_BSLASH,
@@ -98,7 +100,6 @@ enum TokenType {
 	SYM_PLUS,
 	SYM_NUM,
 	SYM_DOLLAR,
-	SYM_GT,
 	SYM_GRAVE,
 	SYM_QUOTE,
 	SYM_ASTERISK, // handled separately
@@ -151,6 +152,8 @@ static const enum TokenType sym_map[128] = {
     ['}'] = SYM_BRACE_C,
     ['['] = SYM_BRACKET_O,
     [']'] = SYM_BRACKET_C,
+    ['<'] = SYM_CHEVRON_O,
+    ['>'] = SYM_CHEVRON_C,
     [':'] = SYM_COLON,
     ['/'] = SYM_SLASH,
     ['-'] = SYM_HYPHEN,
@@ -161,7 +164,6 @@ static const enum TokenType sym_map[128] = {
     ['+'] = SYM_PLUS,
     ['#'] = SYM_NUM,
     ['$'] = SYM_DOLLAR,
-    ['>'] = SYM_GT,
     ['`'] = SYM_GRAVE,
     ['"'] = SYM_QUOTE,
     ['!'] = SYM_EXCLAIM,
@@ -426,6 +428,7 @@ static inline bool is_escapable(UnicodeChar c)
 		return false;
 	}
 }
+
 /*
  * Matches a subset of address delimiter characters.
  * Implements `Asserter`.
@@ -439,6 +442,26 @@ static inline bool is_delim(UnicodeChar c)
 	case '/':
 	case '?':
 	case '+':
+		return true;
+	default:
+		return false;
+	}
+}
+
+/*
+ * Matches a subset of unary operator characters.
+ * [spec](https://caddyserver.com/docs/caddyfile/directives/header)
+ * Implements `Asserter`.
+ */
+static inline bool is_unary_operator(UnicodeChar c)
+{
+	switch (c) {
+	case '+':
+	case '-':
+	case '?':
+	case '!':
+	case '>':
+	case '<':
 		return true;
 	default:
 		return false;
@@ -819,6 +842,12 @@ static void scan_text(Scanner *s)
 {
 	UnicodeChar prefix = s->previous;
 
+	if (s->consumed == 1 && prefix == '<' && is_valid(s, SYM_CHEVRON_C)) {
+		mark_end(s);
+		set_result(s, SYM_CHEVRON_C);
+		return;
+	}
+
 	if (is_valid(s, WS) && is_ws(peek(s))) {
 		advance_while(s, is_ws);
 		set_result(s, WS);
@@ -1037,6 +1066,14 @@ static void scan_text(Scanner *s)
 			    (digits && (is_valid(s, STR_DECIMAL) ||
 					   is_valid(s, STR_QTY_DECIMAL) ||
 					   is_valid(s, STR_IPV4)))) {
+				advance(s);
+				continue;
+			}
+			if (token == SYM_HYPHEN) {
+				advance(s);
+				continue;
+			}
+			if (is_unary_operator(c) && is_unary_operator(prefix)) {
 				advance(s);
 				continue;
 			}

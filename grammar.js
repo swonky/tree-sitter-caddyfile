@@ -77,6 +77,8 @@ export default grammar({
 		$._ext_sym_brace_c,
 		$._ext_sym_bracket_o,
 		$._ext_sym_bracket_c,
+		$._ext_sym_chevron_o,
+		$._ext_sym_chevron_c,
 		$._ext_sym_colon,
 		$._ext_sym_solidus,
 		$._ext_sym_bsolidus,
@@ -88,7 +90,6 @@ export default grammar({
 		$._ext_sym_plus,
 		$._ext_sym_num,
 		$._ext_sym_dollar,
-		$._ext_sym_gt,
 		$._ext_sym_grave,
 		$._ext_sym_quote,
 		$._ext_sym_asterisk,
@@ -286,12 +287,13 @@ export default grammar({
 					optional(field('fragment', $._fragment)),
 				),
 			),
-		host: $ => choice($.ipv6, $.ipv4, $.domain_name),
+
+		host: $ => prec.right(choice($.ipv6, $.ipv4, $.domain_name)),
 
 		authority: $ =>
 			prec.right(repeat1(choice(field('host', $.host), field('port', $._port)))),
 
-		_port: $ => prec.right(seq($._sym_colon, optional(choice($._primitive, $.range)))),
+		_port: $ => prec.right(seq($._sym_colon, optional($._primitive))),
 
 		domain_name: $ =>
 			prec.right(
@@ -483,7 +485,7 @@ export default grammar({
 			prec.right(
 				seq(
 					field('matcher', $.identifier),
-					repeat(seq($._ws, $._arguments_field)),
+					repeat(seq(repeat1($._ws), $._arguments_field)),
 					alias(optional($._matcher_block), $.block),
 				),
 			),
@@ -541,7 +543,20 @@ export default grammar({
 			),
 
 		ipv4: $ => $._ext_str_ipv4,
+		cidr: $ => seq(choice($.ipv4, $.ipv6), $._sym_solidus, $.integer),
 		decimal: $ => $._ext_str_decimal,
+
+		_modifier: $ =>
+			choice(
+				$._sym_exclaim,
+				$._sym_question,
+				$._sym_hyphen,
+				$._sym_plus,
+				$._sym_chevron_o,
+				$._sym_chevron_c,
+			),
+		unary_expression: $ =>
+			seq(field('operator', $._modifier), field('operand', $.literal_string)),
 
 		argument: $ =>
 			prec.right(
@@ -549,6 +564,7 @@ export default grammar({
 				choice(
 					$.mac_address,
 					$.string,
+					$.unary_expression,
 					$.integer,
 					$.decimal,
 					$.boolean,
@@ -562,6 +578,7 @@ export default grammar({
 					$._keyword_private_ranges,
 					$.amount,
 					$.ipv4,
+					$.cidr,
 				),
 			),
 
@@ -606,6 +623,8 @@ export default grammar({
 		_sym_brace_c: $ => alias($._ext_sym_brace_c, '}'),
 		_sym_bracket_o: $ => alias($._ext_sym_bracket_o, '['),
 		_sym_bracket_c: $ => alias($._ext_sym_bracket_c, ']'),
+		_sym_chevron_o: $ => alias($._ext_sym_chevron_o, '<'),
+		_sym_chevron_c: $ => alias($._ext_sym_chevron_c, '>'),
 		_sym_colon: $ => alias($._ext_sym_colon, ':'),
 		_sym_solidus: $ => alias($._ext_sym_solidus, '/'),
 		_sym_bsolidus: $ => alias($._ext_sym_bsolidus, '\\'),
@@ -617,7 +636,6 @@ export default grammar({
 		_sym_plus: $ => alias($._ext_sym_plus, '+'),
 		_sym_num: $ => alias($._ext_sym_num, '#'),
 		_sym_dollar: $ => alias($._ext_sym_dollar, '$'),
-		_sym_gt: $ => alias($._ext_sym_gt, '>'),
 		_sym_grave: $ => alias($._ext_sym_grave, '`'),
 		_sym_quote: $ => alias($._ext_sym_quote, '"'),
 		_sym_asterisk: $ => alias($._ext_sym_asterisk, '*'),

@@ -1086,26 +1086,18 @@ reverse_proxy @private 127.0.0.1
       name: (identifier)
       (request_matcher
         matcher: (identifier)
-        argument: (address
-          (authority
-            host: (ipv4))
-          path: (path
-            segment: (literal_string)))
-        argument: (address
-          (authority
-            host: (ipv4))
-          path: (path
-            segment: (literal_string)))
-        argument: (address
-          (authority
-            host: (ipv4))
-          path: (path
-            segment: (literal_string)))
-        argument: (address
-          (authority
-            host: (ipv4))
-          path: (path
-            segment: (literal_string)))
+        argument: (cidr
+          (ipv4)
+          (integer))
+        argument: (cidr
+          (ipv4)
+          (integer))
+        argument: (cidr
+          (ipv4)
+          (integer))
+        argument: (cidr
+          (ipv4)
+          (integer))
         argument: (address
           (authority
             host: (domain_name
@@ -1847,4 +1839,5 @@ header ?Content-Type
     (statement
       (directive
         (identifier))
-      (literal_string))))
+      (unary_expression
+        (literal_string)))))
