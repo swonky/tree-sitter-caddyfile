@@ -14,7 +14,7 @@ import /path/to/Caddyfile
         (domain_name
           (literal_string)
           (literal_string))))
-    (snippet_reference
+    (import_statement
       (pathname
         (posix_absolute_pathname
           (literal_string)
@@ -37,7 +37,7 @@ import ./path/to/Caddyfile
         (domain_name
           (literal_string)
           (literal_string))))
-    (snippet_reference
+    (import_statement
       (pathname
         (posix_relative_pathname
           (current_directory)
@@ -61,7 +61,7 @@ import ../path/to/Caddyfile
         (domain_name
           (literal_string)
           (literal_string))))
-    (snippet_reference
+    (import_statement
       (pathname
         (posix_relative_pathname
           (parent_directory)
@@ -85,7 +85,7 @@ import ../../path/to/Caddyfile
         (domain_name
           (literal_string)
           (literal_string))))
-    (snippet_reference
+    (import_statement
       (pathname
         (posix_relative_pathname
           (parent_directory)
@@ -110,7 +110,7 @@ import C:\path\to\Caddyfile
         (domain_name
           (literal_string)
           (literal_string))))
-    (snippet_reference
+    (import_statement
       (pathname
         (windows_absolute_pathname
           (literal_string)
@@ -134,7 +134,7 @@ import .\path\to\Caddyfile
         (domain_name
           (literal_string)
           (literal_string))))
-    (snippet_reference
+    (import_statement
       (pathname
         (windows_relative_pathname
           (current_directory)
@@ -158,7 +158,7 @@ import ..\path\to\Caddyfile
         (domain_name
           (literal_string)
           (literal_string))))
-    (snippet_reference
+    (import_statement
       (pathname
         (windows_relative_pathname
           (parent_directory)
@@ -182,7 +182,7 @@ import ..\..\path\to\Caddyfile
         (domain_name
           (literal_string)
           (literal_string))))
-    (snippet_reference
+    (import_statement
       (pathname
         (windows_relative_pathname
           (parent_directory)

@@ -1545,7 +1545,7 @@ example.net {
             (literal_string)
             (literal_string))))
       (block
-        (snippet_reference
+        (import_statement
           (identifier))))
     (snippet_definition
       (identifier)
@@ -1559,7 +1559,7 @@ example.net {
             (literal_string)
             (literal_string))))
       (block
-        (snippet_reference
+        (import_statement
           (identifier))))))
 
 =====================

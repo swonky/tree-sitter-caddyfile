@@ -390,6 +390,10 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "invoke_statement",
           "named": true
         },
@@ -399,14 +403,6 @@
         },
         {
           "type": "request_matcher",
-          "named": true
-        },
-        {
-          "type": "site_definition",
-          "named": true
-        },
-        {
-          "type": "snippet_reference",
           "named": true
         },
         {
@@ -703,19 +699,15 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "invoke_statement",
           "named": true
         },
         {
           "type": "named_matcher_definition",
-          "named": true
-        },
-        {
-          "type": "site_definition",
-          "named": true
-        },
-        {
-          "type": "snippet_reference",
           "named": true
         },
         {
@@ -766,6 +758,46 @@
       "types": [
         {
           "type": "templated_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "import_statement",
+    "named": true,
+    "fields": {
+      "argument": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "argument",
+            "named": true
+          }
+        ]
+      },
+      "pattern": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "pathname",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "block",
           "named": true
         }
       ]
@@ -960,7 +992,7 @@
           "named": true
         },
         {
-          "type": "snippet_reference",
+          "type": "import_statement",
           "named": true
         }
       ]
@@ -1344,19 +1376,15 @@
           "named": true
         },
         {
+          "type": "import_statement",
+          "named": true
+        },
+        {
           "type": "invoke_statement",
           "named": true
         },
         {
           "type": "named_matcher_definition",
-          "named": true
-        },
-        {
-          "type": "site_definition",
-          "named": true
-        },
-        {
-          "type": "snippet_reference",
           "named": true
         },
         {
@@ -1463,46 +1491,6 @@
     "children": {
       "multiple": false,
       "required": true,
-      "types": [
-        {
-          "type": "block",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "snippet_reference",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "argument",
-            "named": true
-          }
-        ]
-      },
-      "pattern": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "pathname",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
       "types": [
         {
           "type": "block",

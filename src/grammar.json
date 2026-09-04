@@ -138,7 +138,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "snippet_reference"
+          "name": "import_statement"
         }
       ]
     },
@@ -1671,7 +1671,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "snippet_reference"
+          "name": "import_statement"
         },
         {
           "type": "SYMBOL",
@@ -1680,10 +1680,6 @@
         {
           "type": "SYMBOL",
           "name": "variable_declaration"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_nested_site_block"
         },
         {
           "type": "SYMBOL",
@@ -2921,7 +2917,7 @@
         ]
       }
     },
-    "snippet_reference": {
+    "import_statement": {
       "type": "PREC_RIGHT",
       "value": 0,
       "content": {

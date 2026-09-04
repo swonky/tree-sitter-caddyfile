@@ -124,7 +124,7 @@ export default grammar({
 		definition: $ =>
 			choice($.site_definition, $.snippet_definition, $.named_route_definition),
 
-		_content: $ => choice($.definition, $.snippet_reference),
+		_content: $ => choice($.definition, $.import_statement),
 
 		global_options: $ => $._block,
 		site_definition: $ => seq($._site, $.block),
@@ -350,10 +350,9 @@ export default grammar({
 			choice(
 				$.statement,
 				$.named_matcher_definition,
-				$.snippet_reference,
+				$.import_statement,
 				$.invoke_statement,
 				$.variable_declaration,
-				$._nested_site_block,
 				$.substitution,
 			),
 
@@ -595,7 +594,7 @@ export default grammar({
 				),
 			),
 
-		snippet_reference: $ =>
+		import_statement: $ =>
 			prec.right(
 				seq(
 					$._keyword_import,
