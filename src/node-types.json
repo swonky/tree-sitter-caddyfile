@@ -160,11 +160,15 @@
         "named": true
       },
       {
-        "type": "parameter",
+        "type": "index_expression",
         "named": true
       },
       {
         "type": "placeholder",
+        "named": true
+      },
+      {
+        "type": "slice_expression",
         "named": true
       }
     ]
@@ -723,6 +727,32 @@
     }
   },
   {
+    "type": "index_expression",
+    "named": true,
+    "fields": {
+      "index": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "integer",
+            "named": true
+          }
+        ]
+      },
+      "operand": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "integer",
     "named": true,
     "fields": {}
@@ -1018,34 +1048,6 @@
     "type": "octal",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "parameter",
-    "named": true,
-    "fields": {
-      "index": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "]",
-            "named": false
-          },
-          {
-            "type": "integer",
-            "named": true
-          },
-          {
-            "type": "range",
-            "named": true
-          }
-        ]
-      }
-    }
   },
   {
     "type": "parent_directory",
@@ -1377,6 +1379,42 @@
     "type": "size",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "slice_expression",
+    "named": true,
+    "fields": {
+      "end": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "integer",
+            "named": true
+          }
+        ]
+      },
+      "operand": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "start": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "integer",
+            "named": true
+          }
+        ]
+      }
+    }
   },
   {
     "type": "snippet_definition",
@@ -1755,10 +1793,6 @@
   },
   {
     "type": "`",
-    "named": false
-  },
-  {
-    "type": "args",
     "named": false
   },
   {

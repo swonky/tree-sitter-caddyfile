@@ -1263,7 +1263,8 @@ root * {args[0]}
           (wildcard)))
       (templated_string
         (substitution
-          (parameter
+          (index_expression
+            (identifier)
             (integer)))))))
 
 ========================

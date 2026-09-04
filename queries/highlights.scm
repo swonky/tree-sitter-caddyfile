@@ -30,7 +30,7 @@
 "import" @keyword.directive
 "invoke" @keyword.directive
 "vars" @keyword
-"args" @variable.builtin
+; "args" @variable.builtin
 
 "env" @keyword
 "file" @keyword

@@ -145,7 +145,13 @@ export default grammar({
 		integer: $ => $._ext_str_num,
 
 		substitution: $ => seq($._sym_brace_o, optional($.reference), $._sym_brace_c),
-		reference: $ => choice($.environment_variable, $.placeholder, $.parameter),
+		reference: $ =>
+			choice(
+				$.environment_variable,
+				$.placeholder,
+				$.index_expression,
+				$.slice_expression,
+			),
 		identifier: $ => choice($.templated_identifier, $._ext_str_bare),
 
 		string: $ => prec.right(choice($.templated_string, $.literal_string)),
@@ -159,18 +165,26 @@ export default grammar({
 		_tmpl_identifier_fragment: $ =>
 			field('fragment', choice($._nested_identifier, $.substitution)),
 
-		_index: $ =>
-			field(
-				'index',
-				seq($._sym_bracket_o, optional(choice($.integer, $.range)), $._sym_bracket_c),
+		_operand: $ => field('operand', $.identifier),
+		index_expression: $ =>
+			prec.right(
+				seq(
+					optional($._operand),
+					$._sym_bracket_o,
+					optional(field('index', $.integer)),
+					$._sym_bracket_c,
+				),
 			),
 
-		range: $ =>
-			prec.left(
+		slice_expression: $ =>
+			prec.right(
 				seq(
-					optional(field('left', $.integer)),
+					optional($._operand),
+					$._sym_bracket_o,
+					optional(field('start', $.integer)),
 					$._sym_colon,
-					optional(field('right', $.integer)),
+					optional(field('end', $.integer)),
+					$._sym_bracket_c,
 				),
 			),
 
@@ -225,7 +239,6 @@ export default grammar({
 				optional(field('member', prec.right(choice($.string, $.pathname)))),
 			),
 
-		parameter: $ => seq(optional($._keyword_args), $._index),
 		environment_variable: $ =>
 			prec.right(
 				seq($._sym_dollar, optional(choice($._env_var_name, $._env_var_name_default))),
