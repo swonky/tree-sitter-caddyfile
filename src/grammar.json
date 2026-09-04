@@ -3207,15 +3207,6 @@
       "named": false,
       "value": "vars"
     },
-    "_keyword_args": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_key_args"
-      },
-      "named": false,
-      "value": "args"
-    },
     "_keyword_env": {
       "type": "ALIAS",
       "content": {
@@ -3553,10 +3544,6 @@
     {
       "type": "SYMBOL",
       "name": "_key_vars"
-    },
-    {
-      "type": "SYMBOL",
-      "name": "_key_args"
     },
     {
       "type": "SYMBOL",
