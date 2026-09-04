@@ -410,6 +410,10 @@
           "named": true
         },
         {
+          "type": "substitution",
+          "named": true
+        },
+        {
           "type": "variable_declaration",
           "named": true
         }
@@ -679,6 +683,10 @@
         },
         {
           "type": "statement",
+          "named": true
+        },
+        {
+          "type": "substitution",
           "named": true
         },
         {
@@ -1336,6 +1344,10 @@
         },
         {
           "type": "statement",
+          "named": true
+        },
+        {
+          "type": "substitution",
           "named": true
         },
         {

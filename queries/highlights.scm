@@ -134,9 +134,11 @@
 	name: (_) @constant.macro
 )
 
+(block (substitution (generic_placeholder (identifier) @label)))
+(block (substitution (generic_placeholder (namespace_expression ((_) @label)))))
+
 (global_options 
 	(statement (directive name: (_) @property)))
-
 (site_definition
 	(block (statement (directive name: (_) @function.builtin))))
 (snippet_definition

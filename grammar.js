@@ -352,6 +352,7 @@ export default grammar({
 				$.invoke_statement,
 				$.variable_declaration,
 				$._nested_site_block,
+				$.substitution,
 			),
 
 		_nested_site_block: $ => seq($._doc_comment_site_aliased, $.site_definition),
