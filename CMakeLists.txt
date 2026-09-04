@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-caddyfile
-        VERSION "0.3.0"
+        VERSION "0.4.0"
         DESCRIPTION "A grammar for Caddyfile"
         HOMEPAGE_URL "https://github.com/swonky/tree-sitter-caddyfile"
         LANGUAGES C)

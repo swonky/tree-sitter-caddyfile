@@ -1,17 +1,18 @@
-## [v0.3.0]
+## [0.4.0] - 2026-09-04
 
 ### Features
 
-- Improved path parsing.
-    - Distinct structural nodes for URL paths and pathnames.
-    - Support for Windows and POSIX style pathnames.
-    - Distinct nodes for relative and absolute pathnames.
-    - Symbolic tokens for current `.` and parent `..` directories.
-- Network addresses now use pathnames instead of url paths
-- Import directive with pathnames.
-- More predictable backslash escaping behaviour.
-- Improved highlight categories.
+- Added support for `{block}` and `{blocks.*}` style snippet substitutions as top-level block statements.
+- Replaced `paramater` node with generic `index_expression` and `slice_expression` like tree-sitter-go.
+- Added `cidr` and `unary expressions` for complex headers.
+- Added highlights queries for symbolic header operators.
+- Renamed `snippet_reference` to `import_statement`.
 
-### Documentation
+### Bug Fixes
 
-- Added playground
+- Allow windows absolute pathnames to omit a subpath following the drive letter.
+- Corrected `operator` behaviour
+
+### Refactor
+
+- Removed vestigial `args` keyword
