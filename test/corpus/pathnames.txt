@@ -1,0 +1,192 @@
+=======
+POSIX/Absolute
+=======
+example.com
+
+import /path/to/Caddyfile
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (snippet_reference
+      (pathname
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
+
+=======
+POSIX/Same directory
+=======
+example.com
+
+import ./path/to/Caddyfile
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (snippet_reference
+      (pathname
+        (posix_relative_pathname
+          (current_directory)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
+
+=======
+POSIX/Parent directory
+=======
+example.com
+
+import ../path/to/Caddyfile
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (snippet_reference
+      (pathname
+        (posix_relative_pathname
+          (parent_directory)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
+
+=======
+POSIX/Grandparent directory
+=======
+example.com
+
+import ../../path/to/Caddyfile
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (snippet_reference
+      (pathname
+        (posix_relative_pathname
+          (parent_directory)
+          (parent_directory)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
+
+=======
+Windows/Absolute
+=======
+example.com
+
+import C:\path\to\Caddyfile
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (snippet_reference
+      (pathname
+        (windows_absolute_pathname
+          (literal_string)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
+
+=======
+Windows/Same directory
+=======
+example.com
+
+import .\path\to\Caddyfile
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (snippet_reference
+      (pathname
+        (windows_relative_pathname
+          (current_directory)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
+
+=======
+Windows/Parent directory
+=======
+example.com
+
+import ..\path\to\Caddyfile
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (snippet_reference
+      (pathname
+        (windows_relative_pathname
+          (parent_directory)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))
+
+=======
+Windows/Grandparent directory
+=======
+example.com
+
+import ..\..\path\to\Caddyfile
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (snippet_reference
+      (pathname
+        (windows_relative_pathname
+          (parent_directory)
+          (parent_directory)
+          (literal_string)
+          (literal_string)
+          (literal_string))))))

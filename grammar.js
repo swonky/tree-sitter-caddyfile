@@ -389,9 +389,9 @@ export default grammar({
 		windows_absolute_pathname: $ =>
 			prec.right(
 				seq(
-					optional(field('drive', $.string)),
+					field('drive', $.string),
 					$._drive_letter_delimiter,
-					$._windows_path,
+					optional($._windows_path),
 				),
 			),
 

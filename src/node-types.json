@@ -1661,7 +1661,7 @@
     "fields": {
       "drive": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "string",

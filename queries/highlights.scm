@@ -124,6 +124,8 @@
 (windows_relative_pathname
 	segment: (_) @string.special.path)
 (windows_absolute_pathname
+	drive: (_) @string.special.path)
+(windows_absolute_pathname
 	segment: (_) @string.special.path)
 (posix_relative_pathname
 	segment: (_) @string.special.path)

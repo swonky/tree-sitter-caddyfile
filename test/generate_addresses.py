@@ -1,3 +1,4 @@
+from collections.abc import Generator
 from itertools import product
 
 SCHEME = "https://"
@@ -9,10 +10,10 @@ QUERY = "?key=value&foo=bar"
 FRAGMENT = "#fragment"
 
 
-def generate():
-    seen = set()
+def generate_addresses() -> Generator[str]:
+    """Generates combinations of URL addresses"""
+    seen = set[str]()
 
-    # filepath forms
     for path, query, fragment in product([False, True], [False, True], [False, True]):
         if not path:
             continue
@@ -25,7 +26,6 @@ def generate():
 
         seen.add(value)
 
-    # URL forms
     for scheme, userinfo, host, port, path, query, fragment in product(
         [False, True],
         [False, True],
@@ -82,5 +82,5 @@ def generate():
 
 if __name__ == "__main__":
     print("example.com")
-    for value in generate():
+    for value in generate_addresses():
         print("reverse_proxy " + value)

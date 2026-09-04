@@ -1,0 +1,192 @@
+=======
+Index
+=======
+example.com
+
+output file /var/log/access_{args[0]}.log
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (literal_string)
+      (pathname
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string)
+          (templated_string
+            (literal_string)
+            (substitution
+              (index_expression
+                (identifier)
+                (integer)))
+            (literal_string)))))))
+
+=======
+Range
+=======
+example.com
+
+output file /var/log/access_{args[0:6]}.log
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (literal_string)
+      (pathname
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string)
+          (templated_string
+            (literal_string)
+            (substitution
+              (slice_expression
+                (identifier)
+                (integer)
+                (integer)))
+            (literal_string)))))))
+
+=======
+All values
+=======
+example.com
+
+output file /var/log/access_{args[:]}.log
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (literal_string)
+      (pathname
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string)
+          (templated_string
+            (literal_string)
+            (substitution
+              (slice_expression
+                (identifier)))
+            (literal_string)))))))
+
+=======
+Lower limit
+=======
+example.com
+
+output file /var/log/access_{args[4:]}.log
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (literal_string)
+      (pathname
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string)
+          (templated_string
+            (literal_string)
+            (substitution
+              (slice_expression
+                (identifier)
+                (integer)))
+            (literal_string)))))))
+
+=======
+Upper limit
+=======
+example.com
+
+output file /var/log/access_{args[:2]}.log
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (literal_string)
+      (pathname
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string)
+          (templated_string
+            (literal_string)
+            (substitution
+              (slice_expression
+                (identifier)
+                (integer)))
+            (literal_string)))))))
+
+=======
+Multiple digits
+=======
+example.com
+
+output file /var/log/access_{args[12:200]}.log
+
+---
+
+(caddyfile
+  (single_site
+    (address
+      (authority
+        (domain_name
+          (literal_string)
+          (literal_string))))
+    (statement
+      (directive
+        (identifier))
+      (literal_string)
+      (pathname
+        (posix_absolute_pathname
+          (literal_string)
+          (literal_string)
+          (templated_string
+            (literal_string)
+            (substitution
+              (slice_expression
+                (identifier)
+                (integer)
+                (integer)))
+            (literal_string)))))))

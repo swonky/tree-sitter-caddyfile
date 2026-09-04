@@ -1884,28 +1884,28 @@
         "type": "SEQ",
         "members": [
           {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "FIELD",
-                "name": "drive",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "string"
-                }
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
+            "type": "FIELD",
+            "name": "drive",
+            "content": {
+              "type": "SYMBOL",
+              "name": "string"
+            }
           },
           {
             "type": "SYMBOL",
             "name": "_drive_letter_delimiter"
           },
           {
-            "type": "SYMBOL",
-            "name": "_windows_path"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_windows_path"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
