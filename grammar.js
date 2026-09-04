@@ -450,7 +450,7 @@ export default grammar({
 		matcher: $ => prec.right(choice($.wildcard, $.named_matcher_reference, $.path)),
 		wildcard: $ => $._sym_asterisk,
 
-		_matcher_name: $ => seq($._sym_at, field('name', $.identifier)),
+		_matcher_name: $ => field('name', seq($._sym_at, $.identifier)),
 
 		named_matcher_definition: $ => seq($._matcher_name, optional($._ws), $.request_matcher),
 
