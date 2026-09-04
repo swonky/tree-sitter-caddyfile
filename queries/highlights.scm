@@ -60,6 +60,8 @@
 	name: (_) @keyword.coroutine)
 (time_placeholder 
 	name: (_) @keyword.coroutine)
+(env_placeholder 
+	name: (_) @constant)
 
 (namespace_expression
 	module: (_) @module
@@ -69,7 +71,6 @@
 	key: (_) @variable)
 
 ; Address
-
 (address "@" @punctuation.delimiter )
 (query "&" @punctuation.delimiter )
 (mapping "=" @punctuation.delimiter)
@@ -85,32 +86,24 @@
 (protocol) @constant.builtin
 
 (network_address
-	"+" @punctuation.operator
-)
-
+	"+" @punctuation.operator)
 
 (request_matcher
-	matcher: (_) @type.builtin
-)
+	matcher: (_) @type.builtin)
 
 (named_matcher_definition
-	name: (_) @type
-)
+	name: (_) @type)
 
 (named_matcher_reference
-	name: (_) @type
-)
-
+	name: (_) @type)
 
 (amount
 	quantity: (integer) @number
-	unit: (_) @number
-)
+	unit: (_) @number)
 
 (amount
 	quantity: (decimal) @number.float
-	unit: (_) @number.float
-)
+	unit: (_) @number.float)
 
 (ipv6
 	hextet: (_) @character
