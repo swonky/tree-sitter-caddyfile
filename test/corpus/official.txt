@@ -999,7 +999,7 @@ reverse_proxy @test 127.0.0.1
     (named_matcher_definition
       name: (identifier)
       (request_matcher
-        modifier: (negative)
+        modifier: (not_operator)
         matcher: (identifier)
         argument: (address
           (authority

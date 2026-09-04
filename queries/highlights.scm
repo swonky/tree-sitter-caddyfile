@@ -38,7 +38,7 @@
 "time" @keyword
 "now" @keyword
 
-(negative) @keyword.operator
+(not_operator) @keyword.operator
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
 ["&" "$"  "@" "<<"] @punctuation.special

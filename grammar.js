@@ -461,17 +461,21 @@ export default grammar({
 				$._sym_brace_c,
 			),
 
-		negative: $ => choice($._sym_exclaim, $._keyword_not),
+		not_operator: $ => $._key_not,
+
 		request_matcher: $ =>
-			seq(
-				optional(field('modifier', $.negative)),
-				choice(
-					$._regexp_matcher,
-					$._generic_matcher,
-					$._expression_matcher,
-					$.embedded_content,
-					$.heredoc,
-					alias($._matcher_block, $.block),
+			prec.right(
+				seq(
+					optional(field('modifier', $.not_operator)),
+					choice(
+						$._regexp_matcher,
+						$._generic_matcher,
+						$._expression_matcher,
+						$.embedded_content,
+						$.heredoc,
+						$.not_operator,
+						alias($._matcher_block, $.block),
+					),
 				),
 			),
 
@@ -519,7 +523,8 @@ export default grammar({
 				),
 			),
 
-		_matcher_field: $ => field('matcher', $.matcher),
+		_matcher_field: $ =>
+			seq(optional(field('modifier', $.not_operator)), field('matcher', $.matcher)),
 		_arguments_field: $ => field('argument', $.argument),
 		_value_field: $ => seq(field('value', $.argument), repeat($._ws)),
 
@@ -631,7 +636,6 @@ export default grammar({
 		_keyword_system: $ => alias($._key_system, 'system'),
 		_keyword_time: $ => alias($._key_time, 'time'),
 		_keyword_now: $ => alias($._key_now, 'now'),
-		_keyword_not: $ => alias($._key_not, 'not'),
 
 		_keyword_expression: $ => alias($._key_expression, $.identifier),
 

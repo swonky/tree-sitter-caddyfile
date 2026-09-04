@@ -2227,73 +2227,72 @@
         }
       ]
     },
-    "negative": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "_sym_exclaim"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_not"
-        }
-      ]
+    "not_operator": {
+      "type": "SYMBOL",
+      "name": "_key_not"
     },
     "request_matcher": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "modifier",
-              "content": {
-                "type": "SYMBOL",
-                "name": "negative"
-              }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_regexp_matcher"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_generic_matcher"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_expression_matcher"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "embedded_content"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "heredoc"
-            },
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_matcher_block"
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "modifier",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "not_operator"
+                }
               },
-              "named": true,
-              "value": "block"
-            }
-          ]
-        }
-      ]
+              {
+                "type": "BLANK"
+              }
+            ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_regexp_matcher"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_generic_matcher"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_expression_matcher"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "embedded_content"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "heredoc"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "not_operator"
+              },
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_matcher_block"
+                },
+                "named": true,
+                "value": "block"
+              }
+            ]
+          }
+        ]
+      }
     },
     "_generic_matcher": {
       "type": "PREC_RIGHT",
@@ -2555,12 +2554,33 @@
       }
     },
     "_matcher_field": {
-      "type": "FIELD",
-      "name": "matcher",
-      "content": {
-        "type": "SYMBOL",
-        "name": "matcher"
-      }
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "modifier",
+              "content": {
+                "type": "SYMBOL",
+                "name": "not_operator"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "matcher",
+          "content": {
+            "type": "SYMBOL",
+            "name": "matcher"
+          }
+        }
+      ]
     },
     "_arguments_field": {
       "type": "FIELD",
@@ -3255,15 +3275,6 @@
       },
       "named": false,
       "value": "now"
-    },
-    "_keyword_not": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "_key_not"
-      },
-      "named": false,
-      "value": "not"
     },
     "_keyword_expression": {
       "type": "ALIAS",
