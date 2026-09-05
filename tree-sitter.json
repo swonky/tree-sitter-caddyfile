@@ -10,7 +10,8 @@
 			"injection-regex": "^caddyfile$",
 			"class-name": "TreeSitterCaddyfile",
 			"highlights": "queries/highlights.scm",
-			"injections": "queries/injections.scm"
+			"injections": "queries/injections.scm",
+			"tags": "queries/tags.scm"
 		}
 	],
 	"metadata": {
