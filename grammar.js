@@ -598,14 +598,13 @@ export default grammar({
 			prec.right(
 				seq(
 					$._keyword_import,
-					repeat($._ws),
+					repeat1($._ws),
 					field(
 						'pattern',
 						prec.right(choice(alias($.literal_string, $.identifier), $.pathname)),
 					),
-					repeat($._ws),
-					repeat($._arguments_field),
-					optional($.block),
+					repeat(seq(repeat1($._ws), $._arguments_field)),
+					optional(seq(repeat1($._ws), $.block)),
 				),
 			),
 
