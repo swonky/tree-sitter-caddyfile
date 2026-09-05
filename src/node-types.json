@@ -425,6 +425,10 @@
           "named": true
         },
         {
+          "type": "site_definition",
+          "named": true
+        },
+        {
           "type": "statement",
           "named": true
         },
@@ -727,6 +731,10 @@
         },
         {
           "type": "named_matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_definition",
           "named": true
         },
         {
@@ -1403,6 +1411,10 @@
         },
         {
           "type": "named_matcher_definition",
+          "named": true
+        },
+        {
+          "type": "site_definition",
           "named": true
         },
         {

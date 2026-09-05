@@ -1694,6 +1694,10 @@
         {
           "type": "SYMBOL",
           "name": "substitution"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_nested_site_block"
         }
       ]
     },
