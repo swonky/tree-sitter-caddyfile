@@ -1,0 +1,74 @@
+{
+	email you@yours.com
+	servers {
+		trusted_proxies static private_ranges
+	}
+	admin caddy:2019 {
+		origins 172.16.2.2:2019
+	}
+}
+
+(snippet) {
+	# this is a reusable snippet
+	log {
+		output file /path/to/access_{arg[0:1]}.log
+	}
+	{block}
+}
+
+# an example named route
+&(app-proxy) {
+	reverse_proxy {$UPSTREAMS:localhost:9000}
+}
+
+http://localhost:3000,
+http://192.168.1.1:3000,
+http://[2001:db8::1%eth0]:3000 {
+	reverse_proxy @private 127.0.0.1
+}
+
+{$FOO:foo}.example.com {
+	header ?Content-Type "text/html"
+
+	respond <<HTML
+		<html>
+			<head><title>Foo</title></head>
+			<body>Bar..?</body>
+		</html>
+		HTML 200
+}
+bar.example.com {
+	@post { 
+		method GET
+		not path_regexp \.([a-f0-9]{6})\.(css|js)$
+	}
+	reverse_proxy not @post {env.SRV0}:9001 {env.SRV1}:9002-9010 {
+		lb_policy first
+	}
+
+	reverse_proxy * unix+h2c//path/to/my.socket
+
+	handle /srv {
+		root /srv # this is an inline comment!
+		file_server
+	}
+
+	respond "Hello, World!"
+}
+
+test1.example.com test2.example.com {
+	vars {
+		abc true
+		def {time.now.unix}
+		ghi 2.3
+	}
+	redir https://www.example.com{uri}/path?key=value&key=value#fragment
+	import snippet arg {vars.def}
+}
+
+app.example.com {
+	@denied `client_ip('12.23.34.45', '23.34.45.56')`
+	abort @denied
+	invoke app-proxy
+	import snippet app {time.now.unix}
+}

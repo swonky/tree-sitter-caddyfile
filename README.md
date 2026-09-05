@@ -17,30 +17,36 @@ The grammar places greater emphasis on identifying syntactic boundaries and pres
 ## Features
 
 ### Base syntax
-The grammar supports the following Caddyfile language syntax structures:
+The grammar supports the Caddyfile language syntax.
 
-- **Primitive value types**: `literal_string`, `integer`, `decimal`, 
-- **Compound value types**: 
-    - Templatable strings
-    - Go-style strings for durations and byte sizes. 
-    - URL and network addresses incl. domains, ipv4, ipv6, mac addresses, unix sockets.
-    - Port ranges.
-- **Substitution**: 
-    - `environment_variable` with default values.
-    - `placeholder` with namespacing and module-specific highlighting.
-    - `arguments` with Go-style slice indexing. 
-- **Global block**
-- **Site blocks**
-- **Snippet** definitions and references
-- **Named matchers**
-- **Named routes**
-- **Negations** (`not` keyword and `!` operator)
-- **Comments**
+- **High-level structural parity with the reference parser**
+    - High-level structural boundaries between nodes are tested against the caddy reference parser[^1].
+- **Hierarchical nesting**
+    - **Global block**
+    - **Site blocks**
+    - **Snippets** (w/ `{block}` and `{blocks.*}` placeholders)
+    - **Named matchers**
+    - **Named routes**
+    - **Subdirective blocks**
+    - **Variable definitions**
+- **Additional nested structure**
+    - **Primitive value types**: `literal_string`, `integer`, `decimal`, 
+    - **Compound value types**: 
+        - Templatable strings.
+        - Complex header syntax.
+        - Go-style durations and byte sizes (eg. `2m` `50MiB`).
+        - URL and network addresses (eg. domains, ipv4, ipv6, mac addresses, unix sockets)
+    - **Substitution**: 
+        - `environment_variable` with default values.
+        - `placeholder` with namespacing and module-specific highlighting.
+        - `arguments` with Go-style slice indexing. 
 - **Language injection**
     - Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")[^5]
     - Grave (`\``) quoted cel expressions[^6]
     - `expression` matcher cel expressions[^6]
     - regular expressions[^9]
+- **Code navigation**
+    - Query files for definitions and references.
 
 ## Examples
 <p align="center">
@@ -49,6 +55,7 @@ The grammar supports the following Caddyfile language syntax structures:
 </p>
 
 ## References
+[^1]: [Caddyfile Go Module](https://pkg.go.dev/github.com/caddyserver/caddy/v2/caddyconfig/caddyfile)
 [^5]: Language injection requires the associated tree-sitter grammar for that language.
 [^6]: requires [tree-sitter-cel](https://github.com/bufbuild/tree-sitter-cel) or alternative.
 [^9]: requires [tree-sitter-regex](https://github.com/tree-sitter/tree-sitter-regex) or alternative.

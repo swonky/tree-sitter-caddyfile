@@ -70,7 +70,7 @@ The following query files[^8] are used by editor integrations and other tooling.
 The repository contains a several tests located within [./test/corpus](test/corpus/).
 
 > [!TIP]
-> Running the tests requires [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md).
+> Running the tests requires [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md) and [Go 1.27+](https://go.dev/doc/install).
 
 ```sh
 # runs all tests in the corpus
@@ -78,6 +78,10 @@ tree-sitter test
 
 # perform parser fuzzing
 tree-sitter fuzz
+
+# perform token boundary test against the reference parser (required Go 1.27+).
+cd test
+go test .
 ```
 
 [^1]: [tree-sitter: Documentation](https://tree-sitter.github.io/tree-sitter/)
