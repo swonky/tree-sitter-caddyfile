@@ -119,12 +119,17 @@ export default grammar({
 			),
 
 		single_site: $ => seq($._site, repeat1($._eol), optional($._block_body)),
-		multi_site: $ => seq($._content, repeat(choice($._content, $._eol))),
+
+		multi_site: $ =>
+			seq(
+				$._root_expression,
+				repeat(seq(repeat1($._eol), $._root_expression)),
+				repeat1($._eol),
+			),
+		_root_expression: $ => choice($.definition, $.import_statement),
 
 		definition: $ =>
 			choice($.site_definition, $.snippet_definition, $.named_route_definition),
-
-		_content: $ => choice($.definition, $.import_statement),
 
 		global_options: $ => $._block,
 		site_definition: $ => seq($._site, $.block),
@@ -598,13 +603,12 @@ export default grammar({
 			prec.right(
 				seq(
 					$._keyword_import,
-					repeat1($._ws),
+					repeat($._ws),
 					field(
 						'pattern',
-						prec.right(choice(alias($.literal_string, $.identifier), $.pathname)),
+						prec.right(choice($.pathname, alias($.literal_string, $.identifier))),
 					),
-					repeat(seq(repeat1($._ws), $._arguments_field)),
-					optional(seq(repeat1($._ws), $.block)),
+					repeat(seq(repeat($._ws), $._arguments_field)),
 				),
 			),
 

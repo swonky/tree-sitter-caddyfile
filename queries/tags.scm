@@ -23,4 +23,4 @@
 )
 
 ; Directives
-(directive name: (_) @reference.directive))
+(directive name: (_) @reference.directive)
