@@ -21,7 +21,7 @@
 (snippet_definition
 	name: (_) @constant.macro)
 
-(named_route_definition
+(named_route_declaration
 	name: (_) @constant.macro)
 
 (regular_expression) @string.special.regex

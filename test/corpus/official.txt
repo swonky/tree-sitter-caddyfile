@@ -1181,7 +1181,8 @@ Named Route
 (caddyfile
   (multi_site
     (named_route_definition
-      (identifier)
+      (named_route_declaration
+        (identifier))
       (block
         (comment
           (comment))))))
@@ -1216,7 +1217,8 @@ example.net {
         (invoke_statement
           (identifier))))
     (named_route_definition
-      (identifier)
+      (named_route_declaration
+        (identifier))
       (block
         (comment
           (comment))))

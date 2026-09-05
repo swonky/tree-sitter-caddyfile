@@ -358,7 +358,7 @@ export default grammar({
 
 		_nested_site_block: $ => seq($._doc_comment_site_aliased, $.site_definition),
 
-		_named_route_name: $ =>
+		named_route_declaration: $ =>
 			seq(
 				$._sym_ampersand,
 				$._sym_paren_o,
@@ -375,7 +375,7 @@ export default grammar({
 
 		assignment: $ => seq(field('key', $._bare_identifier), repeat1($._value_field)),
 
-		named_route_definition: $ => seq($._named_route_name, $.block),
+		named_route_definition: $ => seq($.named_route_declaration, $.block),
 
 		named_matcher_reference: $ => $._matcher_name,
 

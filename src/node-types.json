@@ -1041,7 +1041,7 @@
     }
   },
   {
-    "type": "named_route_definition",
+    "type": "named_route_declaration",
     "named": true,
     "fields": {
       "name": {
@@ -1054,13 +1054,22 @@
           }
         ]
       }
-    },
+    }
+  },
+  {
+    "type": "named_route_definition",
+    "named": true,
+    "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
         {
           "type": "block",
+          "named": true
+        },
+        {
+          "type": "named_route_declaration",
           "named": true
         }
       ]

@@ -1700,7 +1700,7 @@
         }
       ]
     },
-    "_named_route_name": {
+    "named_route_declaration": {
       "type": "SEQ",
       "members": [
         {
@@ -1792,7 +1792,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_named_route_name"
+          "name": "named_route_declaration"
         },
         {
           "type": "SYMBOL",
