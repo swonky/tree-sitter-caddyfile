@@ -18,7 +18,7 @@
 (ipv4) @number.float
 
 ; Definitions
-(snippet_definition
+(snippet_declaration
 	name: (_) @constant.macro)
 
 (named_route_declaration

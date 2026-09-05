@@ -1515,7 +1515,8 @@ Snippet
 (caddyfile
   (multi_site
     (snippet_definition
-      (identifier)
+      (snippet_declaration
+        (identifier))
       (block
         (comment
           (comment))))))
@@ -1550,7 +1551,8 @@ example.net {
         (import_statement
           (identifier))))
     (snippet_definition
-      (identifier)
+      (snippet_declaration
+        (identifier))
       (block
         (comment
           (comment))))

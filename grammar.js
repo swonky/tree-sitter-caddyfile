@@ -341,10 +341,10 @@ export default grammar({
 				$._sym_brace_c,
 			),
 
-		_snippet_name: $ =>
+		snippet_declaration: $ =>
 			seq($._sym_paren_o, optional(field('name', $._bare_identifier)), $._sym_paren_c),
 
-		snippet_definition: $ => seq($._snippet_name, $.block),
+		snippet_definition: $ => seq($.snippet_declaration, $.block),
 
 		_expression: $ =>
 			choice(

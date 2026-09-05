@@ -1616,7 +1616,7 @@
         }
       ]
     },
-    "_snippet_name": {
+    "snippet_declaration": {
       "type": "SEQ",
       "members": [
         {
@@ -1650,7 +1650,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_snippet_name"
+          "name": "snippet_declaration"
         },
         {
           "type": "SYMBOL",
