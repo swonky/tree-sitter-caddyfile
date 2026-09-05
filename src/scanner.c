@@ -1038,7 +1038,7 @@ static void scan_text(Scanner *s)
 		bool checkpoint = !digits && is_digit(c) && s->consumed <= 2;
 
 		if (is_valid(s, CLS_UNIT_DURATION) && kw && checkpoint &&
-		    is_duration_unit(s->word, s->consumed)) {
+		    is_duration_unit(s->word, (uint8_t)s->consumed)) {
 			mark_end(s);
 			set_result(s, CLS_UNIT_DURATION);
 			return;
