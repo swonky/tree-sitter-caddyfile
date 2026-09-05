@@ -16,6 +16,7 @@
 (octal) @character
 (decimal) @number.float
 (ipv4) @number.float
+(amount) @string.special
 
 ; Definitions
 (snippet_declaration
@@ -97,13 +98,13 @@
 (named_matcher_reference
 	name: (_) @type)
 
-(amount
-	quantity: (integer) @number
-	unit: (_) @number)
-
-(amount
-	quantity: (decimal) @number.float
-	unit: (_) @number.float)
+; (amount (_)
+; 	quantity: (integer) @number
+; 	unit: (_) @number)
+;
+; (amount (_)
+; 	quantity: (decimal) @number.float
+; 	unit: (_) @number.float)
 
 (ipv6
 	hextet: (_) @character

@@ -81,6 +81,7 @@ tree-sitter fuzz
 
 # perform token boundary test against the reference parser (required Go 1.27+).
 cd test
+go clean -cache # if the grammar has been altered
 go test .
 ```
 

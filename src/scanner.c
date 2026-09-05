@@ -552,7 +552,6 @@ static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
 		return false;
 	}
 }
-
 /**
  * Returns true if `kw` matches either a duration or unit keyword class.
  */
@@ -1035,15 +1034,24 @@ static void scan_text(Scanner *s)
 			return;
 		}
 
-		if (is_eol(c) || (is_ws(c) && !s->in_quotation)) {
-			if (kw) {
-				enum TokenType keyword = match(s);
-				if (keyword != _UNSPECIFIED) {
-					mark_end(s);
-					set_result(s, keyword);
-					return;
-				}
+		bool breakpoint = is_eol(c) || (is_ws(c) && !s->in_quotation);
+		bool checkpoint = !digits && is_digit(c) && s->consumed <= 2;
+
+		if (is_valid(s, CLS_UNIT_DURATION) && kw && checkpoint &&
+		    is_duration_unit(s->word, s->consumed)) {
+			mark_end(s);
+			set_result(s, CLS_UNIT_DURATION);
+			return;
+		}
+		if (kw && breakpoint) {
+			enum TokenType keyword = match(s);
+			if (keyword != _UNSPECIFIED) {
+				mark_end(s);
+				set_result(s, keyword);
+				return;
 			}
+		}
+		if (breakpoint) {
 			s->in_quotation = false;
 			break;
 		}
@@ -1103,7 +1111,7 @@ static void scan_text(Scanner *s)
 					c = peek(s);
 				}
 
-				if (!(is_ws(c) || is_eol(c))) {
+				if (!(is_ws(c) || is_eol(c) || is_digit(c))) {
 					continue;
 				}
 

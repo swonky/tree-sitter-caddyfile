@@ -538,12 +538,16 @@ export default grammar({
 
 		_amount_decimal: $ => alias($._ext_str_qty_decimal, $.decimal),
 		_amount_integer: $ => alias($._ext_str_qty_integer, $.integer),
+
 		duration: $ => $._ext_str_unit_duration,
 		size: $ => $._ext_str_unit_size,
+
+		additive_sequence: $ => prec.right(seq($.amount, repeat1($.amount))),
+
 		amount: $ =>
 			seq(
 				field('quantity', choice($._amount_integer, $._amount_decimal)),
-				field('unit', choice($.duration, $.size)),
+				field('unit', choice($.size, $.duration)),
 			),
 
 		ipv4: $ => $._ext_str_ipv4,
@@ -581,6 +585,7 @@ export default grammar({
 					$.heredoc,
 					$._keyword_private_ranges,
 					$.amount,
+					$.additive_sequence,
 					$.ipv4,
 					$.cidr,
 				),

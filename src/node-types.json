@@ -4,6 +4,10 @@
     "named": true,
     "subtypes": [
       {
+        "type": "additive_sequence",
+        "named": true
+      },
+      {
         "type": "address",
         "named": true
       },
@@ -208,6 +212,21 @@
         "named": true
       }
     ]
+  },
+  {
+    "type": "additive_sequence",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "amount",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "address",

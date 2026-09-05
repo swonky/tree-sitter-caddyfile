@@ -2666,6 +2666,26 @@
       "type": "SYMBOL",
       "name": "_ext_str_unit_size"
     },
+    "additive_sequence": {
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "amount"
+          },
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "amount"
+            }
+          }
+        ]
+      }
+    },
     "amount": {
       "type": "SEQ",
       "members": [
@@ -2694,11 +2714,11 @@
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "duration"
+                "name": "size"
               },
               {
                 "type": "SYMBOL",
-                "name": "size"
+                "name": "duration"
               }
             ]
           }
@@ -2854,6 +2874,10 @@
           {
             "type": "SYMBOL",
             "name": "amount"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "additive_sequence"
           },
           {
             "type": "SYMBOL",
