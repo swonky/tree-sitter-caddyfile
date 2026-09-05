@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-caddyfile"
 description = "A grammar for Caddyfile"
-version = "0.4.0"
+version = "0.5.0"
 authors = ["Tom Spencer"]
 license = "MIT"
 readme = "README.md"
