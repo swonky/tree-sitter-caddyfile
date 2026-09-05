@@ -16,37 +16,51 @@ The grammar places greater emphasis on identifying syntactic boundaries and pres
 
 ## Features
 
-### Base syntax
-The grammar supports the Caddyfile language syntax.
+### Parity with reference parser
 
-- **High-level structural parity with the reference parser**
-    - High-level structural boundaries between nodes are tested against the caddy reference parser[^1].
-- **Hierarchical nesting**
-    - **Global block**
-    - **Site blocks**
-    - **Snippets** (w/ `{block}` and `{blocks.*}` placeholders)
-    - **Named matchers**
-    - **Named routes**
-    - **Subdirective blocks**
-    - **Variable definitions**
-- **Additional nested structure**
-    - **Primitive value types**: `literal_string`, `integer`, `decimal`, 
-    - **Compound value types**: 
-        - Templatable strings.
-        - Complex header syntax.
-        - Go-style durations and byte sizes (eg. `2m` `50MiB`).
-        - URL and network addresses (eg. domains, ipv4, ipv6, mac addresses, unix sockets)
-    - **Substitution**: 
-        - `environment_variable` with default values.
-        - `placeholder` with namespacing and module-specific highlighting.
-        - `arguments` with Go-style slice indexing. 
-- **Language injection**
-    - Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")[^5]
-    - Grave (`\``) quoted cel expressions[^6]
-    - `expression` matcher cel expressions[^6]
-    - regular expressions[^9]
-- **Code navigation**
-    - Query files for definitions and references.
+High-level structural boundaries between nodes are tested against the caddy reference parser[^1].
+
+### Hierarchical nesting
+
+Hierarchy is preserved as much as possible to minimise structural ambiguity. Higher-order structures include:
+
+- **Global block**
+- **Site blocks**
+- **Snippets**
+- **Named matchers**
+- **Named routes**
+- **Directive arguments**
+- **Matcher arguments**
+- **Subdirective blocks**
+- **Variable definitions**
+
+### Nested structure
+
+Arguments tokens are classified and discretised further into lower-level structures.
+
+- **Primitive value types**: `literal_string`, `integer`, `decimal`, `wildcard` and others.
+- **Quoted strings** with correct backslash escaping behaviour.
+- **Compound value types**: 
+    - Templatable strings with placeholders.
+    - Complex header syntax (eg. `+Foo`, `?Bar`).
+    - Go-style durations and byte sizes (eg. `2m` `50MiB`).
+    - Granular representation of URL and network addresses (eg. domain names, ports, IPv4, IPv6, CIDR, MAC addresses, UNIX sockets).
+    - POSIX and Windows-style pathnames.
+- **Placeholders**: 
+    - Environment variables with default values (eg. `{$FOO:bar}`).
+    - Placeholders with namespacing and module-specific highlighting.
+    - Nested placeholders (eg. `{file./path/to/{$FILENAME}}`)
+    - Go-style index and slice expressions (eg. `args[0]`, `args[0:]`, `args[0:5]`).
+    - `{block}` and `{blocks.*}` placeholders.
+
+### Embedded content
+
+The grammar also supports embedded regular expressions[^9], cel expressions[^6], and heredoc content[^5].
+
+- Heredocs will highlight according to the label term (eg. "<<HTML" or "<<JSON")
+- Supports \` quoted cel expressions
+- `expression` matcher cel expressions[^6]
+- `*_regexp` matcher regular expressions[^9]
 
 ## Examples
 <p align="center">
