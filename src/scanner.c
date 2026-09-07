@@ -12,22 +12,16 @@
 	static inline bool name(CodePoint c) { return !(fn)(c); }
 
 enum TokenType {
-	/*
-	 * never requested
-	 */
+	/* never requested */
 	_UNSPECIFIED,
 
-	/*
-	 * heredoc
-	 */
+	/* heredoc */
 	HEREDOC_OPERATOR,
 	HEREDOC_TAG,
 	HEREDOC_CONTENT,
 	HEREDOC_SUFFIX,
 
-	/*
-	 * strings
-	 */
+	/* strings */
 	STR_WORD,
 	STR_BARE,
 	STR_UPPER,
@@ -41,15 +35,11 @@ enum TokenType {
 	STR_QTY_INTEGER,
 	STR_QTY_DECIMAL,
 
-	/*
-	 * whitespace
-	 */
+	/* whitespace */
 	EOL,
 	WS,
 
-	/*
-	 * keywords
-	 */
+	/* keywords */
 	KEY_BOOLEAN,
 	KEY_IMPORT,
 	KEY_INVOKE,
@@ -64,17 +54,13 @@ enum TokenType {
 	KEY_NOT,
 	KEY_SITE,
 
-	/*
-	 * keyword classes
-	 */
+	/* keyword classes */
 	CLS_PROTOCOL,
 	CLS_REGEXP,
 	CLS_UNIT_DURATION,
 	CLS_UNIT_SIZE,
 
-	/*
-	 * raw symbolic
-	 */
+	/* raw symbolic */
 	SYM_PAREN_O,
 	SYM_PAREN_C,
 	SYM_BRACE_O,
@@ -103,9 +89,7 @@ enum TokenType {
 	SYM_BAR,
 	SYM_EQUAL,
 
-	/*
-	 * semantic symbolic
-	 */
+	/* semantic symbolic */
 	SYM_BLOCK_START,
 	SYM_SCHEME,
 	SYM_COMMENT,
@@ -126,16 +110,24 @@ enum {
 	STRING_BUFFER_SIZE = 64,
 };
 
-/**
- * Type alias for 32-bit unicode character.
- */
+/** A Unicode code point. */
 typedef int32_t CodePoint;
 
+/**
+ * A fixed-capacity buffer of Unicode code points.
+ *
+ * The buffer does not perform dynamic allocation and stores at most
+ * STRING_BUFFER_SIZE code points.
+ */
 typedef struct {
 	CodePoint s[STRING_BUFFER_SIZE];
 	size_t len;
 } StrBuffer;
 
+/**
+ * Append a code point to the buffer.
+ * If the buffer is full, the code point is discarded.
+ */
 static void append(StrBuffer *buf, CodePoint c)
 {
 	if (buf->len >= STRING_BUFFER_SIZE)
@@ -143,19 +135,16 @@ static void append(StrBuffer *buf, CodePoint c)
 	buf->s[buf->len++] = c;
 }
 
+/** Reset the buffer to an empty state. */
 static void reset(StrBuffer *buf) { buf->len = 0; }
 
-/**
- * Word entry. Use `CLASS` macro to initialise.
- */
+/** Word entry. Use `CLASS` macro to initialise. */
 typedef struct {
 	const char *s;
 	size_t len;
 } StrView;
 
-/**
- * Keyword entry. Use `KEYWORD` macro to initialise.
- */
+/** Keyword entry. Use `KEYWORD` macro to initialise. */
 typedef struct {
 	StrView word;
 	enum TokenType token;
@@ -203,9 +192,7 @@ static inline enum TokenType get_token(CodePoint c)
 	return (uc >= 128) ? _UNSPECIFIED : sym_map[uc];
 }
 
-/**
- * String-to-token map for keywords.
- */
+/** String-to-token map for keywords. */
 static const Keyword keywords[] = {
     KEYWORD("true", KEY_BOOLEAN),
     KEYWORD("false", KEY_BOOLEAN),
@@ -223,9 +210,7 @@ static const Keyword keywords[] = {
     KEYWORD("not", KEY_NOT),
 };
 
-/**
- * String array for `CLS_REGEXP`.
- */
+/** String array for `CLS_REGEXP`. */
 static const StrView regex_matchers[] = {
     CLASS("path_regexp"),
     CLASS("host_regexp"),
@@ -234,9 +219,7 @@ static const StrView regex_matchers[] = {
     CLASS("vars_regexp"),
 };
 
-/**
- * String array for `CLS_PROTOCOL`.
- */
+/** String array for `CLS_PROTOCOL`. */
 static const StrView protocols[] = {
     CLASS("unix"),
     CLASS("unixgram"),
@@ -256,70 +239,59 @@ static const StrView protocols[] = {
 };
 
 typedef struct {
-	/* persistent fields */
+	/* SERIALISED FIELDS */
+	// Indicates whether within double quote marks.
 	bool in_quotation;
-	// Current heredoc tag.
-	StrBuffer hdoc_tag;
+	// Current heredoc marker text.
+	StrBuffer marker;
 	// Previous character
 	CodePoint previous;
 
-	// Tree-sitter lexer pointer.
+	/* UNSERIALISED FIELDS */
+	// Tree-sitter lexer.
 	TSLexer *lexer;
 	// Valid symbols array.
-	const bool *vs;
+	const bool *symbols;
 	// Consumed character counter.
 	uint32_t consumed;
 	// Consumed character buffer.
 	StrBuffer buffer;
 } Scanner;
 
-/**
- * Returns the current lexer column position.
- */
+/** Returns the current lexer column position. */
 static inline uint32_t get_column(Scanner *s)
 {
 	assert(s != NULL);
 	return s->lexer->get_column(s->lexer);
 }
 
-/**
- * Sets the lexer's result symbol.
- */
+/** Sets the lexer's result symbol. */
 static inline void set_result(Scanner *s, enum TokenType token)
 {
 	assert(s != NULL);
 	s->lexer->result_symbol = (TSSymbol)token;
 }
 
-/**
- * Sets the end boundary of the current token to the current lexer position.
- */
+/** Sets the end boundary of the current token to the current lexer position. */
 static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
 
-/**
- * Returns true if lexer has reached the end of the file.
- */
+/** Returns true if lexer has reached the end of the file. */
 static inline bool eof(const Scanner *s) { return s->lexer->eof(s->lexer); }
 
-/**
- * Returns true if `token` is valid in the current context.
- */
+/** Returns true if `token` is valid in the current context. */
 static inline bool is_valid(const Scanner *s, enum TokenType token)
 {
 	assert(s != NULL);
-	return s->vs != NULL && s->vs[token];
+	assert(s->symbols != NULL);
+	return s->symbols[token];
 }
 
-/**
- * Returns current lexer lookahead character.
- */
+/** Returns current lexer lookahead character. */
 static inline CodePoint peek(const Scanner *s) { return s->lexer->lookahead; }
 
 /// === Asserter predicate functions ===
 
-/**
- * Function type for unicode character predicates.
- */
+/** Function type for unicode character predicates. */
 typedef bool (*Asserter)(CodePoint);
 
 /**
@@ -642,11 +614,9 @@ static enum TokenType match(const Scanner *s)
 	if (s->consumed != s->buffer.len)
 		return _UNSPECIFIED;
 
-	// [spec](https://caddyserver.com/docs/conventions#durations)
 	if (is_valid(s, CLS_UNIT_DURATION) && is_duration_unit(s->buffer))
 		return CLS_UNIT_DURATION;
 
-	// [spec](https://caddyserver.com/docs/conventions#durations)
 	if (is_valid(s, CLS_UNIT_SIZE) && is_size_unit(s->buffer))
 		return CLS_UNIT_SIZE;
 
@@ -741,8 +711,8 @@ static inline void advance_rol(Scanner *s)
 
 static bool scan_tag(Scanner *s)
 {
-	for (size_t i = 0; i < STRING_BUFFER_SIZE && i < s->hdoc_tag.len; i++) {
-		if (eof(s) || peek(s) != s->hdoc_tag.s[i])
+	for (size_t i = 0; i < STRING_BUFFER_SIZE && i < s->marker.len; i++) {
+		if (eof(s) || peek(s) != s->marker.s[i])
 			return false;
 		advance(s);
 	}
@@ -762,7 +732,7 @@ static bool scan_heredoc(Scanner *s)
 	if (is_valid(s, ERROR_SENTINEL))
 		return false;
 
-	if (is_valid(s, HEREDOC_CONTENT) && s->hdoc_tag.len != 0) {
+	if (is_valid(s, HEREDOC_CONTENT) && s->marker.len != 0) {
 		while (!eof(s)) {
 			advance_while(s, is_ws);
 			mark_end(s);
@@ -778,13 +748,13 @@ static bool scan_heredoc(Scanner *s)
 	}
 
 	if (is_valid(s, HEREDOC_SUFFIX)) {
-		for (unsigned int i = 0; i < s->hdoc_tag.len; i++)
+		for (size_t i = 0; i < s->marker.len; i++)
 			advance(s);
-		if (s->hdoc_tag.len != s->consumed) {
-			s->hdoc_tag.len = 0;
+		if (s->marker.len != s->consumed) {
+			reset(&s->marker);
 			return false;
 		}
-		reset(&s->hdoc_tag);
+		reset(&s->marker);
 		mark_end(s);
 		set_result(s, HEREDOC_SUFFIX);
 		return true;
@@ -809,10 +779,10 @@ static bool scan_heredoc(Scanner *s)
 			CodePoint c = peek(s);
 			if (!is_heredoc_char(c))
 				break;
-			append(&s->hdoc_tag, c);
+			append(&s->marker, c);
 			advance(s);
 		}
-		if (s->hdoc_tag.len == 0)
+		if (s->marker.len == 0)
 			return false;
 		mark_end(s);
 		set_result(s, HEREDOC_TAG);
@@ -881,7 +851,8 @@ static void scan_text(Scanner *s)
 	bool hex = true;
 	bool upper = true;
 	bool kw = true;
-	int nperiod = 0;
+
+	unsigned int nperiod = 0;
 
 	if (c == '.') {
 		advance(s);
@@ -1201,7 +1172,7 @@ void *tree_sitter_caddyfile_external_scanner_create(void)
 {
 	Scanner *s = ts_calloc(1, sizeof(Scanner));
 	s->in_quotation = false;
-	s->hdoc_tag = (StrBuffer){0};
+	s->marker = (StrBuffer){0};
 	s->previous = '\0';
 	reset_transient_fields(s);
 	return s;
@@ -1217,15 +1188,15 @@ unsigned tree_sitter_caddyfile_external_scanner_serialize(
 {
 	Scanner *s = payload;
 
-	buffer[0] = (char)s->hdoc_tag.len;
+	buffer[0] = (char)s->marker.len;
 	ser_u32_le(buffer + 1, (uint32_t)s->previous);
 	buffer[1 + U32_SIZE] = (char)s->in_quotation;
 
-	for (unsigned i = 0; i < s->hdoc_tag.len; i++)
+	for (unsigned i = 0; i < s->marker.len; i++)
 		ser_u32_le(buffer + HEADER_SIZE + i * U32_SIZE,
-		    (uint32_t)s->hdoc_tag.s[i]);
+		    (uint32_t)s->marker.s[i]);
 
-	return HEADER_SIZE + s->hdoc_tag.len * U32_SIZE;
+	return HEADER_SIZE + s->marker.len * U32_SIZE;
 }
 
 void tree_sitter_caddyfile_external_scanner_deserialize(
@@ -1238,20 +1209,20 @@ void tree_sitter_caddyfile_external_scanner_deserialize(
 	if (length < HEADER_SIZE)
 		return;
 
-	s->hdoc_tag.len = (uint8_t)buffer[0];
+	s->marker.len = (uint8_t)buffer[0];
 	s->previous = (CodePoint)deser_u32_le(buffer + 1);
 	s->in_quotation = buffer[1 + U32_SIZE] != 0;
 
-	if (s->hdoc_tag.len > STRING_BUFFER_SIZE)
-		s->hdoc_tag.len = STRING_BUFFER_SIZE;
+	if (s->marker.len > STRING_BUFFER_SIZE)
+		s->marker.len = STRING_BUFFER_SIZE;
 
 	unsigned available = (length - HEADER_SIZE) / U32_SIZE;
 
-	if (s->hdoc_tag.len > available)
-		s->hdoc_tag.len = (uint8_t)available;
+	if (s->marker.len > available)
+		s->marker.len = (uint8_t)available;
 
-	for (size_t i = 0; i < s->hdoc_tag.len; i++) {
-		s->hdoc_tag.s[i] = (CodePoint)deser_u32_le(
+	for (size_t i = 0; i < s->marker.len; i++) {
+		s->marker.s[i] = (CodePoint)deser_u32_le(
 		    buffer + HEADER_SIZE + i * U32_SIZE);
 	}
 }
@@ -1263,7 +1234,7 @@ bool tree_sitter_caddyfile_external_scanner_scan(
 	reset_transient_fields(scanner);
 
 	scanner->lexer = lexer;
-	scanner->vs = valid_symbols;
+	scanner->symbols = valid_symbols;
 
 	if (scan_heredoc(scanner))
 		return scanner->consumed != 0;
