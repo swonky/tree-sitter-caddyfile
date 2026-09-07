@@ -6,10 +6,10 @@
 #include <stdlib.h>
 
 #define ARRAY_LEN(a) (sizeof(a) / sizeof((a)[0]))
-#define KEYWORD(text, token) {text, sizeof(text) - 1, token}
+#define KEYWORD(text, token) {{text, sizeof(text) - 1}, token}
 #define CLASS(text) {text, sizeof(text) - 1}
 #define INVERT(name, fn)                                                       \
-	static inline bool name(UnicodeChar c) { return !(fn)(c); }
+	static inline bool name(CodePoint c) { return !(fn)(c); }
 
 enum TokenType {
 	/*
@@ -121,39 +121,37 @@ enum TokenType {
 };
 
 enum {
-	U32LEN = sizeof(uint32_t),
-	HDRLEN = sizeof(uint8_t) + U32LEN + sizeof(uint8_t),
-	BUFLEN = 64,
+	U32_SIZE = sizeof(uint32_t),
+	HEADER_SIZE = sizeof(uint8_t) + U32_SIZE + sizeof(uint8_t),
+	STRING_BUFFER_SIZE = 64,
 };
 
 /**
  * Type alias for 32-bit unicode character.
  */
-typedef int32_t UnicodeChar;
+typedef int32_t CodePoint;
+
+typedef struct {
+	CodePoint s[STRING_BUFFER_SIZE];
+	size_t len;
+} StrBuffer;
+
+static void append(StrBuffer *buf, CodePoint c)
+{
+	if (buf->len >= STRING_BUFFER_SIZE)
+		return;
+	buf->s[buf->len++] = c;
+}
+
+static void reset(StrBuffer *buf) { buf->len = 0; }
 
 /**
  * Word entry. Use `CLASS` macro to initialise.
  */
 typedef struct {
 	const char *s;
-	unsigned int len;
+	size_t len;
 } StrView;
-
-typedef struct {
-	UnicodeChar s[BUFLEN];
-	unsigned int len;
-} StrBuffer;
-
-static void append(StrBuffer *buf, UnicodeChar c)
-{
-	if (buf->len >= BUFLEN)
-		return;
-
-	buf->s[buf->len] = c;
-	buf->len++;
-}
-
-static void reset(StrBuffer *buf) { buf->len = 0; }
 
 /**
  * Keyword entry. Use `KEYWORD` macro to initialise.
@@ -199,7 +197,7 @@ static const enum TokenType sym_map[128] = {
  * Safely indexes `sym_map` and returns the associated token enum.
  * Returns `_UNSPECIFIED` if no token exists for that character.
  */
-static inline enum TokenType get_token(UnicodeChar c)
+static inline enum TokenType get_token(CodePoint c)
 {
 	unsigned int uc = (unsigned int)c;
 	return (uc >= 128) ? _UNSPECIFIED : sym_map[uc];
@@ -263,7 +261,7 @@ typedef struct {
 	// Current heredoc tag.
 	StrBuffer hdoc_tag;
 	// Previous character
-	UnicodeChar previous;
+	CodePoint previous;
 
 	// Tree-sitter lexer pointer.
 	TSLexer *lexer;
@@ -315,26 +313,26 @@ static inline bool is_valid(const Scanner *s, enum TokenType token)
 /**
  * Returns current lexer lookahead character.
  */
-static inline UnicodeChar peek(const Scanner *s) { return s->lexer->lookahead; }
+static inline CodePoint peek(const Scanner *s) { return s->lexer->lookahead; }
 
 /// === Asserter predicate functions ===
 
 /**
  * Function type for unicode character predicates.
  */
-typedef bool (*Asserter)(UnicodeChar);
+typedef bool (*Asserter)(CodePoint);
 
 /**
  * Matches ASCII decimal digits.
  * Implements `Asserter`.
  */
-static inline bool is_digit(UnicodeChar c) { return (c >= '0' && c <= '9'); }
+static inline bool is_digit(CodePoint c) { return (c >= '0' && c <= '9'); }
 
 /**
  * Matches ASCII hexadecimal digits.
  * Implements `Asserter`.
  */
-static inline bool is_hex(UnicodeChar c)
+static inline bool is_hex(CodePoint c)
 {
 	return (c >= '0' && c <= '9') || (c >= 'A' && c <= 'F') ||
 	       (c >= 'a' && c <= 'f');
@@ -344,43 +342,37 @@ static inline bool is_hex(UnicodeChar c)
  * Matches ASCII uppercase letters.
  * Implements `Asserter`.
  */
-static inline bool is_upper(UnicodeChar c) { return (c >= 'A' && c <= 'Z'); }
+static inline bool is_upper(CodePoint c) { return (c >= 'A' && c <= 'Z'); }
 
 /**
  * Matches ASCII lowercase letters.
  * Implements `Asserter`.
  */
-static inline bool is_lower(UnicodeChar c) { return (c >= 'a' && c <= 'z'); }
+static inline bool is_lower(CodePoint c) { return (c >= 'a' && c <= 'z'); }
 
 /**
  * Matches all ASCII characters.
  * Implements `Asserter`.
  */
-static inline bool is_ascii(UnicodeChar c) { return (c >= 0 && c <= 0x7e); }
+static inline bool is_ascii(CodePoint c) { return (c >= 0 && c <= 0x7e); }
 
 /**
  * Matches ASCII alphabetic characters..
  * Implements `Asserter`.
  */
-static inline bool is_alpha(UnicodeChar c)
-{
-	return is_upper(c) || is_lower(c);
-}
+static inline bool is_alpha(CodePoint c) { return is_upper(c) || is_lower(c); }
 
 /**
  * Matches ASCII alphanumeric characters.
  * Implements `Asserter`.
  */
-static inline bool is_alnum(UnicodeChar c)
-{
-	return is_digit(c) || is_alpha(c);
-}
+static inline bool is_alnum(CodePoint c) { return is_digit(c) || is_alpha(c); }
 
 /**
  * Matches Unicode whitespace characters.
  * Implements `Asserter`.
  */
-static inline bool is_ws(UnicodeChar c)
+static inline bool is_ws(CodePoint c)
 {
 	switch (c) {
 	case ' ':
@@ -411,7 +403,7 @@ static inline bool is_ws(UnicodeChar c)
  * Matches unicode end-of-line characters.
  * Implements `Asserter`.
  */
-static inline bool is_eol(UnicodeChar c)
+static inline bool is_eol(CodePoint c)
 {
 	switch (c) {
 	case 0x000A: // LF \n
@@ -438,7 +430,7 @@ INVERT(is_not_eol, is_eol)
  * Matches characters that can be escaped with a preceding backslash.
  * Implements `Asserter`.
  */
-static inline bool is_escapable(UnicodeChar c)
+static inline bool is_escapable(CodePoint c)
 {
 	switch (c) {
 	case '\\':
@@ -456,7 +448,7 @@ static inline bool is_escapable(UnicodeChar c)
  * Matches a subset of address delimiter characters.
  * Implements `Asserter`.
  */
-static inline bool is_delim(UnicodeChar c)
+static inline bool is_delim(CodePoint c)
 {
 	switch (c) {
 	case '.':
@@ -476,7 +468,7 @@ static inline bool is_delim(UnicodeChar c)
  * [spec](https://caddyserver.com/docs/caddyfile/directives/header)
  * Implements `Asserter`.
  */
-static inline bool is_unary_operator(UnicodeChar c)
+static inline bool is_unary_operator(CodePoint c)
 {
 	switch (c) {
 	case '+':
@@ -496,7 +488,7 @@ static inline bool is_unary_operator(UnicodeChar c)
  * Valid prefixes are k, m, g, t, p, and e, case-insensitive.
  * Implements `Asserter`.
  */
-static inline bool is_size_prefix(UnicodeChar c)
+static inline bool is_size_prefix(CodePoint c)
 {
 	if (!is_ascii(c))
 		return false;
@@ -510,10 +502,7 @@ static inline bool is_size_prefix(UnicodeChar c)
  * The valid unit is b, case-insensitive.
  * Implements `Asserter`.
  */
-static inline bool is_size_suffix(UnicodeChar c)
-{
-	return c == 'b' || c == 'B';
-}
+static inline bool is_size_suffix(CodePoint c) { return c == 'b' || c == 'B'; }
 
 /*
  *	=== Sized string matcher functions ===
@@ -589,8 +578,8 @@ static bool word_equals(StrBuffer buf, const StrView *view)
 	assert(view != NULL);
 	if (buf.len != view->len)
 		return false;
-	for (size_t i = 0; i < buf.len && i < BUFLEN; i++)
-		if (buf.s[i] != (UnicodeChar)view->s[i])
+	for (size_t i = 0; i < buf.len && i < STRING_BUFFER_SIZE; i++)
+		if (buf.s[i] != (CodePoint)view->s[i])
 			return false;
 	return true;
 }
@@ -601,7 +590,7 @@ static bool word_equals(StrBuffer buf, const StrView *view)
  */
 static enum TokenType check_protocol(const Scanner *s)
 {
-	UnicodeChar c = peek(s);
+	CodePoint c = peek(s);
 	if (!is_valid(s, CLS_PROTOCOL) || (c != '+' && c != '/'))
 		return _UNSPECIFIED;
 	for (size_t i = 0; i < ARRAY_LEN(protocols); i++) {
@@ -678,10 +667,7 @@ static enum TokenType match(const Scanner *s)
 	return _UNSPECIFIED;
 }
 
-static inline bool is_word_char(UnicodeChar c)
-{
-	return is_alnum(c) || c == '_';
-}
+static inline bool is_word_char(CodePoint c) { return is_alnum(c) || c == '_'; }
 
 /// === Navigation convenience functions ===
 
@@ -755,12 +741,17 @@ static inline void advance_rol(Scanner *s)
 
 static bool scan_tag(Scanner *s)
 {
-	for (uint8_t i = 0; i < BUFLEN && i < s->hdoc_tag.len; i++) {
+	for (size_t i = 0; i < STRING_BUFFER_SIZE && i < s->hdoc_tag.len; i++) {
 		if (eof(s) || peek(s) != s->hdoc_tag.s[i])
 			return false;
 		advance(s);
 	}
 	return true;
+}
+
+static bool inline is_heredoc_char(CodePoint c)
+{
+	return is_alnum(c) || c == '_' || c == '-';
 }
 
 /*
@@ -787,13 +778,13 @@ static bool scan_heredoc(Scanner *s)
 	}
 
 	if (is_valid(s, HEREDOC_SUFFIX)) {
-		for (int i = 0; i < s->hdoc_tag.len; i++)
+		for (unsigned int i = 0; i < s->hdoc_tag.len; i++)
 			advance(s);
 		if (s->hdoc_tag.len != s->consumed) {
 			s->hdoc_tag.len = 0;
 			return false;
 		}
-		s->hdoc_tag.len = 0;
+		reset(&s->hdoc_tag);
 		mark_end(s);
 		set_result(s, HEREDOC_SUFFIX);
 		return true;
@@ -815,13 +806,10 @@ static bool scan_heredoc(Scanner *s)
 
 	if (is_valid(s, HEREDOC_TAG)) {
 		while (!eof(s)) {
-			UnicodeChar c = peek(s);
-			if (is_ws(c) || is_eol(c) || c == '#')
+			CodePoint c = peek(s);
+			if (!is_heredoc_char(c))
 				break;
-			if (s->hdoc_tag.len < BUFLEN) {
-				s->hdoc_tag.s[s->hdoc_tag.len] = c;
-				s->hdoc_tag.len++;
-			}
+			append(&s->hdoc_tag, c);
 			advance(s);
 		}
 		if (s->hdoc_tag.len == 0)
@@ -838,7 +826,7 @@ static bool scan_heredoc(Scanner *s)
  */
 static void scan_text(Scanner *s)
 {
-	UnicodeChar prefix = s->previous;
+	CodePoint prefix = s->previous;
 
 	if (s->consumed == 1 && prefix == '<' && is_valid(s, SYM_CHEVRON_C)) {
 		mark_end(s);
@@ -854,7 +842,7 @@ static void scan_text(Scanner *s)
 
 	skip_while(s, is_ws);
 
-	UnicodeChar c = peek(s);
+	CodePoint c = peek(s);
 
 	if (c == '#' && (get_column(s) == 0 || is_ws(s->previous))) {
 		advance(s);
@@ -902,7 +890,7 @@ static void scan_text(Scanner *s)
 		nperiod += 1;
 		upper = false;
 
-		UnicodeChar x = peek(s);
+		CodePoint x = peek(s);
 		if (is_valid(s, SYM_DOT_PATH) && (x == '/' || x == '\\')) {
 			set_result(s, SYM_DOT_PATH);
 			return;
@@ -1231,13 +1219,13 @@ unsigned tree_sitter_caddyfile_external_scanner_serialize(
 
 	buffer[0] = (char)s->hdoc_tag.len;
 	ser_u32_le(buffer + 1, (uint32_t)s->previous);
-	buffer[1 + U32LEN] = (char)s->in_quotation;
+	buffer[1 + U32_SIZE] = (char)s->in_quotation;
 
 	for (unsigned i = 0; i < s->hdoc_tag.len; i++)
-		ser_u32_le(
-		    buffer + HDRLEN + i * U32LEN, (uint32_t)s->hdoc_tag.s[i]);
+		ser_u32_le(buffer + HEADER_SIZE + i * U32_SIZE,
+		    (uint32_t)s->hdoc_tag.s[i]);
 
-	return HDRLEN + s->hdoc_tag.len * U32LEN;
+	return HEADER_SIZE + s->hdoc_tag.len * U32_SIZE;
 }
 
 void tree_sitter_caddyfile_external_scanner_deserialize(
@@ -1247,24 +1235,24 @@ void tree_sitter_caddyfile_external_scanner_deserialize(
 
 	reset_transient_fields(s);
 
-	if (length < HDRLEN)
+	if (length < HEADER_SIZE)
 		return;
 
 	s->hdoc_tag.len = (uint8_t)buffer[0];
-	s->previous = (UnicodeChar)deser_u32_le(buffer + 1);
-	s->in_quotation = buffer[1 + U32LEN] != 0;
+	s->previous = (CodePoint)deser_u32_le(buffer + 1);
+	s->in_quotation = buffer[1 + U32_SIZE] != 0;
 
-	if (s->hdoc_tag.len > BUFLEN)
-		s->hdoc_tag.len = BUFLEN;
+	if (s->hdoc_tag.len > STRING_BUFFER_SIZE)
+		s->hdoc_tag.len = STRING_BUFFER_SIZE;
 
-	unsigned available = (length - HDRLEN) / U32LEN;
+	unsigned available = (length - HEADER_SIZE) / U32_SIZE;
 
 	if (s->hdoc_tag.len > available)
 		s->hdoc_tag.len = (uint8_t)available;
 
-	for (unsigned i = 0; i < s->hdoc_tag.len; i++) {
-		s->hdoc_tag.s[i] =
-		    (UnicodeChar)deser_u32_le(buffer + HDRLEN + i * U32LEN);
+	for (size_t i = 0; i < s->hdoc_tag.len; i++) {
+		s->hdoc_tag.s[i] = (CodePoint)deser_u32_le(
+		    buffer + HEADER_SIZE + i * U32_SIZE);
 	}
 }
 
