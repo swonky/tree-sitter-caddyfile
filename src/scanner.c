@@ -1196,9 +1196,9 @@ unsigned tree_sitter_caddyfile_external_scanner_serialize(
 		ser_u32_le(buffer + HEADER_SIZE + i * U32_SIZE,
 		    (uint32_t)s->marker.s[i]);
 
-	assert(s->marker.len <= INT32_MAX);
+	assert(s->marker.len <= UINT32_MAX);
 
-	return HEADER_SIZE + (int32_t)s->marker.len * U32_SIZE;
+	return HEADER_SIZE + (uint32_t)s->marker.len * U32_SIZE;
 }
 
 void tree_sitter_caddyfile_external_scanner_deserialize(
