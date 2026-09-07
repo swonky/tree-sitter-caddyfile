@@ -7,15 +7,9 @@
 
 #define ARRAY_LEN(a) (sizeof(a) / sizeof((a)[0]))
 #define KEYWORD(text, token) {text, sizeof(text) - 1, token}
-#define CLASS(text) {text, sizeof(text) - 1, _UNSPECIFIED}
+#define CLASS(text) {text, sizeof(text) - 1}
 #define INVERT(name, fn)                                                       \
 	static inline bool name(UnicodeChar c) { return !(fn)(c); }
-
-enum {
-	U32LEN = sizeof(uint32_t),
-	HDRLEN = sizeof(uint8_t) + U32LEN + sizeof(uint8_t),
-	TAGLEN = 64,
-};
 
 enum TokenType {
 	/*
@@ -126,18 +120,46 @@ enum TokenType {
 	ERROR_SENTINEL,
 };
 
+enum {
+	U32LEN = sizeof(uint32_t),
+	HDRLEN = sizeof(uint8_t) + U32LEN + sizeof(uint8_t),
+	BUFLEN = 64,
+};
+
 /**
  * Type alias for 32-bit unicode character.
  */
 typedef int32_t UnicodeChar;
 
 /**
- * Keyword entry.
- * Use `KEYWORD` or `CLASS` macro to initialise.
+ * Word entry. Use `CLASS` macro to initialise.
  */
 typedef struct {
-	const char *text;
-	uint8_t len;
+	const char *s;
+	unsigned int len;
+} StrView;
+
+typedef struct {
+	UnicodeChar s[BUFLEN];
+	unsigned int len;
+} StrBuffer;
+
+static void append(StrBuffer *buf, UnicodeChar c)
+{
+	if (buf->len >= BUFLEN)
+		return;
+
+	buf->s[buf->len] = c;
+	buf->len++;
+}
+
+static void reset(StrBuffer *buf) { buf->len = 0; }
+
+/**
+ * Keyword entry. Use `KEYWORD` macro to initialise.
+ */
+typedef struct {
+	StrView word;
 	enum TokenType token;
 } Keyword;
 
@@ -206,7 +228,7 @@ static const Keyword keywords[] = {
 /**
  * String array for `CLS_REGEXP`.
  */
-static const Keyword regex_matchers[] = {
+static const StrView regex_matchers[] = {
     CLASS("path_regexp"),
     CLASS("host_regexp"),
     CLASS("header_regexp"),
@@ -217,7 +239,7 @@ static const Keyword regex_matchers[] = {
 /**
  * String array for `CLS_PROTOCOL`.
  */
-static const Keyword protocols[] = {
+static const StrView protocols[] = {
     CLASS("unix"),
     CLASS("unixgram"),
     CLASS("unixpacket"),
@@ -235,21 +257,22 @@ static const Keyword protocols[] = {
     CLASS("fdgram"),
 };
 
-/// === Scanner definition and convenience functions ===
-
 typedef struct {
 	/* persistent fields */
 	bool in_quotation;
-	uint8_t tag_len;
-	UnicodeChar tag[TAGLEN];
+	// Current heredoc tag.
+	StrBuffer hdoc_tag;
+	// Previous character
 	UnicodeChar previous;
 
-	/* transient fields */
+	// Tree-sitter lexer pointer.
 	TSLexer *lexer;
+	// Valid symbols array.
 	const bool *vs;
-	unsigned int consumed;
-	uint8_t word_len;
-	UnicodeChar word[TAGLEN];
+	// Consumed character counter.
+	uint32_t consumed;
+	// Consumed character buffer.
+	StrBuffer buffer;
 } Scanner;
 
 /**
@@ -278,12 +301,12 @@ static inline void mark_end(Scanner *s) { s->lexer->mark_end(s->lexer); }
 /**
  * Returns true if lexer has reached the end of the file.
  */
-static inline bool eof(Scanner *s) { return s->lexer->eof(s->lexer); }
+static inline bool eof(const Scanner *s) { return s->lexer->eof(s->lexer); }
 
 /**
  * Returns true if `token` is valid in the current context.
  */
-static inline bool is_valid(Scanner *s, enum TokenType token)
+static inline bool is_valid(const Scanner *s, enum TokenType token)
 {
 	assert(s != NULL);
 	return s->vs != NULL && s->vs[token];
@@ -292,7 +315,7 @@ static inline bool is_valid(Scanner *s, enum TokenType token)
 /**
  * Returns current lexer lookahead character.
  */
-static inline UnicodeChar peek(Scanner *s) { return s->lexer->lookahead; }
+static inline UnicodeChar peek(const Scanner *s) { return s->lexer->lookahead; }
 
 /// === Asserter predicate functions ===
 
@@ -502,17 +525,16 @@ static inline bool is_size_suffix(UnicodeChar c)
  * [spec](https://caddyserver.com/docs/caddyfile/directives/request_body#syntax)
  * [go-humanize](https://pkg.go.dev/github.com/dustin/go-humanize#pkg-constants)
  */
-static inline bool is_size_unit(const UnicodeChar *kw, uint8_t len)
+static inline bool is_size_unit(StrBuffer buf)
 {
-	assert(kw != NULL);
-	switch (len) {
+	switch (buf.len) {
 	case 1:
-		return is_size_suffix(kw[0]) || is_size_prefix(kw[0]);
+		return is_size_suffix(buf.s[0]) || is_size_prefix(buf.s[0]);
 	case 2:
-		return is_size_prefix(kw[0]) && is_size_suffix(kw[1]);
+		return is_size_prefix(buf.s[0]) && is_size_suffix(buf.s[1]);
 	case 3:
-		return is_size_prefix(kw[0]) && kw[1] == 'i' &&
-		       is_size_suffix(kw[2]);
+		return is_size_prefix(buf.s[0]) && buf.s[1] == 'i' &&
+		       is_size_suffix(buf.s[2]);
 	default:
 		return false;
 	}
@@ -524,12 +546,11 @@ static inline bool is_size_unit(const UnicodeChar *kw, uint8_t len)
  * [spec](https://caddyserver.com/docs/conventions#durations)
  * [time.ParseDuration](https://golang.org/pkg/time/#ParseDuration)
  */
-static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
+static bool is_duration_unit(StrBuffer buf)
 {
-	assert(kw != NULL);
-	switch (len) {
+	switch (buf.len) {
 	case 1:
-		switch (kw[0]) {
+		switch (buf.s[0]) {
 		case 's':
 		case 'm':
 		case 'h':
@@ -539,12 +560,12 @@ static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
 			return false;
 		}
 	case 2:
-		switch (kw[0]) {
+		switch (buf.s[0]) {
 		case 'n':
 		case 'u':
 		case 0x00B5:
 		case 'm':
-			return kw[1] == 's';
+			return buf.s[1] == 's';
 		default:
 			return false;
 		}
@@ -555,66 +576,37 @@ static bool is_duration_unit(const UnicodeChar *kw, uint8_t len)
 /**
  * Returns true if `kw` matches either a duration or unit keyword class.
  */
-static inline bool is_unit(const UnicodeChar *kw, uint8_t len)
+static inline bool is_unit(StrBuffer buf)
 {
-	return is_duration_unit(kw, len) || is_size_unit(kw, len);
+	return is_duration_unit(buf) || is_size_unit(buf);
 }
 
 /*
  * Sized unicode string comparator for `s->word` and `kw`.
  */
-static bool word_equals(Scanner *s, const Keyword *kw)
+static bool word_equals(StrBuffer buf, const StrView *view)
 {
-	assert(s != NULL);
-	if (s->word_len != kw->len)
+	assert(view != NULL);
+	if (buf.len != view->len)
 		return false;
-	for (size_t i = 0; i < s->word_len && i < TAGLEN; i++)
-		if (s->word[i] != (UnicodeChar)kw->text[i])
+	for (size_t i = 0; i < buf.len && i < BUFLEN; i++)
+		if (buf.s[i] != (UnicodeChar)view->s[i])
 			return false;
 	return true;
-}
-
-/**
- * Performs search on `s->token` for CLS_UNIT_DURATION token matches.
- * Do not call directly without performing token length and null checks.
- *
- * [spec](https://caddyserver.com/docs/conventions#durations)
- */
-static enum TokenType check_unit_duration(Scanner *s)
-{
-	return is_valid(s, CLS_UNIT_DURATION) &&
-		       is_duration_unit(s->word, s->word_len)
-		   ? CLS_UNIT_DURATION
-		   : _UNSPECIFIED;
-}
-
-/**
- * Performs search on `s->token` for CLS_UNIT_SIZE token matches.
- * Do not call directly without performing token length and null checks.
- *
- * Based on [Go's
- * time.ParseDuration](https://golang.org/pkg/time/#ParseDuration) syntax
- * [spec](https://caddyserver.com/docs/conventions#durations)
- */
-static enum TokenType check_unit_size(Scanner *s)
-{
-	return is_valid(s, CLS_UNIT_SIZE) && is_size_unit(s->word, s->word_len)
-		   ? CLS_UNIT_SIZE
-		   : _UNSPECIFIED;
 }
 
 /**
  * Performs search on `s->token` for CLS_PROTOCOL token matches.
  * Do not call directly without performing token length and null checks.
  */
-static enum TokenType check_protocol(Scanner *s)
+static enum TokenType check_protocol(const Scanner *s)
 {
 	UnicodeChar c = peek(s);
 	if (!is_valid(s, CLS_PROTOCOL) || (c != '+' && c != '/'))
 		return _UNSPECIFIED;
 	for (size_t i = 0; i < ARRAY_LEN(protocols); i++) {
-		const Keyword *kw = &protocols[i];
-		if (word_equals(s, kw))
+		const StrView *ref = &protocols[i];
+		if (word_equals(s->buffer, ref))
 			return CLS_PROTOCOL;
 	}
 	return _UNSPECIFIED;
@@ -624,13 +616,13 @@ static enum TokenType check_protocol(Scanner *s)
  * Performs search on `s->token` for CLS_REGEXP token matches.
  * Do not call directly without performing token length and null checks.
  */
-static enum TokenType check_regex_matchers(Scanner *s)
+static enum TokenType check_regex_matchers(const Scanner *s)
 {
 	if (!is_valid(s, CLS_REGEXP))
 		return _UNSPECIFIED;
 	for (size_t i = 0; i < ARRAY_LEN(regex_matchers); i++) {
-		const Keyword *kw = &regex_matchers[i];
-		if (word_equals(s, kw))
+		const StrView *ref = &regex_matchers[i];
+		if (word_equals(s->buffer, ref))
 			return CLS_REGEXP;
 	}
 	return _UNSPECIFIED;
@@ -640,11 +632,11 @@ static enum TokenType check_regex_matchers(Scanner *s)
  * Performs search on `s->token` for keyword matches
  * Do not call directly without performing token length and null checks.
  */
-static enum TokenType check_keyword(Scanner *s)
+static enum TokenType check_keyword(const Scanner *s)
 {
 	for (size_t i = 0; i < ARRAY_LEN(keywords); i++) {
 		const Keyword *kw = &keywords[i];
-		if (is_valid(s, kw->token) && word_equals(s, kw))
+		if (is_valid(s, kw->token) && word_equals(s->buffer, &kw->word))
 			return kw->token;
 	}
 	return _UNSPECIFIED;
@@ -654,22 +646,22 @@ static enum TokenType check_keyword(Scanner *s)
  * Matches `s->word` against the scanner's token classes in precedence order.
  * Returns the first matching token type, or `_UNSPECIFIED` if no match exists.
  */
-static enum TokenType match(Scanner *s)
+static enum TokenType match(const Scanner *s)
 {
 	assert(s != NULL);
 
-	if (s->consumed != s->word_len)
+	if (s->consumed != s->buffer.len)
 		return _UNSPECIFIED;
 
+	// [spec](https://caddyserver.com/docs/conventions#durations)
+	if (is_valid(s, CLS_UNIT_DURATION) && is_duration_unit(s->buffer))
+		return CLS_UNIT_DURATION;
+
+	// [spec](https://caddyserver.com/docs/conventions#durations)
+	if (is_valid(s, CLS_UNIT_SIZE) && is_size_unit(s->buffer))
+		return CLS_UNIT_SIZE;
+
 	enum TokenType token;
-
-	token = check_unit_duration(s);
-	if (token != _UNSPECIFIED)
-		return token;
-
-	token = check_unit_size(s);
-	if (token != _UNSPECIFIED)
-		return token;
 
 	token = check_protocol(s);
 	if (token != _UNSPECIFIED)
@@ -686,6 +678,11 @@ static enum TokenType match(Scanner *s)
 	return _UNSPECIFIED;
 }
 
+static inline bool is_word_char(UnicodeChar c)
+{
+	return is_alnum(c) || c == '_';
+}
+
 /// === Navigation convenience functions ===
 
 /**
@@ -695,14 +692,14 @@ static inline void advance(Scanner *s)
 {
 	if (eof(s))
 		return;
+
 	s->previous = peek(s);
 	s->lexer->advance(s->lexer, false);
-	if (s->word_len == 0 && s->consumed < TAGLEN) {
-		s->word[s->consumed] = s->previous;
-		UnicodeChar c = peek(s);
-		if (!is_alnum(c) && c != '_' && s->consumed < UINT8_MAX - 1)
-			s->word_len = (uint8_t)s->consumed + 1;
+
+	if (is_word_char(s->previous) && (s->buffer.len == s->consumed)) {
+		append(&s->buffer, s->previous);
 	}
+
 	s->consumed++;
 }
 
@@ -756,6 +753,16 @@ static inline void advance_rol(Scanner *s)
 
 /// === Scanner control flow ===
 
+static bool scan_tag(Scanner *s)
+{
+	for (uint8_t i = 0; i < BUFLEN && i < s->hdoc_tag.len; i++) {
+		if (eof(s) || peek(s) != s->hdoc_tag.s[i])
+			return false;
+		advance(s);
+	}
+	return true;
+}
+
 /*
  * Handles lexing the heredoc operator, tag, and content.
  */
@@ -763,20 +770,12 @@ static bool scan_heredoc(Scanner *s)
 {
 	if (is_valid(s, ERROR_SENTINEL))
 		return false;
-	uint8_t n;
-	if (is_valid(s, HEREDOC_CONTENT) && s->tag_len != 0) {
+
+	if (is_valid(s, HEREDOC_CONTENT) && s->hdoc_tag.len != 0) {
 		while (!eof(s)) {
 			advance_while(s, is_ws);
 			mark_end(s);
-			for (n = 0; n < TAGLEN && n < s->tag_len; n++) {
-				if (eof(s))
-					break;
-				if (peek(s) != s->tag[n])
-					break;
-				advance(s);
-			}
-
-			if (n == s->tag_len) {
+			if (scan_tag(s)) {
 				set_result(s, HEREDOC_CONTENT);
 				return true;
 			}
@@ -788,13 +787,13 @@ static bool scan_heredoc(Scanner *s)
 	}
 
 	if (is_valid(s, HEREDOC_SUFFIX)) {
-		for (int i = 0; i < s->tag_len; i++)
+		for (int i = 0; i < s->hdoc_tag.len; i++)
 			advance(s);
-		if (s->tag_len != s->consumed) {
-			s->tag_len = 0;
+		if (s->hdoc_tag.len != s->consumed) {
+			s->hdoc_tag.len = 0;
 			return false;
 		}
-		s->tag_len = 0;
+		s->hdoc_tag.len = 0;
 		mark_end(s);
 		set_result(s, HEREDOC_SUFFIX);
 		return true;
@@ -819,13 +818,13 @@ static bool scan_heredoc(Scanner *s)
 			UnicodeChar c = peek(s);
 			if (is_ws(c) || is_eol(c) || c == '#')
 				break;
-			if (s->tag_len < TAGLEN) {
-				s->tag[s->tag_len] = c;
-				s->tag_len++;
+			if (s->hdoc_tag.len < BUFLEN) {
+				s->hdoc_tag.s[s->hdoc_tag.len] = c;
+				s->hdoc_tag.len++;
 			}
 			advance(s);
 		}
-		if (s->tag_len == 0)
+		if (s->hdoc_tag.len == 0)
 			return false;
 		mark_end(s);
 		set_result(s, HEREDOC_TAG);
@@ -1038,7 +1037,7 @@ static void scan_text(Scanner *s)
 		bool checkpoint = !digits && is_digit(c) && s->consumed <= 2;
 
 		if (is_valid(s, CLS_UNIT_DURATION) && kw && checkpoint &&
-		    is_duration_unit(s->word, (uint8_t)s->consumed)) {
+		    is_duration_unit(s->buffer)) {
 			mark_end(s);
 			set_result(s, CLS_UNIT_DURATION);
 			return;
@@ -1098,15 +1097,14 @@ static void scan_text(Scanner *s)
 			if (is_alpha(c) && s->consumed > 0 && nperiod <= 1 &&
 			    is_valid(s, STR_QTY_INTEGER) &&
 			    is_valid(s, STR_QTY_DECIMAL)) {
-				UnicodeChar suffix[3] = {c};
+				StrBuffer buf = {0};
+				append(&buf, c);
 				advance(s);
 				c = peek(s);
-				uint8_t len = 1;
-				while (!eof(s) && len < 3) {
+				while (!eof(s) && buf.len < 3) {
 					if (!is_alpha(c))
 						break;
-					suffix[len] = c;
-					len++;
+					append(&buf, c);
 					advance(s);
 					c = peek(s);
 				}
@@ -1115,7 +1113,7 @@ static void scan_text(Scanner *s)
 					continue;
 				}
 
-				if (!is_unit(suffix, len))
+				if (!is_unit(buf))
 					continue;
 
 				switch (nperiod) {
@@ -1177,19 +1175,7 @@ static void scan_text(Scanner *s)
 	return;
 }
 
-/// Scanner initialisation logic
-
-/*
- * Initialises persistent field values.
- * Modifications to these values persist across scanner
- * instances.
- */
-static inline void init_persistent_fields(Scanner *s)
-{
-	s->in_quotation = false;
-	s->tag_len = 0;
-	s->previous = '\0';
-}
+/// # Scanner initialisation logic
 
 /*
  * Sets transient field values.
@@ -1198,13 +1184,37 @@ static inline void init_persistent_fields(Scanner *s)
 static inline void reset_transient_fields(Scanner *s)
 {
 	s->consumed = 0;
-	s->word_len = 0;
+	s->buffer = (StrBuffer){0};
+}
+
+/*
+ * Serialises a uint32 value to raw bytes.
+ */
+static inline void ser_u32_le(char *buffer, uint32_t value)
+{
+	buffer[0] = (char)(value >> 0);
+	buffer[1] = (char)(value >> 8);
+	buffer[2] = (char)(value >> 16);
+	buffer[3] = (char)(value >> 24);
+}
+
+/*
+ * Deserialises a uint32 value from raw bytes.
+ */
+static inline uint32_t deser_u32_le(const char *buffer)
+{
+	return ((uint32_t)(uint8_t)buffer[0] << 0) |
+	       ((uint32_t)(uint8_t)buffer[1] << 8) |
+	       ((uint32_t)(uint8_t)buffer[2] << 16) |
+	       ((uint32_t)(uint8_t)buffer[3] << 24);
 }
 
 void *tree_sitter_caddyfile_external_scanner_create(void)
 {
 	Scanner *s = ts_calloc(1, sizeof(Scanner));
-	init_persistent_fields(s);
+	s->in_quotation = false;
+	s->hdoc_tag = (StrBuffer){0};
+	s->previous = '\0';
 	reset_transient_fields(s);
 	return s;
 }
@@ -1214,40 +1224,20 @@ void tree_sitter_caddyfile_external_scanner_destroy(void *payload)
 	ts_free(payload);
 }
 
-static inline void ser_u32_le(char *buffer, uint32_t value)
-{
-	buffer[0] = (char)(value >> 0);
-	buffer[1] = (char)(value >> 8);
-	buffer[2] = (char)(value >> 16);
-	buffer[3] = (char)(value >> 24);
-}
-
-static inline uint32_t deser_u32_le(const char *buffer)
-{
-	return ((uint32_t)(uint8_t)buffer[0] << 0) |
-	       ((uint32_t)(uint8_t)buffer[1] << 8) |
-	       ((uint32_t)(uint8_t)buffer[2] << 16) |
-	       ((uint32_t)(uint8_t)buffer[3] << 24);
-}
-
-static inline unsigned serialized_size(const Scanner *s)
-{
-	return HDRLEN + s->tag_len * U32LEN;
-}
-
 unsigned tree_sitter_caddyfile_external_scanner_serialize(
     void *payload, char *buffer)
 {
 	Scanner *s = payload;
 
-	buffer[0] = (char)s->tag_len;
+	buffer[0] = (char)s->hdoc_tag.len;
 	ser_u32_le(buffer + 1, (uint32_t)s->previous);
 	buffer[1 + U32LEN] = (char)s->in_quotation;
 
-	for (unsigned i = 0; i < s->tag_len; i++)
-		ser_u32_le(buffer + HDRLEN + i * U32LEN, (uint32_t)s->tag[i]);
+	for (unsigned i = 0; i < s->hdoc_tag.len; i++)
+		ser_u32_le(
+		    buffer + HDRLEN + i * U32LEN, (uint32_t)s->hdoc_tag.s[i]);
 
-	return serialized_size(s);
+	return HDRLEN + s->hdoc_tag.len * U32LEN;
 }
 
 void tree_sitter_caddyfile_external_scanner_deserialize(
@@ -1260,20 +1250,20 @@ void tree_sitter_caddyfile_external_scanner_deserialize(
 	if (length < HDRLEN)
 		return;
 
-	s->tag_len = (uint8_t)buffer[0];
+	s->hdoc_tag.len = (uint8_t)buffer[0];
 	s->previous = (UnicodeChar)deser_u32_le(buffer + 1);
 	s->in_quotation = buffer[1 + U32LEN] != 0;
 
-	if (s->tag_len > TAGLEN)
-		s->tag_len = TAGLEN;
+	if (s->hdoc_tag.len > BUFLEN)
+		s->hdoc_tag.len = BUFLEN;
 
 	unsigned available = (length - HDRLEN) / U32LEN;
 
-	if (s->tag_len > available)
-		s->tag_len = (uint8_t)available;
+	if (s->hdoc_tag.len > available)
+		s->hdoc_tag.len = (uint8_t)available;
 
-	for (unsigned i = 0; i < s->tag_len; i++) {
-		s->tag[i] =
+	for (unsigned i = 0; i < s->hdoc_tag.len; i++) {
+		s->hdoc_tag.s[i] =
 		    (UnicodeChar)deser_u32_le(buffer + HDRLEN + i * U32LEN);
 	}
 }
