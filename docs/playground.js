@@ -200,19 +200,27 @@ window.initializePlayground = async opts => {
 		} else if (languageVersion) {
 			languageVersion.style.visibility = 'hidden';
 		}
+
 		parser.setLanguage(languagesByName[newLanguageName]);
 
 		try {
 			const response = await fetch(`${LANGUAGE_BASE_URL}/highlights.scm`);
 			if (!response.ok) {
-				throw new Error(
-					`Failed to load highlights.scm: ${response.status} ${response.statusText}`,
-				);
+				throw new Error(`Failed to load highlights.scm: ${response.status}`);
 			}
 			queryEditor.setValue(await response.text());
 		} catch (error) {
 			console.error(error);
-			queryEditor.setValue('');
+		}
+
+		try {
+			const response = await fetch(`${LANGUAGE_BASE_URL}/example.caddy`);
+			if (!response.ok) {
+				throw new Error(`Failed to load example.caddy: ${response.status}`);
+			}
+			codeEditor.setValue(await response.text());
+		} catch (error) {
+			console.error(error);
 		}
 
 		handleCodeChange();
