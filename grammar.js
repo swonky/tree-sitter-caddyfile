@@ -236,12 +236,22 @@ export default grammar({
 				optional(field('name', $.identifier)),
 			),
 
+		generic_pathname: $ =>
+			repeat1(
+				choice(
+					$._sym_solidus,
+					$._sym_bsolidus,
+					$._sym_colon,
+					field('segment', $.string),
+				),
+			),
+
 		file_placeholder: $ =>
 			seq(
 				optional($._sym_period),
 				$._keyword_file,
 				$._sym_period,
-				optional(field('member', prec.right(choice($.string, $.pathname)))),
+				optional(field('member', $.generic_pathname)),
 			),
 
 		environment_variable: $ =>

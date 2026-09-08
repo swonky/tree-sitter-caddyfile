@@ -679,9 +679,21 @@
         "required": false,
         "types": [
           {
-            "type": "pathname",
+            "type": "generic_pathname",
             "named": true
-          },
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "generic_pathname",
+    "named": true,
+    "fields": {
+      "segment": {
+        "multiple": true,
+        "required": false,
+        "types": [
           {
             "type": "string",
             "named": true

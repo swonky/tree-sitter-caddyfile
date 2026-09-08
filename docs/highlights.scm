@@ -136,6 +136,11 @@
 (posix_absolute_pathname
 	segment: (templated_string fragment: (literal_string) @path ))
 
+(generic_pathname 
+	segment: (_) @path)
+(generic_pathname 
+	segment: (templated_string fragment: (literal_string) @path ))
+
 (environment_variable
 	name: (_) @constant.macro
 )

@@ -63,6 +63,10 @@
 	name: (_) @keyword.coroutine)
 (env_placeholder 
 	name: (_) @constant)
+(generic_pathname 
+	segment: (_) @string.special.path)
+(generic_pathname 
+	segment: (templated_string fragment: (literal_string) @string.special.path ))
 
 (namespace_expression
 	module: (_) @module
@@ -119,14 +123,25 @@
 	segment: (_) @string.special.url)
 (windows_relative_pathname
 	segment: (_) @string.special.path)
+(windows_relative_pathname
+	segment: (templated_string fragment: (literal_string) @string.special.path ))
+
 (windows_absolute_pathname
 	drive: (_) @string.special.path)
 (windows_absolute_pathname
 	segment: (_) @string.special.path)
+(windows_absolute_pathname
+	segment: (templated_string fragment: (literal_string) @string.special.path ))
+
 (posix_relative_pathname
 	segment: (_) @string.special.path)
+(posix_relative_pathname
+	segment: (templated_string fragment: (literal_string) @string.special.path ))
+
 (posix_absolute_pathname
 	segment: (_) @string.special.path)
+(posix_absolute_pathname
+	segment: (templated_string fragment: (literal_string) @string.special.path ))
 
 (environment_variable
 	name: (_) @constant.macro

@@ -822,6 +822,34 @@
         }
       ]
     },
+    "generic_pathname": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "_sym_solidus"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_sym_bsolidus"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_sym_colon"
+          },
+          {
+            "type": "FIELD",
+            "name": "segment",
+            "content": {
+              "type": "SYMBOL",
+              "name": "string"
+            }
+          }
+        ]
+      }
+    },
     "file_placeholder": {
       "type": "SEQ",
       "members": [
@@ -852,21 +880,8 @@
               "type": "FIELD",
               "name": "member",
               "content": {
-                "type": "PREC_RIGHT",
-                "value": 0,
-                "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "string"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "pathname"
-                    }
-                  ]
-                }
+                "type": "SYMBOL",
+                "name": "generic_pathname"
               }
             },
             {
