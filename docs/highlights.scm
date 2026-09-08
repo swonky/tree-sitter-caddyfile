@@ -132,17 +132,19 @@
 	name: (_) @constant.macro
 )
 
+(address (literal_string) @constant)
+
 (block (substitution (generic_placeholder (identifier) @label)))
 (block (substitution (generic_placeholder (namespace_expression ((_) @label)))))
 
 (global_options 
 	(statement (directive name: (_) @property)))
 (site_definition
-	(block (statement (directive name: (_) @function.builtin))))
+	(block (statement (directive name: (_) @constant))))
 (snippet_definition
-	(block (statement (directive name: (_) @function.builtin))))
+	(block (statement (directive name: (_) @module))))
 (named_route_definition
-	(block (statement (directive name: (_) @function.builtin))))
+	(block (statement (directive name: (_) @module))))
 (site_definition
 	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
 (snippet_definition

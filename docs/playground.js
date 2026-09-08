@@ -74,10 +74,10 @@ window.initializePlayground = async opts => {
 	const CAPTURE_REGEX = /@\s*([\w\._-]+)/g;
 
 	const CAPTURE_COLORS = {
-		keyword: '#859900', // green
-		function: '#268bd2', // blue
+		function: '#859900', // green
+		keyword: '#268bd2', // blue
 		type: '#b58900', // yellow
-		constant: '#6c71c4', // violet
+		constant: '#cb4b16',
 		string: '#2aa198', // cyan
 		number: '#d33682', // magenta
 		boolean: '#cb4b16', // orange
@@ -85,13 +85,15 @@ window.initializePlayground = async opts => {
 		operator: '#cb4b16', // orange
 		property: '#268bd2', // blue
 		variable: '#839496', // base0
-		module: '#b58900', // yellow
+		module: '#268bd2', // yellow
 		label: '#2aa198', // cyan
 		punctuation: '#586e75', // base01
 		comment: '#586e75', // base01
 		spell: '#586e75', // base01
 		error: '#dc322f', // red
 	};
+
+	//'#6c71c4', // violet
 
 	const codeInput = document.getElementById('code-input');
 	const languageSelect = document.getElementById('language-select');
