@@ -5,7 +5,7 @@ function initializeLocalTheme() {
 	// Load saved theme or use system preference
 	const savedTheme = localStorage.getItem('theme');
 	const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-	const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+	const initialTheme = savedTheme || 'dark';
 
 	// Set initial theme
 	document.documentElement.setAttribute('data-theme', initialTheme);
@@ -70,39 +70,28 @@ window.initializePlayground = async opts => {
 	initializeCustomSelect({ addListeners: true });
 
 	let tree;
+
 	const CAPTURE_REGEX = /@\s*([\w\._-]+)/g;
 
-	const LIGHT_COLORS = [
-		'#b58900', // yellow
-		'#cb4b16', // orange
-		'#dc322f', // red
-		'#d33682', // magenta
-		'#6c71c4', // violet
-		'#268bd2', // blue
-		'#2aa198', // cyan
-		'#859900', // green
-		'#586e75', // base01
-		'#657b83', // base00
-		'#839496', // base0
-		'#93a1a1', // base1
-		'#002b36', // base03
-	];
-
-	const DARK_COLORS = [
-		'#b58900', // yellow
-		'#cb4b16', // orange
-		'#dc322f', // red
-		'#d33682', // magenta
-		'#6c71c4', // violet
-		'#268bd2', // blue
-		'#2aa198', // cyan
-		'#859900', // green
-		'#839496', // base0
-		'#93a1a1', // base1
-		'#eee8d5', // base2
-		'#fdf6e3', // base3
-		'#002b36', // base03
-	];
+	const CAPTURE_COLORS = {
+		keyword: '#859900', // green
+		function: '#268bd2', // blue
+		type: '#b58900', // yellow
+		constant: '#6c71c4', // violet
+		string: '#2aa198', // cyan
+		number: '#d33682', // magenta
+		boolean: '#cb4b16', // orange
+		character: '#cb4b16', // orange
+		operator: '#cb4b16', // orange
+		property: '#268bd2', // blue
+		variable: '#839496', // base0
+		module: '#b58900', // yellow
+		label: '#2aa198', // cyan
+		punctuation: '#586e75', // base01
+		comment: '#586e75', // base01
+		spell: '#586e75', // base01
+		error: '#dc322f', // red
+	};
 
 	const codeInput = document.getElementById('code-input');
 	const languageSelect = document.getElementById('language-select');
@@ -590,14 +579,8 @@ window.initializePlayground = async opts => {
 	}
 
 	function colorForCaptureName(capture) {
-		const id = query.captureNames.indexOf(capture);
-		const isDark =
-			document.querySelector('html').classList.contains('ayu') ||
-			document.querySelector('html').classList.contains('coal') ||
-			document.querySelector('html').classList.contains('navy');
-
-		const colors = isDark ? DARK_COLORS : LIGHT_COLORS;
-		return colors[id % colors.length];
+		const category = capture.split('.')[0];
+		return CAPTURE_COLORS[category] ?? '#839496';
 	}
 
 	function loadState() {
