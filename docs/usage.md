@@ -1,35 +1,109 @@
 # Usage
 
-> [!CAUTION]
-> To accommodate Caddyfile's contextual syntax quirks, the parser is highly dependant on a handwritten custom scanner written in C11. 
-> The complexity of the scanner increases the chance of fatal errors. 
-> While the parser currently tolerates fuzzed inputs, I urge caution before integrating the parser into tooling until automated testing is implemented and an official release is posted.
+The sections below cover some common ways to compile the parser and integrate it into your code, applications, and tooling.
 
-## Installation
+However, this parser has no special requirements. If you are familiar with compiling and using Tree-sitter parsers, you can use whatever approach best fits your setup. 
+
+## Compiling from source
+
+> Compiling the parser requires [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md), a C compiler (eg. GCC/Clang), and a JavaScript runtime (eg. NodeJS).
+
+```sh
+git clone https://github.com/swonky/tree-sitter-caddyfile
+
+# It's recommended to checkout the latest release version.
+git checkout "v0.5.0"
+
+# Generates the parser and language bindings.
+tree-sitter generate
+
+# Compile dynamic shared object.
+tree-sitter build -o "path/to/caddyfile.so"
+
+# Compile to WebAssembly.
+tree-sitter build --wasm -o "path/to/caddyfile.wasm"
+```
+
+## Editor integrations
+
+### Neovim (0.12+)
+> See more: [neovim Documentation: Treesitter](https://neovim.io/doc/user/treesitter)
+
+To add the Caddyfile filetype, add this to `~/.config/nvim/init.lua` (or equivalent):
+```lua
+vim.filetype.add({
+	extension = { caddy = 'caddyfile' },
+	filename = { Caddyfile = 'caddyfile'},
+})
+```
+
+The parser will be autodetected if you add `caddyfile.so` to your neovim `parser` directory under `runtimepath`, or you can register the parser manually with:
+```lua
+vim.treesitter.language.add('caddyfile', { path = "/path/to/caddyfile.so" })
+```
+
+### Neovim (< 0.12)
+Older versions of Neovim requires third-party plugins to use Tree-sitter. 
+See more: [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+
+### Visual Studio Code
+Tree-sitter parsers can be used in VSCode by compiling the parser to WebAssembly, and using third-party plugins like [tree-sitter-vscode](https://github.com/AlecGhost/tree-sitter-vscode).
+
+## Language bindings
 
 This grammar can be used directly with Tree-sitter or through language-specific Tree-sitter integrations.
 
 ### Go
 Add the package using `go get`:
 ```sh
-go get "github.com/swonky/tree-sitter-caddyfile@v0.2.0"
+go get "github.com/swonky/tree-sitter-caddyfile@v0.5.0"
 ```
 
 And in your code:
 ```go
-import tsparser "github.com/swonky/tree-sitter-caddyfile"
+import (
+	caddyfile "github.com/swonky/tree-sitter-caddyfile/bindings/go"
+	tree_sitter "github.com/tree-sitter/go-tree-sitter"
+)
+
+func main() {
+    document := "example.com\nreverse_proxy localhost:8000"
+
+	language := tree_sitter.NewLanguage(caddyfile.Language())
+	if err := parser.SetLanguage(language); err != nil {
+		t.Fatalf("set language: %v", err)
+	}
+
+	tree := parser.Parse(document, nil)
+	defer tree.Close()
+
+    // Perform queries...
+}
 ```
 
 ### Rust
 Add the repository to your project's `Cargo.toml` dependencies:
 ```toml
 [dependencies]
-tree-sitter-caddyfile = { git = "https://github.com/swonky/tree-sitter-caddyfile", tag = "v0.2.0" }
+tree-sitter-caddyfile = { git = "https://github.com/swonky/tree-sitter-caddyfile", tag = "v0.5.0" }
 ```
 
 And in your code:
 ```rust
-use tree_sitter_caddyfile
+fn main() -> Result<(), Box<dyn Error>> {
+    let source = br#"example.com\nreverse_proxy localhost:8000"#;
+    let language = tree_sitter_caddyfile::LANGUAGE.into();
+    let query = tree_sitter::Query::new(
+        &language, 
+        tree_sitter_caddyfile::HIGHLIGHTS_QUERY // or custom
+    )?;
+
+    let mut parser = Parser::new();
+    parser.set_language(language)?;
+    let tree = parser.parse(source, None).ok_or("failed to parse source")?;
+
+    // Perform queries...
+}
 ```
 
 ### Other languages
@@ -38,55 +112,6 @@ These bindings are available under [./bindings](bindings/) for C, Go, Java, Java
 
 See the Tree-sitter documentation[^1] for language-specific bindings and usage.
 
-# Repository structure
-Tree-sitter repositories contain a number of generated files. Most of the parser's behaviour is determined by a small number of source files, while the remaining files are generated from them.
-
-## Parser
-The parser itself is generated from these files.
-
-| File | Content |
-| ---- | ------- |
-| [grammar.js](grammar.js)          | Defines the compositional grammar rules.       |
-| [src/scanner.c](src/scanner.c)    | Custom scanner that handles lexical behaviour. |
-
-## Queries
-The following query files[^8] are used by editor integrations and other tooling.
-
-| File | Content |
-| ---- | ------- |
-| [highlights.scm](queries/highlights.scm)  | Syntax highlighting and spell checking  |
-| [injections.scm](queries/injections.scm)  | Language injection[^7]                  |
-| [folds.scm](queries/folds.scm)            | Code folding                            |
-
-## Tests
-
-| File | Content |
-| ---- | ------- |
-| [official.txt](test/corpus/official.txt) | Adapted from the official tree-sitter-caddyfile repository [^9].
-
-# Development
-
-## Testing [^4]
-The repository contains a several tests located within [./test/corpus](test/corpus/).
-
-> [!TIP]
-> Running the tests requires [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md) and [Go 1.27+](https://go.dev/doc/install).
-
-```sh
-# runs all tests in the corpus
-tree-sitter test
-
-# perform parser fuzzing
-tree-sitter fuzz
-
-# perform token boundary test against the reference parser (required Go 1.27+).
-cd test
-go clean -cache # if the grammar has been altered
-go test .
-```
-
 [^1]: [tree-sitter: Documentation](https://tree-sitter.github.io/tree-sitter/)
-[^4]: [tree-sitter: Writing tests](https://tree-sitter.github.io/tree-sitter/creating-parsers/5-writing-tests.html)
-[^7]: [tree-sitter: Language injection](https://tree-sitter.github.io/tree-sitter/3-syntax-highlighting.html#language-injection)
 [^8]: [tree-sitter: Query syntax](https://tree-sitter.github.io/tree-sitter/using-parsers/queries/1-syntax.html)
 [^9]: [Official tree-sitter-caddyfile tests](https://github.com/caddyserver/tree-sitter-caddyfile/tree/8ee969d8fd68d67661016d890110e4cae18ed03c/test/corpus)
