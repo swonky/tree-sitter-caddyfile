@@ -86,7 +86,7 @@ window.initializePlayground = async opts => {
 		property: '#268bd2', // blue
 		variable: '#839496', // base0
 		module: '#268bd2', // yellow
-		label: '#2aa198', // cyan
+		label: '#dc322f', // cyan
 		punctuation: '#586e75', // base01
 		comment: '#586e75', // base01
 		spell: '#586e75', // base01

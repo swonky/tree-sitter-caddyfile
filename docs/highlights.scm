@@ -9,43 +9,39 @@
 
 ; Lexer atomic types
 [(string) (literal_string)] @string 
-(verb) @string.special
+(verb) @label
 (integer) @number
 (boolean) @boolean
 (byte) @character
 (octal) @character
 (decimal) @number.float
 (ipv4) @number.float
-(amount) @string.special
+(amount) @label
 
 ; Definitions
 (snippet_declaration
-	name: (_) @constant.macro)
+	name: (_) @module)
 
 (named_route_declaration
-	name: (_) @constant.macro)
+	name: (_) @module)
 
 (regular_expression) @string.special.regex
 
 ; Keywords
-"import" @keyword.directive
-"invoke" @keyword.directive
-"vars" @keyword
-; "args" @variable.builtin
+["import" "invoke" "vars"] @keyword.directive
 
-"env" @keyword
-"file" @keyword
-"system" @keyword
-"time" @keyword
-"now" @keyword
+["env"
+"file"
+"system" 
+"time" 
+"now"] @label
 
-(not_operator) @keyword.operator
+(not_operator) @label
 
 ["(" ")" "{" "}" "[" "]"] @punctuation.bracket
-["&" "$"  "@" "<<"] @punctuation.special
-["*"] @character.special
+["&" "$"  "<<" "*"] @character.special
 ["/" "." ":" "#" "?" "%" "|" "-" "://" "\\"] @punctuation.delimiter
-["`"] @punctuation.special
+["`"] @string.special
 ["\""] @string
 
 (unary_expression (["?" "!" "+" "-" "<" ">"] @operator))
@@ -65,8 +61,8 @@
 	name: (_) @constant)
 
 (namespace_expression
-	module: (_) @module
-	member: (_) @function.call)
+	module: (_) @label
+	member: (_) @constant)
 
 (assignment
 	key: (_) @variable)
@@ -95,8 +91,7 @@
 (named_matcher_definition
 	name: (_) @type)
 
-(named_matcher_reference
-	name: (_) @type)
+(named_matcher_reference) @type
 
 ; (amount (_)
 ; 	quantity: (integer) @number
@@ -132,26 +127,26 @@
 	name: (_) @constant.macro
 )
 
-(address (literal_string) @constant)
+(domain_name segment: (_) @constant)
 
 (block (substitution (generic_placeholder (identifier) @label)))
 (block (substitution (generic_placeholder (namespace_expression ((_) @label)))))
 
 (global_options 
-	(statement (directive name: (_) @property)))
+	(statement (directive name: (_) @function)))
 (site_definition
-	(block (statement (directive name: (_) @constant))))
+	(block (statement (directive name: (_) @function.builtin))))
 (snippet_definition
-	(block (statement (directive name: (_) @module))))
+	(block (statement (directive name: (_) @function.builtin))))
 (named_route_definition
-	(block (statement (directive name: (_) @module))))
+	(block (statement (directive name: (_) @function.builtin))))
 (site_definition
 	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
 (snippet_definition
 	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
 (named_route_definition
 	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
-
+(index_expression operand: (_) @constant)
 (statement (block (statement (directive name: (_) @function.method))))
 (statement (block (statement (conditional_directive (directive name: (_) @function.method)))))
 
