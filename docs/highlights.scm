@@ -110,18 +110,31 @@
 	doc: (_) @type
 ) @comment.documentation
 
+
 (path
 	segment: (_) @string.special.url)
+
 (windows_relative_pathname
-	segment: (_) @string.special.path)
+	segment: (_) @path)
+(windows_relative_pathname
+	segment: (templated_string fragment: (literal_string) @path ))
+
 (windows_absolute_pathname
-	drive: (_) @string.special.path)
+	drive: (_) @path)
 (windows_absolute_pathname
-	segment: (_) @string.special.path)
+	segment: (_) @path)
+(windows_absolute_pathname
+	segment: (templated_string fragment: (literal_string) @path ))
+
 (posix_relative_pathname
-	segment: (_) @string.special.path)
+	segment: (_) @path)
+(posix_relative_pathname
+	segment: (templated_string fragment: (literal_string) @path ))
+
 (posix_absolute_pathname
-	segment: (_) @string.special.path)
+	segment: (_) @path)
+(posix_absolute_pathname
+	segment: (templated_string fragment: (literal_string) @path ))
 
 (environment_variable
 	name: (_) @constant.macro

@@ -76,6 +76,7 @@ window.initializePlayground = async opts => {
 	const CAPTURE_COLORS = {
 		function: '#859900', // green
 		keyword: '#268bd2', // blue
+		path: '#268bd2', // blue
 		type: '#b58900', // yellow
 		constant: '#cb4b16',
 		string: '#2aa198', // cyan
