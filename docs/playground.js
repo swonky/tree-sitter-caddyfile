@@ -111,6 +111,17 @@ window.initializePlayground = async opts => {
 	const updateTimeSpan = document.getElementById('update-time');
 	const languagesByName = {};
 
+	const STATE_VERSION = '2';
+
+	if (localStorage.getItem('stateVersion') !== STATE_VERSION) {
+		localStorage.removeItem('language');
+		localStorage.removeItem('sourceCode');
+		localStorage.removeItem('query');
+		localStorage.removeItem('queryEnabled');
+		localStorage.removeItem('anonymousNodes');
+		localStorage.setItem('stateVersion', STATE_VERSION);
+	}
+
 	loadState();
 
 	await Parser.init();
