@@ -51587,7 +51587,7 @@ TS_PUBLIC const TSLanguage *tree_sitter_caddyfile(void) {
     .metadata = {
       .major_version = 0,
       .minor_version = 5,
-      .patch_version = 0,
+      .patch_version = 1,
     },
   };
   return &language;
