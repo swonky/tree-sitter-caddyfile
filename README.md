@@ -10,8 +10,9 @@ The grammar places greater emphasis on identifying syntactic boundaries and pres
 > Please see [caddyserver/tree-sitter-caddyfile](https://github.com/caddyserver/tree-sitter-caddyfile) if you are searching for the official grammar maintained by caddyserver.
 
 ## Links
-- [Documentation](./docs/usage.md)
-- [Playground](https://swonky.github.io/tree-sitter-caddyfile)
+- [Usage](./docs/usage.md)
+- [Development](./docs/development.md)
+- [Syntax Playground](https://swonky.github.io/tree-sitter-caddyfile)
 - [Third party notices](./NOTICE.md)
 
 ## Features
