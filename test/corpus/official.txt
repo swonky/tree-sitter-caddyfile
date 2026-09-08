@@ -1315,10 +1315,11 @@ dns cloudflare {file.{$CF_API_TOKEN_FILE}}
       (templated_string
         (substitution
           (file_placeholder
-            (templated_string
-              (substitution
-                (environment_variable
-                  (identifier))))))))))
+            (generic_pathname
+              (templated_string
+                (substitution
+                  (environment_variable
+                    (identifier)))))))))))
 
 ==================================
 Single Site Block with one address
