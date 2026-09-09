@@ -8,14 +8,15 @@
 (regular_expression) @string.special
 
 ; Lexer atomic types
-[(string) (literal_string)] @string 
+(statement argument: [(string) (literal_string)] @string)
+(statement argument: [(integer) (decimal)] @number)
+(address (string) @constant)
+
 (verb) @label
-(integer) @number
 (boolean) @boolean
 (byte) @character
 (octal) @character
-(decimal) @number.float
-(ipv4) @number.float
+(ipv4) @character
 (amount) @label
 
 ; Definitions
@@ -28,7 +29,7 @@
 (regular_expression) @string.special.regex
 
 ; Keywords
-["import" "invoke" "vars"] @keyword.directive
+["import" "invoke" "vars"] @label
 
 ["env"
 "file"
@@ -49,9 +50,6 @@
 (current_directory) @string.special.symbol
 (parent_directory) @string.special.symbol
 
-; Substitutions
-(substitution ["{" "}"] @punctuation.special)
-(generic_placeholder (identifier) @variable.member)
 
 (system_placeholder 
 	name: (_) @keyword.coroutine)
@@ -64,8 +62,6 @@
 	module: (_) @label
 	member: (_) @constant)
 
-(assignment
-	key: (_) @variable)
 
 ; Address
 (address "@" @punctuation.delimiter )
@@ -74,35 +70,23 @@
 (mapping key: (_) @property )
 (mapping value: (_) @string )
 
-(path
-	segment: (_) @string.special.path)
 
-(path
-	segment: (_) @string.special.path)
+(path segment: (_) @module)
 
 (protocol) @constant.builtin
 
-(network_address
-	"+" @punctuation.operator)
+(network_address "+" @punctuation.operator)
 
-(request_matcher
-	matcher: (_) @type.builtin)
+(request_matcher matcher: (_) @module)
 
 (named_matcher_definition
-	name: (_) @type)
+	name: (_) @module)
 
-(named_matcher_reference) @type
+(named_matcher_reference) @module
 
-; (amount (_)
-; 	quantity: (integer) @number
-; 	unit: (_) @number)
-;
-; (amount (_)
-; 	quantity: (decimal) @number.float
-; 	unit: (_) @number.float)
-
-(ipv6
-	hextet: (_) @character
+((ipv6
+	hextet: (_) @character)
+    (#set! "priority" 110)
 )
 
 (comment
@@ -142,13 +126,13 @@
 	segment: (templated_string fragment: (literal_string) @path ))
 
 (environment_variable
-	name: (_) @constant.macro
-)
+	name: (_) @type
+) @type
 
 (domain_name segment: (_) @constant)
 
-(block (substitution (generic_placeholder (identifier) @label)))
-(block (substitution (generic_placeholder (namespace_expression ((_) @label)))))
+(block (substitution (generic_placeholder (identifier) @type)))
+(block (substitution (generic_placeholder (namespace_expression ((_) @type)))))
 
 (global_options 
 	(statement (directive name: (_) @function)))
@@ -164,13 +148,21 @@
 	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
 (named_route_definition
 	(block (statement (conditional_directive (directive name: (_) @function.builtin)))))
-(index_expression operand: (_) @constant)
+(index_expression operand: (_) @type)
 (statement (block (statement (directive name: (_) @function.method))))
 (statement (block (statement (conditional_directive (directive name: (_) @function.method)))))
 
-(shortcut) @constant.builtin
+(shortcut) @label
+
+(substitution ["{" "}"] @type)
+(generic_placeholder (identifier) @type)
 
 (comment) @spell @comment
 
+(string) @string
+(integer) @number
+(decimal) @number
+(identifier) @module
+(amount quantity: (_) @character unit: (_) @character) @character
 
-(ERROR) @error-node
+
