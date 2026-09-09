@@ -945,6 +945,9 @@ static void scan_text(Scanner *s)
 
 		c = peek(s);
 
+		/* Handles comment behaviour.
+		 * (context-based. Only valid after comment has begun.)
+		 */
 		if (!is_valid(s, ERROR_SENTINEL) && is_valid(s, STR_COMMENT) &&
 		    c != '@' && prefix != '@') {
 			advance_while(s, is_not_eol);
@@ -953,8 +956,9 @@ static void scan_text(Scanner *s)
 			return;
 		}
 
-		/* Handles backslashes escape behaviour, or returns SYM_BSLASH
-		 * token */
+		/* Handles backslash special character escaping behaviour,
+		 * or returns SYM_BSLASH token for Windows pathnames.
+		 */
 		if (!is_valid(s, ERROR_SENTINEL) && c == '\\') {
 			if (s->consumed > 1) {
 				mark_end(s);
