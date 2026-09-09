@@ -1356,8 +1356,17 @@
             "type": "CHOICE",
             "members": [
               {
-                "type": "SYMBOL",
-                "name": "_primitive"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "range"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_primitive"
+                  }
+                ]
               },
               {
                 "type": "BLANK"
@@ -1405,37 +1414,41 @@
       }
     },
     "range": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "FIELD",
-              "name": "left",
-              "content": {
-                "type": "SYMBOL",
-                "name": "_primitive"
-              }
-            },
-            {
-              "type": "BLANK"
+      "type": "PREC_RIGHT",
+      "value": 0,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "left",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_primitive"
             }
-          ]
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_sym_hyphen"
-        },
-        {
-          "type": "FIELD",
-          "name": "right",
-          "content": {
+          },
+          {
             "type": "SYMBOL",
-            "name": "_primitive"
+            "name": "_sym_hyphen"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "right",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_primitive"
+                }
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
-        }
-      ]
+        ]
+      }
     },
     "mapping": {
       "type": "PREC_RIGHT",

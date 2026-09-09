@@ -308,7 +308,7 @@ export default grammar({
 		authority: $ =>
 			prec.right(repeat1(choice(field('host', $.host), field('port', $._port)))),
 
-		_port: $ => prec.right(seq($._sym_colon, optional($._primitive))),
+		_port: $ => prec.right(seq($._sym_colon, optional(choice($.range, $._primitive)))),
 
 		domain_name: $ =>
 			prec.right(
@@ -319,10 +319,12 @@ export default grammar({
 			),
 
 		range: $ =>
-			seq(
-				optional(field('left', $._primitive)),
-				$._sym_hyphen,
-				field('right', $._primitive),
+			prec.right(
+				seq(
+					field('left', $._primitive),
+					$._sym_hyphen,
+					optional(field('right', $._primitive)),
+				),
 			),
 
 		mapping: $ =>

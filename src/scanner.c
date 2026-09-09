@@ -953,6 +953,8 @@ static void scan_text(Scanner *s)
 			return;
 		}
 
+		/* Handles backslashes escape behaviour, or returns SYM_BSLASH
+		 * token */
 		if (!is_valid(s, ERROR_SENTINEL) && c == '\\') {
 			if (s->consumed > 1) {
 				mark_end(s);
@@ -966,6 +968,7 @@ static void scan_text(Scanner *s)
 				break;
 		}
 
+		/* Handles "grave-quoted" cel expression termination. */
 		if (is_valid(s, STR_CEL) && prefix == '`') {
 			mark_end(s);
 			if (c != '`') {
@@ -976,6 +979,7 @@ static void scan_text(Scanner *s)
 			return;
 		}
 
+		/* Handles "grave-quoted" cel expression content. */
 		if (!is_valid(s, ERROR_SENTINEL) &&
 		    is_valid(s, STR_CEL_INLINE) && c != '`') {
 			while (!eof(s) && !is_eol(peek(s))) {
@@ -992,30 +996,35 @@ static void scan_text(Scanner *s)
 			return;
 		}
 
-		bool breakpoint = is_eol(c) || (is_ws(c) && !s->in_quotation);
-		bool checkpoint = !digits && is_digit(c) && s->consumed <= 2;
-
-		if (is_valid(s, CLS_UNIT_DURATION) && kw && checkpoint &&
-		    is_duration_unit(s->buffer)) {
-			mark_end(s);
-			set_result(s, CLS_UNIT_DURATION);
-			return;
-		}
-		if (kw && breakpoint) {
-			enum TokenType keyword = match(s);
-			if (keyword != _UNSPECIFIED) {
+		/* Handles units within a compound amount (eg. 2h30m) */
+		if (!digits && is_digit(c)) {
+			if (is_valid(s, CLS_UNIT_DURATION) && kw &&
+			    s->consumed <= 2 && is_duration_unit(s->buffer)) {
 				mark_end(s);
-				set_result(s, keyword);
+				set_result(s, CLS_UNIT_DURATION);
 				return;
 			}
 		}
-		if (breakpoint) {
+
+		/* Handles end-of-line or whitespace (always breaks!). */
+		if (is_eol(c) || (is_ws(c) && !s->in_quotation)) {
+			if (kw) {
+				enum TokenType keyword = match(s);
+				if (keyword != _UNSPECIFIED) {
+					mark_end(s);
+					set_result(s, keyword);
+					return;
+				}
+			}
 			s->in_quotation = false;
 			break;
 		}
 
+		/* Increments period counter. Used for decimal/ipv4 recognition.
+		 */
 		nperiod += (c == '.');
 
+		/* Handles context-based termination behaviour. */
 		token = get_token(c);
 		if ((s->consumed > 0 && (is_delim(c) && !s->in_quotation)) ||
 		    (token != _UNSPECIFIED && is_valid(s, token))) {
@@ -1051,6 +1060,16 @@ static void scan_text(Scanner *s)
 		hex = hex && is_hex(c);
 
 		if (digits && !is_digit(c) && c != '.') {
+
+			// handles integer ranges
+			if (c == '-' && is_valid(s, STR_NUM) &&
+			    s->consumed > 0) {
+				mark_end(s);
+				set_result(s, STR_NUM);
+				return;
+			}
+
+			// handles quantity integers
 			mark_end(s);
 			digits = false;
 			if (is_alpha(c) && s->consumed > 0 && nperiod <= 1 &&

@@ -389,6 +389,10 @@
             "named": true
           },
           {
+            "type": "range",
+            "named": true
+          },
+          {
             "type": "string",
             "named": true
           }
@@ -1307,6 +1311,40 @@
         "multiple": false,
         "required": false,
         "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "range",
+    "named": true,
+    "fields": {
+      "left": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "integer",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "right": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "integer",
+            "named": true
+          },
           {
             "type": "string",
             "named": true
