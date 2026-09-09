@@ -1,14 +1,9 @@
-## [0.5.1] - 2026-09-08
+## [0.5.2] - 2026-09-09
 
 ### Bug Fixes
 
-- Issue with relative paths in file placeholders
-
-### Refactor
-
-- Improved safer string handling
+- Port ranges now work correctly in addresses
 
 ### Documentation
 
-- Updated usage section.
-- Added interactive syntax highlighting in the playground.
+- Improved playground theming

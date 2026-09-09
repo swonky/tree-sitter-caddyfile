@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-caddyfile",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "A grammar for Caddyfile",
   "type": "module",
   "repository": {
